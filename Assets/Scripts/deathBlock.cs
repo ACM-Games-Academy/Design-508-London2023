@@ -22,9 +22,9 @@ public class deathBlock : MonoBehaviour
     {
 
         GameObject colliderObject = collision.gameObject;
-        if (colliderObject.tag == "Player")
+        if (colliderObject.tag == "Player" && !GameManager.instance.won)
         {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
