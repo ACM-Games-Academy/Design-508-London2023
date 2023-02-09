@@ -8786,6 +8786,7 @@ MonoBehaviour:
   function: Reload
   delay: 0
   bm: {fileID: 113583144}
+  clickable: 0
 --- !u!1001 &639739369157644403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9002,7 +9003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6873028980809309546, guid: 02677face9416e844b82db15e52a3ab4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.66
+      value: -9.34
       objectReference: {fileID: 0}
     - target: {fileID: 6873028980809309546, guid: 02677face9416e844b82db15e52a3ab4, type: 3}
       propertyPath: m_LocalPosition.y
