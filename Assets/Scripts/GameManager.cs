@@ -6,6 +6,11 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    [SerializeField] float timeScale;
+    [Header("Drag In Your Maze Prefab Here:")]
+    public List<GameObject> mazes;
+
+    [Header("Auto Defined In Script:")]
     public int playerNumber;
     public Material activePlayer;
     public Material inActivePlayer;
@@ -15,7 +20,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        Time.timeScale = 2;
+        Time.timeScale = timeScale;
     }
 
     // Update is called once per frame

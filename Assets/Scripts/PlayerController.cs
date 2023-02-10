@@ -30,19 +30,19 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey("d"))
             {
                 //dtransform.rotation = Quaternion.Euler(Mathf.LerpAngle(transform.rotation.x, 0, 0.01f), Mathf.LerpAngle(transform.rotation.y, 0, 0.01f), transform.rotation.z);
-                GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, -roticerySpeed);
+                GetComponent<Rigidbody>().angularVelocity = new Vector3(GetComponent<Rigidbody>().angularVelocity.x, 0, -roticerySpeed);
             }
-            else if (Input.GetKey("a"))
+            if (Input.GetKey("a"))
             {
-                GetComponent<Rigidbody>().angularVelocity = new Vector3(0, 0, roticerySpeed);
+                GetComponent<Rigidbody>().angularVelocity = new Vector3(GetComponent<Rigidbody>().angularVelocity.x, 0, roticerySpeed);
             }
-            else if (Input.GetKey("w"))
+            if (Input.GetKey("w"))
             {
-                GetComponent<Rigidbody>().angularVelocity = new Vector3(roticerySpeed, 0, 0);
+                GetComponent<Rigidbody>().angularVelocity = new Vector3(roticerySpeed, 0, GetComponent<Rigidbody>().angularVelocity.z);
             }
-            else if (Input.GetKey("s"))
+            if (Input.GetKey("s"))
             {
-                GetComponent<Rigidbody>().angularVelocity = new Vector3(-roticerySpeed, 0, 0);
+                GetComponent<Rigidbody>().angularVelocity = new Vector3(-roticerySpeed, 0, GetComponent<Rigidbody>().angularVelocity.z);
             }
             if (touchingYou && Input.GetKeyDown("e"))
             {
