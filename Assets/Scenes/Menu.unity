@@ -3435,7 +3435,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeScale: 3
-  mazes: []
+  mazes:
+  - {fileID: 4006669227690362814, guid: e272c834c37315f469cc2deef7f2a4ec, type: 3}
+  - {fileID: 4006669227690362814, guid: 794ef0341f9333a44b190216ff2dca51, type: 3}
+  - {fileID: 4006669227690362814, guid: 0c4871e554fbc0a46bd9897018733c5c, type: 3}
+  - {fileID: 4006669227690362814, guid: 7bfcebbf48bf51e4e9742f63b5eaf78d, type: 3}
   playerNumber: 0
   activePlayer: {fileID: 2100000, guid: 1f9e6484457807242a8987440bceb598, type: 2}
   inActivePlayer: {fileID: 2100000, guid: 5b0f2c3d600d02f44ae2b811bd4291e8, type: 2}
