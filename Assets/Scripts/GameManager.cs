@@ -6,10 +6,10 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    [SerializeField] float timeScale;
+    public float timeScale;
     [Header("Drag In Your Maze Prefab Here:")]
     public List<GameObject> mazes;
-
+    public static List<GameObject> currentMazes = new List<GameObject>();
     [Header("Auto Defined In Script:")]
     public int playerNumber;
     public Material activePlayer;
@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        SetMazes();
         Time.timeScale = timeScale;
     }
 
@@ -37,6 +38,15 @@ public class GameManager : MonoBehaviour
                 ButtonManager.instance.unPause();
             }
            
+        }
+    }
+
+    public void SetMazes()
+    {
+        if (currentMazes.Count == 0)
+        {
+            currentMazes.Add(mazes[Random.Range(0, mazes.Count)]);
+            currentMazes.Add(mazes[Random.Range(0, mazes.Count)]);
         }
     }
 }

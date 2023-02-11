@@ -36,9 +36,11 @@ public class ButtonManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void nextScene()
+    public void nextLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        GameManager.currentMazes = new List<GameObject>();
+        Reload();
     }
 
     public void pause()
@@ -49,7 +51,7 @@ public class ButtonManager : MonoBehaviour
 
     public void unPause()
     {
-        Time.timeScale = 2;
+        Time.timeScale = GameManager.instance.timeScale;
         pauseScreen.SetActive(false);
     }
 

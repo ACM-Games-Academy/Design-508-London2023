@@ -634,6 +634,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -3.53
       objectReference: {fileID: 0}
+    - target: {fileID: 6002359849751626808, guid: a3bd9a5d568131640beec2ec1ca2734e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 35.877686
+      objectReference: {fileID: 0}
     - target: {fileID: 7976084218011001245, guid: a3bd9a5d568131640beec2ec1ca2734e, type: 3}
       propertyPath: m_Name
       value: GAME PARENT

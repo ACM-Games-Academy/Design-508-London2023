@@ -5124,6 +5124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdeff814852d1594f8a6c97cac933918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  left: 1
 --- !u!1001 &1080803790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9635,6 +9636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdeff814852d1594f8a6c97cac933918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  left: 0
 --- !u!1 &2104309769
 GameObject:
   m_ObjectHideFlags: 0
@@ -9997,14 +9999,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: GameController
       objectReference: {fileID: 0}
-    - target: {fileID: 3074819921795553831, guid: a3bd9a5d568131640beec2ec1ca2734e, type: 3}
-      propertyPath: mazes.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3074819921795553831, guid: a3bd9a5d568131640beec2ec1ca2734e, type: 3}
-      propertyPath: mazes.Array.data[1]
-      value: 
-      objectReference: {fileID: 4006669227690362814, guid: e272c834c37315f469cc2deef7f2a4ec, type: 3}
     - target: {fileID: 3074819921875953292, guid: a3bd9a5d568131640beec2ec1ca2734e, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.7
