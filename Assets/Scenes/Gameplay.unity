@@ -10001,12 +10001,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3074819921795553831, guid: a3bd9a5d568131640beec2ec1ca2734e, type: 3}
       propertyPath: mazes.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3074819921795553831, guid: a3bd9a5d568131640beec2ec1ca2734e, type: 3}
       propertyPath: mazes.Array.data[3]
       value: 
       objectReference: {fileID: 4006669227690362814, guid: 0c4871e554fbc0a46bd9897018733c5c, type: 3}
+    - target: {fileID: 3074819921795553831, guid: a3bd9a5d568131640beec2ec1ca2734e, type: 3}
+      propertyPath: mazes.Array.data[4]
+      value: 
+      objectReference: {fileID: 4006669227690362814, guid: c6df12449fb89ed47a2728d66a76a0a5, type: 3}
     - target: {fileID: 3074819921875953292, guid: a3bd9a5d568131640beec2ec1ca2734e, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.7
