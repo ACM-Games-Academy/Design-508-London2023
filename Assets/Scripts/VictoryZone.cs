@@ -17,7 +17,7 @@ public class VictoryZone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     if(playersTouching == GameManager.instance.playerNumber)
+     if(playersTouching == GameManager.instance.playerNumber && playersTouching > 0)
         {
             WinScreen.SetActive(true);
             GameManager.instance.won = true;
