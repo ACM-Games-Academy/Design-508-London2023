@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1988770798544916245}
+  - component: {fileID: 3833476772565574516}
   m_Layer: 0
   m_Name: HedgeWall
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3833476772565574516
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988770798544916244}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.5544376, y: 23.540833, z: 1.686127}
+  m_Center: {x: 0.5763767, y: 11.270416, z: -0.3430636}
 --- !u!1001 &1988770798328750397
 PrefabInstance:
   m_ObjectHideFlags: 0

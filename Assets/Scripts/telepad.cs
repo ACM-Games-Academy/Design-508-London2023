@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class telepad : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class telepad : MonoBehaviour
         {
             touching = true;
             cargo = colliderObject;
+            GameManager.instance.switchPrompt.GetComponent<TextMeshProUGUI>().text = "Press 'E' to Teleport";
+            GameManager.instance.switchPrompt.SetActive(true);
         }
     }
 
@@ -43,6 +46,8 @@ public class telepad : MonoBehaviour
         if (colliderObject.tag == "Player")
         {
             touching = false;
+            GameManager.instance.switchPrompt.GetComponent<TextMeshProUGUI>().text = "Press 'E' to switch to object";
+            GameManager.instance.switchPrompt.SetActive(false);
             cargo = null;
         }
     }
