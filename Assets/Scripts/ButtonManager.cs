@@ -29,7 +29,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void start()
     {
-        SceneManager.LoadScene("Level 1");
+        SceneManager.LoadScene("Gameplay");
     }
     public void quit()
     {

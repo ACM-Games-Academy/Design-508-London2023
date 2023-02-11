@@ -24,9 +24,9 @@ public class VictoryZone : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        GameObject colliderObject = collision.gameObject;
+        GameObject colliderObject = other.gameObject;
         if (colliderObject.tag == "Player")
         {
             //if the player object isn't already on the victory zone
@@ -38,10 +38,10 @@ public class VictoryZone : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        GameObject colliderObject = collision.gameObject;
-        if (colliderObject.tag == "Player") 
+        GameObject colliderObject = other.gameObject;
+        if (colliderObject.tag == "Player")
         {
             //if this object is in the list of touching objects then remove it
             if (playersOnMe.Contains(colliderObject))

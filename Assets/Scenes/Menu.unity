@@ -3434,6 +3434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 904b6c90dd6f6ed4996d415338e7ad98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeScale: 3
+  mazes: []
   playerNumber: 0
   activePlayer: {fileID: 2100000, guid: 1f9e6484457807242a8987440bceb598, type: 2}
   inActivePlayer: {fileID: 2100000, guid: 5b0f2c3d600d02f44ae2b811bd4291e8, type: 2}
