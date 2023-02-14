@@ -52,6 +52,19 @@ public class PlayerController : MonoBehaviour
         GroundCheck();
         Inputs();
     }
+    private void FixedUpdate()
+    {
+        //JUMPING
+        if (grounded && Input.GetButtonDown("Jump"))
+        {
+            b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
+        }
+        //Activating Flight
+        else if (!grounded && Input.GetKeyDown("space") && flight)
+        {
+            isFlying = true;
+        }
+    }
     void WASDmovement(float speed)
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -103,16 +116,6 @@ public class PlayerController : MonoBehaviour
     void GroundMovement()
     {
         WASDmovement(moveSpeed);
-        //JUMPING
-        if (grounded && Input.GetButtonDown("Jump"))
-        {
-            b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
-        }
-        //Activating Flight
-        else if (!grounded && Input.GetKeyDown("space") && flight)
-        {
-            isFlying = true;
-        }
     }
 
     void Flying()
