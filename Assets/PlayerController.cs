@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         laser = GetComponent<LineRenderer>();
+        Application.targetFrameRate = 60;
     }
 
     // Update is called once per frame
