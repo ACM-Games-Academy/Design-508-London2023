@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
             {
                 Flying();
             }
-            if (laserVision && Input.GetMouseButtonDown(0))
+            if (laserVision)
             {
                 LaserVision();
             }
@@ -145,19 +145,26 @@ public class PlayerController : MonoBehaviour
 
     void LaserVision()
     {
-        Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
         laser.SetPosition(0, eyeballs.position);
-        bool hit = Physics.Raycast(eyeballs.position, direction.normalized, out RaycastHit ray, maxDistance,LaserLayers);
-        if (hit)
+        //when firing laser
+        if (Input.GetMouseButton(0))
         {
-            laser.SetPosition(1, ray.point);
+            Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
+            bool hit = Physics.Raycast(eyeballs.position, direction.normalized, out RaycastHit ray, maxDistance, LaserLayers);
+            if (hit)
+            {
+                laser.SetPosition(1, ray.point);
+            }
+            else
+            {
+                laser.SetPosition(1, eyeballs.position);
+            }
+            Debug.DrawRay(eyeballs.position, direction.normalized);
         }
         else
         {
             laser.SetPosition(1, eyeballs.position);
         }
-        Debug.DrawRay(eyeballs.position, direction.normalized);
-
     }
 
 
