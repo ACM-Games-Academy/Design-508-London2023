@@ -537,7 +537,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62669148}
-  m_LocalRotation: {x: 0.30517742, y: -0.000000016385561, z: 0.000000005250999, w: 0.95229554}
+  m_LocalRotation: {x: 0.30517742, y: -0.000000016385558, z: 0.0000000052509983, w: 0.95229554}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -914,7 +914,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   GroundRaycastLength: 0.1
-  jumpForce: 80
+  jumpForce: 300
   moveSpeed: 300
   sprintMultiplier: 1.5
   rotationSpeed: 4
