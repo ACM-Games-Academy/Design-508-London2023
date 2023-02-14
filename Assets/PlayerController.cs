@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         //JUMPING
-        if (grounded && Input.GetButtonDown("Jump"))
+        if (grounded && Input.GetKeyDown("space"))
         {
             //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
             b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
