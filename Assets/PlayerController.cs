@@ -57,7 +57,8 @@ public class PlayerController : MonoBehaviour
         //JUMPING
         if (grounded && Input.GetButtonDown("Jump"))
         {
-            b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
+            //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
+            b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
         }
         //Activating Flight
         else if (!grounded && Input.GetKeyDown("space") && flight)
