@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     Transform cam;
 
     [Header("Flight")]
+    bool isFlying;
     [SerializeField] bool flight;
     [SerializeField] float flightSpeed;
     [SerializeField] float riseSpeed;
@@ -36,8 +37,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector3 directionOffset;
     LineRenderer laser1;
     LineRenderer laser2;
-
-    bool isFlying;
+    Animator ani;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         laser1 = eyeball1.GetComponent<LineRenderer>();
         laser2 = eyeball2.GetComponent<LineRenderer>();
+        ani = GetComponentInChildren<Animator>();
         Application.targetFrameRate = 60;
     }
 
@@ -68,6 +69,7 @@ public class PlayerController : MonoBehaviour
         else if (!grounded && Input.GetKeyDown("space") && flight)
         {
             isFlying = true;
+            ani.SetBool("flying", true);
         }
     }
     void WASDmovement(float speed)
@@ -77,11 +79,16 @@ public class PlayerController : MonoBehaviour
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
         if (direction.magnitude >= 0.1f)
         {
+            ani.SetBool("moving", true);
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
             guy.rotation = Quaternion.Slerp(guy.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             Vector3 moveDir = targetRotation * Vector3.forward;
             b.AddForce(moveDir.normalized * speed * 100 * Time.deltaTime, ForceMode.Force);
+        }
+        else
+        {
+            ani.SetBool("moving", false);
         }
     }
 
@@ -94,11 +101,13 @@ public class PlayerController : MonoBehaviour
             {
                 moveSpeed *= sprintMultiplier;
                 flightSpeed *= sprintMultiplier;
+                ani.SetBool("sprinting", true);
             }
             if (Input.GetKeyUp("left shift"))
             {
                 moveSpeed /= sprintMultiplier;
                 flightSpeed /= sprintMultiplier;
+            ani.SetBool("sprinting", false);
             }
 
             //regular movement
@@ -149,6 +158,7 @@ public class PlayerController : MonoBehaviour
             doublePressed = false;
             isFlying = false;
             b.useGravity = true;
+            ani.SetBool("flying", false);
         }
     }
 
@@ -192,6 +202,7 @@ public class PlayerController : MonoBehaviour
     void GroundCheck()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, GroundRaycastLength, GroundLayers);
+        ani.SetBool("airborn", !grounded);
         Debug.DrawRay(transform.position, Vector3.down*GroundRaycastLength, Color.magenta);
     }
 }
