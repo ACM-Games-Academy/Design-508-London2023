@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float maxDistance;
     [SerializeField] LayerMask LaserLayers;
     [SerializeField] Vector3 directionOffset;
+    [SerializeField] GameObject laserEffect;
+    List<GameObject> spawnedEffects = new List<GameObject>();
     LineRenderer laser1;
     LineRenderer laser2;
     Animator ani;
@@ -173,7 +175,10 @@ public class PlayerController : MonoBehaviour
             if (hit)
             {
                 laser.SetPosition(1, ray.point);
-            }
+                GameObject effect = Instantiate(laserEffect,ray.point,Quaternion.Euler(0,0,0));
+                spawnedEffects.Add(effect);
+                Invoke("DestroyOldestEffect",3f);
+            }   
             else
             {
                 laser.SetPosition(1, eyeball.position);
@@ -204,5 +209,12 @@ public class PlayerController : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, GroundRaycastLength, GroundLayers);
         ani.SetBool("airborn", !grounded);
         Debug.DrawRay(transform.position, Vector3.down*GroundRaycastLength, Color.magenta);
+    }
+
+
+    void DestroyOldestEffect()
+    {
+        Destroy(spawnedEffects[0]);
+        spawnedEffects.Remove(spawnedEffects[0]);
     }
 }
