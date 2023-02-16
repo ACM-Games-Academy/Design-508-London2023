@@ -19,7 +19,7 @@ public class Explodable : MonoBehaviour
     public void Explode()
     {
         GameObject blast =  Instantiate(explosion);
-        blast.transform.position = transform.position;
+        blast.transform.position = transform.position; 
         Destroy(gameObject);
     }
 }
