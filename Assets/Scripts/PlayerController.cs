@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float lowerSpeed;
 
     [Header("Laser Vision")]
+    [SerializeField] float laserDamage;
     [SerializeField] bool laserVision;
     [SerializeField] Transform eyeball1;
     [SerializeField] Transform eyeball2;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
     LineRenderer laser1;
     LineRenderer laser2;
     Animator ani;
+    public static HealthManager playerHealth;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +53,7 @@ public class PlayerController : MonoBehaviour
         laser2 = eyeball2.GetComponent<LineRenderer>();
         ani = GetComponentInChildren<Animator>();
         Application.targetFrameRate = 60;
+        playerHealth = GetComponent<HealthManager>();
     }
 
     // Update is called once per frame
@@ -178,6 +181,10 @@ public class PlayerController : MonoBehaviour
                 GameObject effect = Instantiate(laserEffect,ray.point,Quaternion.Euler(0,0,0));
                 spawnedEffects.Add(effect);
                 Invoke("DestroyOldestEffect",3f);
+                if(TryGetComponent(out HealthManager health))
+                {
+                    health.HealthChange(-laserDamage);
+                }
             }   
             else
             {

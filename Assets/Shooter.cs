@@ -17,7 +17,6 @@ public class Shooter : MonoBehaviour
     [SerializeField] float Xoffset;
     [SerializeField] float Yoffset;
     [SerializeField] Transform Yrotater;
-    [SerializeField] float rotationSpeed;
     [Header("Shooting at the Target")]
     [SerializeField] Transform Shootpoint;
     [SerializeField] GameObject bullet;
