@@ -21,11 +21,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform guy;
     Transform cam;
 
-
     [Header("Punch")]
     [SerializeField] float punchTime;
+    [SerializeField] float punchCooldown;
     [SerializeField] BoxCollider punchCollider;
-    [SerializeField] float punchDamage;
+    bool canPunch;
     bool punching;
 
     [Header("Flight")]
@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float lowerSpeed;
 
     [Header("Laser Vision")]
-    [SerializeField] float laserDamage;
     [SerializeField] bool laserVision;
     [SerializeField] Transform eyeball1;
     [SerializeField] Transform eyeball2;
@@ -44,6 +43,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask LaserLayers;
     [SerializeField] Vector3 directionOffset;
     [SerializeField] GameObject laserEffect;
+
+    [Header("Damage Values")]
+    [SerializeField] float laserDamage;
+    [SerializeField] float punchDamage;
+
     List<GameObject> spawnedEffects = new List<GameObject>();
     LineRenderer laser1;
     LineRenderer laser2;
@@ -52,15 +56,20 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //GET COMPONENTING
         b = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         laser1 = eyeball1.GetComponent<LineRenderer>();
         laser2 = eyeball2.GetComponent<LineRenderer>();
         ani = GetComponentInChildren<Animator>();
-        Application.targetFrameRate = 60;
         playerHealth = GetComponent<HealthManager>();
+        punchCollider.GetComponent<MeleeHitbox>().damage = punchDamage;
+
+        //OTHER STUFF
+        Application.targetFrameRate = 60;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+        canPunch = true;
     }
 
     // Update is called once per frame
@@ -139,7 +148,7 @@ public class PlayerController : MonoBehaviour
             }
             ani.SetBool("punch",punching);
             punchCollider.enabled = punching;
-            if(Input.GetKeyDown("r"))
+            if((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch)
             {
                 punching = true;
                 Invoke("DisablePunch",punchTime);
@@ -155,6 +164,13 @@ public class PlayerController : MonoBehaviour
     void DisablePunch()
     {
         punching = false;
+        canPunch = false;
+        Invoke("EnablePunch", punchCooldown);
+    }
+
+    void EnablePunch()
+    {
+        canPunch = true;
     }
 
     void Flying()
