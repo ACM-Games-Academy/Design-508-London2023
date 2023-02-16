@@ -537,7 +537,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62669148}
-  m_LocalRotation: {x: 0.30517742, y: -0.00000001638556, z: 0.0000000052509987, w: 0.95229554}
+  m_LocalRotation: {x: 0.30517742, y: -0.000000016385561, z: 0.0000000052509987, w: 0.95229554}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -895,7 +895,7 @@ MonoBehaviour:
   flightSpeed: 300
   riseSpeed: 200
   lowerSpeed: 150
-  laserDamage: 0
+  laserDamage: 3
   laserVision: 1
   eyeball1: {fileID: 6978361269438739124}
   eyeball2: {fileID: 8563975687438808343}
@@ -934,8 +934,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   maxHealth: 100
-  dieFunction: 
-  dieFunctionSource: {fileID: 0}
+  deathScript: {fileID: 0}
+  deathFunction: 
 --- !u!1 &605523239
 GameObject:
   m_ObjectHideFlags: 3
@@ -1789,7 +1789,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846160864}
-  m_LocalRotation: {x: 0.27038392, y: 0.000000016565487, z: -0.000000004652328, w: 0.9627526}
+  m_LocalRotation: {x: 0.27038392, y: -0.000000016565487, z: 0.000000004652328, w: 0.9627526}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4735,10 +4735,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
-  maxHealth: 30
-  dieFunction: Explode
-  dieFunctionSource: {fileID: 0}
+  health: 0
+  maxHealth: 20
+  deathScript: {fileID: 6536832487520184027}
+  deathFunction: Explode
 --- !u!114 &6536832487520184027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4751,6 +4751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c311336d7681a614c84a36a07323c43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosion: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
 --- !u!23 &6662242272688363736
 MeshRenderer:
   m_ObjectHideFlags: 0

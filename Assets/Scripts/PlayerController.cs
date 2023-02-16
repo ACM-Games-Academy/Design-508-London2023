@@ -181,9 +181,10 @@ public class PlayerController : MonoBehaviour
                 GameObject effect = Instantiate(laserEffect,ray.point,Quaternion.Euler(0,0,0));
                 spawnedEffects.Add(effect);
                 Invoke("DestroyOldestEffect",3f);
-                if(TryGetComponent(out HealthManager health))
+                if(ray.collider.gameObject.TryGetComponent(out HealthManager health))
                 {
-                    health.HealthChange(-laserDamage);
+                    health.HealthChange(-laserDamage*Time.deltaTime);
+                    print("a");
                 }
             }   
             else

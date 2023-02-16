@@ -7,8 +7,8 @@ public class HealthManager : MonoBehaviour
     public float health;
     [SerializeField] float maxHealth;
     [Header("Death Functionality")]
-    [SerializeField] string dieFunction;
-    [SerializeField] GameObject dieFunctionSource;
+    [SerializeField] MonoBehaviour deathScript;
+    [SerializeField] string deathFunction;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,10 +22,11 @@ public class HealthManager : MonoBehaviour
     }
     public void HealthChange(float amount)
     {
-        health -= amount;
-        if(health < 0)
+        health += amount;
+        if(health <= 0)
         {
             health = 0;
+            deathScript.Invoke(deathFunction, 0);
         }
         else if(health > maxHealth)
         {
