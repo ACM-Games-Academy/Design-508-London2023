@@ -2,3 +2,5 @@
 "Rigged T-Pose Human Male w 50 Face Blendshapes" (https://skfb.ly/6QTJ9) by Mike Alger is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 
 "MissileTower_Building002" (https://skfb.ly/onDoB) by Christian Rudorff is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+
+"Basic Missle" (https://skfb.ly/6WSWD) by Blender3D is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
