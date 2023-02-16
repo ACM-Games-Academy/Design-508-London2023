@@ -21,6 +21,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform guy;
     Transform cam;
 
+
+    [Header("Punch")]
+    [SerializeField] float punchTime;
+    [SerializeField] BoxCollider punchCollider;
+    [SerializeField] float punchDamage;
+    bool punching;
+
     [Header("Flight")]
     bool isFlying;
     [SerializeField] bool flight;
@@ -130,12 +137,24 @@ public class PlayerController : MonoBehaviour
                 LaserVision(eyeball1,laser1);
             LaserVision(eyeball2, laser2);
             }
+            ani.SetBool("punch",punching);
+            punchCollider.enabled = punching;
+            if(Input.GetKeyDown("r"))
+            {
+                punching = true;
+                Invoke("DisablePunch",punchTime);
+            }
             
     }
 
     void GroundMovement()
     {
         WASDmovement(moveSpeed);
+    }
+
+    void DisablePunch()
+    {
+        punching = false;
     }
 
     void Flying()
@@ -184,7 +203,6 @@ public class PlayerController : MonoBehaviour
                 if(ray.collider.gameObject.TryGetComponent(out HealthManager health))
                 {
                     health.HealthChange(-laserDamage*Time.deltaTime);
-                    print("a");
                 }
             }   
             else
