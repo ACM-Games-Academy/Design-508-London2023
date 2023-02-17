@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-    public float health;
     [SerializeField] float maxHealth;
-    [Header("Death Functionality")]
+    [Header("What Happens Upon Death?")]
     [SerializeField] MonoBehaviour deathScript;
     [SerializeField] string deathFunction;
+    [Header("Set Automatically by Script:")]
+    public float health;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,5 +33,10 @@ public class HealthManager : MonoBehaviour
         {
             health = maxHealth;
         }
+    }
+
+    public void Death()
+    {
+        HealthChange(-health);
     }
 }
