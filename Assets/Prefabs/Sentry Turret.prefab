@@ -426,14 +426,15 @@ MonoBehaviour:
   targetTag: Player
   WhatBlocksMyView:
     serializedVersion: 2
-    m_Bits: 137
+    m_Bits: 9
   detectionDistance: 80
   Xrotater: {fileID: 7649749184598558257}
-  Xoffset: 270
+  Xoffset: 260
   Yoffset: 180
   Yrotater: {fileID: 6449709137473726326}
   Shootpoint: {fileID: 5339765707011454472}
-  bullet: {fileID: 0}
+  bullet: {fileID: 5833300349897850176, guid: 3295404d2f90daa4187fc11d24cd8080, type: 3}
+  shootCooldown: 3
 --- !u!65 &1201852095781724705
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -466,6 +467,7 @@ MonoBehaviour:
   affectedLayers:
     serializedVersion: 2
     m_Bits: 201
+  destructionMode: 0
 --- !u!114 &1201852095781724706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1584,14 +1586,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5339765707011454487}
-  m_LocalRotation: {x: -0.0005623997, y: 2.8421713e-14, z: -3.552714e-15, w: 0.9999999}
-  m_LocalPosition: {x: 0, y: 0.011612373, z: -0.00027339347}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.01644, z: -0.00027}
+  m_LocalScale: {x: 0.03567279, y: 0.03567279, z: 0.03567279}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7649749184598558257}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &5339765708457053418
 GameObject:
   m_ObjectHideFlags: 0
