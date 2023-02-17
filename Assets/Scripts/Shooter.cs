@@ -20,11 +20,13 @@ public class Shooter : MonoBehaviour
     [Header("Shooting at the Target")]
     [SerializeField] Transform Shootpoint;
     [SerializeField] GameObject bullet;
+    [SerializeField] float shootCooldown;
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.FindGameObjectWithTag(targetTag).transform;
-        pointer = Instantiate(new GameObject("pointer"), transform).transform;
+        pointer = Instantiate(new GameObject("pointer")).transform;
+        pointer.position = Shootpoint.position;
     }
 
     // Update is called once per frame
@@ -39,22 +41,29 @@ public class Shooter : MonoBehaviour
         {
             AimAtPlayer();
         }
+        else if(state == behaviours.destroy)
+        {
+            AimAtPlayer();
+            Shoot();
+            StartAttackCycle();
+        }
     }
 
 
     void Detection()
     {
         pointer.LookAt(target);
-        bool hit = Physics.Raycast(Shootpoint.position, pointer.forward, out RaycastHit ray, detectionDistance, WhatBlocksMyView);
+        bool hit = Physics.Raycast(pointer.position, pointer.forward, out RaycastHit ray, detectionDistance, WhatBlocksMyView);
         if (hit)
         {
             if(ray.collider.gameObject == target.gameObject && state == behaviours.search)
             {
-                state = behaviours.aim;
+                StartAttackCycle();
             }
-            else
+            else if(ray.collider.gameObject != target.gameObject)
             {
                 state = behaviours.search;
+                StopCoroutine(ShootCooldown());
             }
         }
         else
@@ -71,5 +80,23 @@ public class Shooter : MonoBehaviour
 
         float YAngle = 180 + Mathf.Atan2(Yrotater.position.x - target.position.x, Yrotater.position.z - target.position.z) * Mathf.Rad2Deg + Yoffset;//Find Y angle toward target
         Yrotater.localRotation = Quaternion.Euler(0,YAngle, 0);//Quaternion.Euler(0,Mathf.LerpAngle(Yrotater.localRotation.x, YAngle, rotationSpeed * Time.deltaTime), 0);//Lerp rotation to target Y angle
+    }
+
+    void StartAttackCycle()
+    {
+             state = behaviours.aim;
+            StartCoroutine(ShootCooldown());
+    }
+
+    void Shoot()
+    {
+        GameObject firedBullet = Instantiate(bullet, pointer);
+        Physics.IgnoreCollision(firedBullet.GetComponent<Collider>(), transform.GetComponent<Collider>(), true);
+    }
+
+    IEnumerator ShootCooldown()
+    {
+        yield return new WaitForSeconds(shootCooldown);
+        state = behaviours.destroy;
     }
 }

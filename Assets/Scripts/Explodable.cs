@@ -13,6 +13,8 @@ public class Explodable : MonoBehaviour
     [SerializeField] float explosionForce;
     [SerializeField] float affectedRadius;
     [SerializeField] LayerMask affectedLayers;
+    enum modes { destroy, disable}
+    [SerializeField] modes destructionMode;
     bool playMode;
 
     // Start is called before the first frame update
@@ -35,8 +37,14 @@ public class Explodable : MonoBehaviour
     {
         GameObject blast = Instantiate(explosion);
         blast.transform.position = transform.position;
-        Destroy(gameObject);
-
+        if(destructionMode == modes.destroy)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
         Collider[] nearby = Physics.OverlapSphere(transform.position, affectedRadius, affectedLayers);
         foreach (Collider col in nearby)
         {
@@ -46,8 +54,6 @@ public class Explodable : MonoBehaviour
             }
             if (col.TryGetComponent(out Rigidbody rb))
             {
-                print("a");
-                print(rb.gameObject.name);
                 rb.AddExplosionForce(explosionForce*Time.deltaTime, transform.position, affectedRadius);
             }
         }
