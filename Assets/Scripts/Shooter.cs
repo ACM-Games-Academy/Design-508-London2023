@@ -90,7 +90,7 @@ public class Shooter : MonoBehaviour
 
     void Shoot()
     {
-        GameObject firedBullet = Instantiate(bullet, pointer);
+        GameObject firedBullet = Instantiate(bullet, pointer.position, pointer.rotation);
         Physics.IgnoreCollision(firedBullet.GetComponent<Collider>(), transform.GetComponent<Collider>(), true);
     }
 

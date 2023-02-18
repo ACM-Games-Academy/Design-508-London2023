@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerController : MonoBehaviour
 {
@@ -37,12 +38,18 @@ public class PlayerController : MonoBehaviour
 
     [Header("Laser Vision")]
     [SerializeField] bool laserVision;
+    [SerializeField] Transform head;
     [SerializeField] Transform eyeball1;
     [SerializeField] Transform eyeball2;
     [SerializeField] float maxDistance;
     [SerializeField] LayerMask LaserLayers;
     [SerializeField] Vector3 directionOffset;
     [SerializeField] GameObject laserEffect;
+
+    [Header("Aim Constraint")]
+    [SerializeField] MultiAimConstraint headAimConstraint;
+    [SerializeField] Transform laserVisionTarget;
+    [SerializeField] float WeightLerpSpeed;
 
     [Header("Damage Values")]
     [SerializeField] float laserDamage;
@@ -144,7 +151,7 @@ public class PlayerController : MonoBehaviour
             if (laserVision)
             {
                 LaserVision(eyeball1,laser1);
-            LaserVision(eyeball2, laser2);
+                LaserVision(eyeball2, laser2);
             }
             ani.SetBool("punch",punching);
             punchCollider.enabled = punching;
@@ -209,12 +216,15 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
+            //print(Mathf.Abs(direction.y - guy.forward.y)*360);
             bool hit = Physics.Raycast(eyeball.position, direction.normalized, out RaycastHit ray, maxDistance, LaserLayers);
             if (hit)
             {
                 laser.SetPosition(1, ray.point);
                 GameObject effect = Instantiate(laserEffect,ray.point,Quaternion.Euler(0,0,0));
                 spawnedEffects.Add(effect);
+                headAimConstraint.weight = Mathf.Lerp(headAimConstraint.weight, 1, WeightLerpSpeed * Time.deltaTime);
+                laserVisionTarget.position = ray.point;
                 Invoke("DestroyOldestEffect",3f);
                 if(ray.collider.gameObject.TryGetComponent(out HealthManager health))
                 {
@@ -224,12 +234,14 @@ public class PlayerController : MonoBehaviour
             else
             {
                 laser.SetPosition(1, eyeball.position);
+                headAimConstraint.weight = Mathf.Lerp(headAimConstraint.weight, 0, WeightLerpSpeed * Time.deltaTime);
             }
             Debug.DrawRay(eyeball.position, direction.normalized);
         }
         else
         {
             laser.SetPosition(1, eyeball.position);
+            headAimConstraint.weight = Mathf.Lerp(headAimConstraint.weight,0, WeightLerpSpeed * Time.deltaTime);
         }
     }
 
