@@ -428,13 +428,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 9
   detectionDistance: 80
+  rotateAtTarget: 1
   Xrotater: {fileID: 7649749184598558257}
+  Yrotater: {fileID: 6449709137473726326}
   Xoffset: 260
   Yoffset: 180
-  Yrotater: {fileID: 6449709137473726326}
   Shootpoint: {fileID: 5339765707011454472}
   bullet: {fileID: 5833300349897850176, guid: 3295404d2f90daa4187fc11d24cd8080, type: 3}
-  shootCooldown: 4
+  shootCooldown: 3
 --- !u!65 &1201852095781724705
 BoxCollider:
   m_ObjectHideFlags: 0
