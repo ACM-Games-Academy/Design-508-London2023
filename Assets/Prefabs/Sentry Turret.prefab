@@ -428,6 +428,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 9
   detectionDistance: 80
+  isStatic: 1
   rotateAtTarget: 1
   Xrotater: {fileID: 7649749184598558257}
   Yrotater: {fileID: 6449709137473726326}

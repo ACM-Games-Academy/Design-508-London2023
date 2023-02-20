@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     public enum behaviours{search,aim,destroy};
-    [SerializeField] behaviours state;
+    public behaviours state;
     [SerializeField] string targetTag;
     Transform target;
     Transform pointer;
@@ -13,6 +13,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] LayerMask WhatBlocksMyView;
     [SerializeField] [Range(1,100)]float detectionDistance;
     [Header("Aiming at the Target")]
+    [SerializeField] bool isStatic;
     [SerializeField] bool rotateAtTarget;
     [SerializeField] Transform Xrotater;
     [SerializeField] Transform Yrotater;
@@ -33,6 +34,10 @@ public class Shooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isStatic)
+        {
+            pointer.position = Shootpoint.position;
+        }
         Detection();
         if(state == behaviours.search)
         {

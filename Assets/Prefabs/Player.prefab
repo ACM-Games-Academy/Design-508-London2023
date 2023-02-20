@@ -240,6 +240,7 @@ MonoBehaviour:
   riseSpeed: 200
   lowerSpeed: 150
   laserVision: 1
+  angleDiff: 10
   head: {fileID: 5835250700897205276}
   eyeball1: {fileID: 28654073616725585}
   eyeball2: {fileID: 3189647250252573917}
