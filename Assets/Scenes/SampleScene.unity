@@ -1857,7 +1857,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27970
+  m_Name: pb_Mesh25392
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2557,7 +2557,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1603932014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2705,7 +2705,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27956
+  m_Name: pb_Mesh25378
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2983,7 +2983,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846160864}
-  m_LocalRotation: {x: 0.64362925, y: 0.0000001748229, z: -0.0000001470216, w: 0.76533747}
+  m_LocalRotation: {x: 0.64362925, y: 0.00000010294914, z: -0.00000008657757, w: 0.7653375}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3188,6 +3188,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 80169870468695963, guid: ff60915e26741f34c96ed2926457e9fa,
+        type: 3}
+      propertyPath: angleDiff
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 80169870468695963, guid: ff60915e26741f34c96ed2926457e9fa,
+        type: 3}
+      propertyPath: angleLimit
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 80169870468695963, guid: ff60915e26741f34c96ed2926457e9fa,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 80169870468695964, guid: ff60915e26741f34c96ed2926457e9fa,
         type: 3}
       propertyPath: m_Name

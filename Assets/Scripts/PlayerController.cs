@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Laser Vision")]
     [SerializeField] bool laserVision;
+    [SerializeField] float angleDiff;
     [SerializeField] Transform head;
     [SerializeField] Transform eyeball1;
     [SerializeField] Transform eyeball2;
@@ -216,7 +217,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
-            //print(Mathf.Abs(direction.y - guy.forward.y)*360);
+            //Vector3 maxDirection = Quaternion.AngleAxis(angleLimit, Vector3.up) * guy.forward;
+            //Vector3 minDirection = Quaternion.AngleAxis(-angleLimit, Vector3.up) * guy.forward;
             bool hit = Physics.Raycast(eyeball.position, direction.normalized, out RaycastHit ray, maxDistance, LaserLayers);
             if (hit)
             {
@@ -229,6 +231,12 @@ public class PlayerController : MonoBehaviour
                 if(ray.collider.gameObject.TryGetComponent(out HealthManager health))
                 {
                     health.HealthChange(-laserDamage*Time.deltaTime);
+                }
+
+                float angle = head.localRotation.eulerAngles.y;             
+                if (Vector3.Angle(head.forward, direction) > angleDiff)
+                {
+                    guy.rotation = Quaternion.Slerp(guy.rotation, Quaternion.Euler(0, cam.eulerAngles.y, 0),rotationSpeed*Time.deltaTime/2);
                 }
             }   
             else
