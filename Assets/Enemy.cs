@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[ExecuteInEditMode]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] float targetRange;
+    [SerializeField] float playerTargetRange;
+    [SerializeField] bool showRangeInSceneView;
     [SerializeField] string playerTag;
+    bool playMode;
     NavMeshAgent agent;
+    Transform player;
 
     //[Header("Ranged Settings")]
     bool isRanged;
@@ -17,28 +21,46 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        if(TryGetComponent(out Shooter s))
+        player = GameObject.FindGameObjectWithTag(playerTag).transform;
+        playMode = true;
+        if (TryGetComponent(out Shooter s))
         {
             shootScript = s;
             isRanged = true;
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        if (showRangeInSceneView)
+        {
+            Gizmos.color = new Color(1, 0, 0, 0.2f);
+            Gizmos.DrawSphere(transform.position, playerTargetRange);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        agent.destination = GameObject.FindGameObjectWithTag(playerTag).transform.position;
-        if (isRanged)
+        if (playMode)
         {
-            if(shootScript.state == Shooter.behaviours.aim)
+            bool targetPlayer = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
+            agent.isStopped = !targetPlayer;
+            if (targetPlayer)
             {
-                agent.isStopped = true;
+                agent.destination = player.position;
+                if (isRanged)
+                {
+                    if (shootScript.state == Shooter.behaviours.aim)
+                    {
+                        agent.isStopped = true;
+                    }
+                    else
+                    {
+                        agent.isStopped = false;
+                    }
+                }
             }
-            else
-            {
-                agent.isStopped = false;
-            }
-        }
-        
+        }       
     }
 }
