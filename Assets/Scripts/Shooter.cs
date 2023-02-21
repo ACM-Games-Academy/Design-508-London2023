@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shooter : MonoBehaviour
 {
-    public enum behaviours{search,aim,destroy};
+    public enum behaviours{search,aim};
     public behaviours state;
     [SerializeField] string targetTag;
     Transform target;
@@ -23,12 +23,16 @@ public class Shooter : MonoBehaviour
     [SerializeField] Transform Shootpoint;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootCooldown;
+    [SerializeField] float despawnTime;
+    GameObject previousBullet;
+    bool fire;
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.FindGameObjectWithTag(targetTag).transform;
         pointer = Instantiate(new GameObject("pointer")).transform;
         pointer.position = Shootpoint.position;
+        StartCoroutine(ShootCooldown());
     }
 
     // Update is called once per frame
@@ -43,16 +47,16 @@ public class Shooter : MonoBehaviour
         {
             //look around animation
         }
-        else if(state == behaviours.aim)
+        if(state == behaviours.aim)
         {
             AimAtPlayer();
+            if (fire)
+            {
+                Shoot();
+            }
         }
-        else if(state == behaviours.destroy)
-        {
-            AimAtPlayer();
-            Shoot();
-            StartAttackCycle();
-        }
+        
+
     }
 
 
@@ -62,14 +66,13 @@ public class Shooter : MonoBehaviour
         bool hit = Physics.Raycast(pointer.position, pointer.forward, out RaycastHit ray, detectionDistance, WhatBlocksMyView);
         if (hit)
         {
-            if(ray.collider.gameObject == target.gameObject && state == behaviours.search)
+            if(ray.collider.gameObject == target.gameObject && state != behaviours.aim)
             {
-                StartAttackCycle();
+                state = behaviours.aim;
             }
             else if(ray.collider.gameObject != target.gameObject)
             {
                 state = behaviours.search;
-                StopCoroutine(ShootCooldown());
             }
         }
         else
@@ -91,21 +94,27 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    void StartAttackCycle()
-    {
-             state = behaviours.aim;
-            StartCoroutine(ShootCooldown());
-    }
-
     void Shoot()
     {
         GameObject firedBullet = Instantiate(bullet, pointer.position, pointer.rotation);
+        previousBullet = firedBullet;
         Physics.IgnoreCollision(firedBullet.GetComponent<Collider>(), transform.GetComponent<Collider>(), true);
+        fire = false;
+    }
+
+    void DestroyPrevious()
+    {
+        if (previousBullet != null)
+        {
+            Destroy(previousBullet);
+        }
     }
 
     IEnumerator ShootCooldown()
     {
         yield return new WaitForSeconds(shootCooldown);
-        state = behaviours.destroy;
+        fire = true;
+        yield return new WaitForEndOfFrame();
+        StartCoroutine(ShootCooldown());
     }
 }
