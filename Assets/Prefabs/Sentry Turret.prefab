@@ -435,8 +435,10 @@ MonoBehaviour:
   Xoffset: 260
   Yoffset: 180
   Shootpoint: {fileID: 5339765707011454472}
+  mode: 0
   bullet: {fileID: 5833300349897850176, guid: 3295404d2f90daa4187fc11d24cd8080, type: 3}
   shootCooldown: 3
+  despawnTime: 20
 --- !u!65 &1201852095781724705
 BoxCollider:
   m_ObjectHideFlags: 0
