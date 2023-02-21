@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float playerTargetRange;
     [SerializeField] bool showRangeInSceneView;
     [SerializeField] string playerTag;
+    [SerializeField] Animator ani;
     NavMeshAgent agent;
     Transform player;
 
@@ -52,10 +53,12 @@ public class Enemy : MonoBehaviour
                     if (shootScript.state == Shooter.behaviours.aim)
                     {
                         agent.isStopped = true;
+                        ani.SetBool("Aiming",true);
                     }
                     else
                     {
                         agent.isStopped = false;
+                        ani.SetBool("Walking", true);
                     }
                 }
             }

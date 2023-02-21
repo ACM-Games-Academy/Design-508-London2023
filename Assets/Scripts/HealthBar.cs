@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class HealthBar : MonoBehaviour
 {
-    public float health;
-    public float maxHealth;
+    float health;
+    float maxHealth;
     // Start is called before the first frame update
     void Start()
     {
