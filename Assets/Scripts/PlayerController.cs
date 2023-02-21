@@ -63,8 +63,9 @@ public class PlayerController : MonoBehaviour
     LineRenderer laser2;
     Animator ani;
     public static HealthManager playerHealth;
+    
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //GET COMPONENTING
         b = GetComponent<Rigidbody>();
