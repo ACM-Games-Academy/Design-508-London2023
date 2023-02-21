@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doublePressWait: 0.5
-  healthText: {fileID: 0}
+  disableInputs: 0
   GroundLayers:
     serializedVersion: 2
     m_Bits: 72

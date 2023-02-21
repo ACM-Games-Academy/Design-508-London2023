@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     int presses;
     bool doublePressed;
     [SerializeField] float doublePressWait;
-    [SerializeField] TextMeshProUGUI healthText;
+    public bool disableInputs;
     [Header("Physics Properties")]
     [SerializeField] LayerMask GroundLayers;
     [SerializeField] float GroundRaycastLength;
@@ -87,8 +87,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GroundCheck();
-        Inputs();
-        healthText.text = Mathf.RoundToInt(playerHealth.health).ToString();
+        if (!disableInputs)
+        {
+            Inputs();
+        }
     }
     private void FixedUpdate()
     {
@@ -275,6 +277,10 @@ public class PlayerController : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, GroundRaycastLength, GroundLayers);
         ani.SetBool("airborn", !grounded);
         Debug.DrawRay(transform.position, Vector3.down*GroundRaycastLength, Color.magenta);
+        if(playerHealth.health <= 0)
+        {
+            Destroy(gameObject, 5);
+        }
     }
 
 
@@ -282,5 +288,17 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(spawnedEffects[0]);
         spawnedEffects.Remove(spawnedEffects[0]);
+    }
+
+    public void Die()
+    {
+        ani.SetBool("dead", true);
+        if (isFlying)
+        {
+            isFlying = false;
+            b.useGravity = true;
+            disableInputs = true;
+            GroundRaycastLength *= 2;
+        }
     }
 }
