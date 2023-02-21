@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doublePressWait: 0.5
+  healthText: {fileID: 0}
   GroundLayers:
     serializedVersion: 2
     m_Bits: 72
@@ -298,7 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 200
   deathScript: {fileID: 533832401}
   deathFunction: Explode
   health: 0
