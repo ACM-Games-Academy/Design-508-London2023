@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] float playerTargetRange;
     [SerializeField] bool showRangeInSceneView;
     [SerializeField] string playerTag;
-    bool playMode;
     NavMeshAgent agent;
     Transform player;
 
@@ -22,7 +21,6 @@ public class Enemy : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag(playerTag).transform;
-        playMode = true;
         if (TryGetComponent(out Shooter s))
         {
             shootScript = s;
@@ -42,7 +40,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playMode)
+        if (Application.isPlaying)
         {
             bool targetPlayer = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
             agent.isStopped = !targetPlayer;
@@ -61,6 +59,6 @@ public class Enemy : MonoBehaviour
                     }
                 }
             }
-        }       
+        }
     }
 }

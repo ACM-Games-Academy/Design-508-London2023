@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     int presses;
     bool doublePressed;
     [SerializeField] float doublePressWait;
+    [SerializeField] TextMeshProUGUI healthText;
     [Header("Physics Properties")]
     [SerializeField] LayerMask GroundLayers;
     [SerializeField] float GroundRaycastLength;
@@ -85,6 +87,7 @@ public class PlayerController : MonoBehaviour
     {
         GroundCheck();
         Inputs();
+        healthText.text = Mathf.RoundToInt(playerHealth.health).ToString();
     }
     private void FixedUpdate()
     {

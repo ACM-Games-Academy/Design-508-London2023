@@ -15,12 +15,11 @@ public class Explodable : MonoBehaviour
     [SerializeField] LayerMask affectedLayers;
     enum modes { destroy, disable}
     [SerializeField] modes destructionMode;
-    bool playMode;
 
     // Start is called before the first frame update
     void Start()
     {
-        playMode = true;
+
     }
 
     private void OnDrawGizmos()
