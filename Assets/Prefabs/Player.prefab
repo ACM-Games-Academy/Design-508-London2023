@@ -256,7 +256,7 @@ MonoBehaviour:
   WeightLerpSpeed: 10
   laserDamage: 3
   punchDamage: 4
-  bloodEffect: {fileID: 1000010675638318, guid: a3768c8a9d1b90d4bb0eb0e4bdbe730c,
+  bloodEffect: {fileID: 1000010675638318, guid: 1afa466a5d347f144939ca63607ad67b,
     type: 3}
   bloodSpawn: {fileID: 5669680585943203224}
 --- !u!54 &80169870468695962
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 100
   deathScript: {fileID: 80169870468695963}
   deathFunction: Die
   health: 0
@@ -915,7 +915,7 @@ GameObject:
   - component: {fileID: 5669680585943203224}
   m_Layer: 8
   m_Name: mixamorig:Spine
-  m_TagString: Untagged
+  m_TagString: PlayerTargetPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

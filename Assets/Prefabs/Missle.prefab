@@ -9546,7 +9546,7 @@ MonoBehaviour:
   explosion: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
   explosionDamage: 35
   explosionForce: 1000000
-  affectedRadius: 0.95
+  affectedRadius: 1.8
   affectedLayers:
     serializedVersion: 2
     m_Bits: 265

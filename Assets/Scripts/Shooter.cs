@@ -7,6 +7,7 @@ public class Shooter : MonoBehaviour
     public enum behaviours{search,aim};
     public behaviours state;
     [SerializeField] string targetTag;
+    Collider targetCollider;
     Transform target;
     Transform pointer;
     [Header("Detecting The Target")]
@@ -21,6 +22,8 @@ public class Shooter : MonoBehaviour
     [SerializeField] float Yoffset; 
     [Header("Shooting at the Target")]
     [SerializeField] Transform Shootpoint;
+    enum bulletType { projectile,hitscan};
+    [SerializeField] bulletType mode;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootCooldown;
     [SerializeField] float despawnTime;
@@ -30,6 +33,7 @@ public class Shooter : MonoBehaviour
     void Start()
     {
         target = GameObject.FindGameObjectWithTag(targetTag).transform;
+        targetCollider = target.root.GetComponent<Collider>();
         pointer = Instantiate(new GameObject("pointer")).transform;
         pointer.position = Shootpoint.position;
         StartCoroutine(ShootCooldown());
@@ -66,11 +70,11 @@ public class Shooter : MonoBehaviour
         bool hit = Physics.Raycast(pointer.position, pointer.forward, out RaycastHit ray, detectionDistance, WhatBlocksMyView);
         if (hit)
         {
-            if(ray.collider.gameObject == target.gameObject && state != behaviours.aim)
+            if(ray.collider == targetCollider && state != behaviours.aim)
             {
                 state = behaviours.aim;
             }
-            else if(ray.collider.gameObject != target.gameObject)
+            else if(ray.collider != targetCollider)
             {
                 state = behaviours.search;
             }
@@ -96,10 +100,27 @@ public class Shooter : MonoBehaviour
 
     void Shoot()
     {
-        GameObject firedBullet = Instantiate(bullet, pointer.position, pointer.rotation);
-        previousBullet = firedBullet;
-        Physics.IgnoreCollision(firedBullet.GetComponent<Collider>(), transform.GetComponent<Collider>(), true);
-        fire = false;
+        if(mode == bulletType.projectile)
+        {
+            GameObject firedBullet = Instantiate(bullet, pointer.position, pointer.rotation);
+            previousBullet = firedBullet;
+            Physics.IgnoreCollision(firedBullet.GetComponent<Collider>(), transform.GetComponent<Collider>(), true);
+            //Invoke("DestroyPrevious", despawnTime);
+            fire = false;
+        }
+        else
+        {
+            Vector3 aim = Quaternion.Euler(Random.Range(0, 5), Random.Range(0,5), Random.Range(0, 5)) * pointer.forward;
+            bool hit = Physics.Raycast(pointer.position, pointer.forward, out RaycastHit ray, WhatBlocksMyView);
+            if (hit)
+            {
+                if(ray.collider.gameObject == target.gameObject)
+                {
+
+                }
+            }
+        }
+
     }
 
     void DestroyPrevious()

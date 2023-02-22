@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         //JUMPING
-        if (grounded && Input.GetKeyDown("space"))
+        if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
         {
             //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
             b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
@@ -286,6 +286,7 @@ public class PlayerController : MonoBehaviour
         //Death Event
         if (playerHealth.health <= 0 && grounded)
         {
+            b.isKinematic = true;
             //reload scene or whatever
         }
     }
@@ -307,10 +308,6 @@ public class PlayerController : MonoBehaviour
         {
             isFlying = false;
             b.useGravity = true;
-        }
-        else
-        {
-            b.isKinematic = true;
         }
     }
 }
