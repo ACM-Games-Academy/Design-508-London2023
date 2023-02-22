@@ -9549,7 +9549,8 @@ MonoBehaviour:
   affectedRadius: 0.95
   affectedLayers:
     serializedVersion: 2
-    m_Bits: 9
+    m_Bits: 265
+  destructionMode: 0
 --- !u!114 &435907782320734911
 MonoBehaviour:
   m_ObjectHideFlags: 0

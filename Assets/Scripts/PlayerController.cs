@@ -58,6 +58,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float laserDamage;
     [SerializeField] float punchDamage;
 
+    [Header("Death")]
+    [SerializeField] GameObject bloodEffect;
+    [SerializeField] Transform bloodSpawn;
+
     List<GameObject> spawnedEffects = new List<GameObject>();
     LineRenderer laser1;
     LineRenderer laser2;
@@ -91,6 +95,7 @@ public class PlayerController : MonoBehaviour
         {
             Inputs();
         }
+
     }
     private void FixedUpdate()
     {
@@ -277,9 +282,11 @@ public class PlayerController : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, GroundRaycastLength, GroundLayers);
         ani.SetBool("airborn", !grounded);
         Debug.DrawRay(transform.position, Vector3.down*GroundRaycastLength, Color.magenta);
-        if(playerHealth.health <= 0)
+
+        //Death Event
+        if (playerHealth.health <= 0 && grounded)
         {
-            Destroy(gameObject, 5);
+            //reload scene or whatever
         }
     }
 
@@ -290,15 +297,20 @@ public class PlayerController : MonoBehaviour
         spawnedEffects.Remove(spawnedEffects[0]);
     }
 
+
     public void Die()
     {
         ani.SetBool("dead", true);
+        disableInputs = true;
+        GameObject blood = Instantiate(bloodEffect,bloodSpawn.position,bloodSpawn.rotation,bloodSpawn);
         if (isFlying)
         {
             isFlying = false;
             b.useGravity = true;
-            disableInputs = true;
-            GroundRaycastLength *= 2;
+        }
+        else
+        {
+            b.isKinematic = true;
         }
     }
 }
