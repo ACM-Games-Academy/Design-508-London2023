@@ -9627,6 +9627,7 @@ GameObject:
   - component: {fileID: 3288710697465383067}
   - component: {fileID: 3391917496815021309}
   - component: {fileID: 3417968771187267175}
+  - component: {fileID: 2737698165303540769}
   m_Layer: 0
   m_Name: LaserEffect
   m_TagString: Untagged
@@ -14244,3 +14245,17 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &2737698165303540769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3291674522085086469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89942b33e9332034985866d0e4543302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageRadius: 1
+  damagePerSecond: 0.1
