@@ -1283,7 +1283,7 @@ GameObject:
   - component: {fileID: 41873987}
   - component: {fileID: 41873986}
   - component: {fileID: 41873985}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1682,7 +1682,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62669148}
-  m_LocalRotation: {x: 0.22965086, y: 0.005613763, z: -0.0013246315, w: 0.973256}
+  m_LocalRotation: {x: 0.22965084, y: 0.0056138006, z: -0.0013246401, w: 0.973256}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1768,7 +1768,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.21428476, y: 0.005633941, z: -0.0012359994, w: 0.97675425}
+  m_LocalRotation: {x: 0.21428476, y: 0.0056339786, z: -0.0012360077, w: 0.97675425}
   m_LocalPosition: {x: 0, y: 5, z: -7.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1924,7 +1924,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25218
+  m_Name: pb_Mesh25238
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2157,7 +2157,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605523239}
-  m_LocalRotation: {x: 0.21428472, y: 0.005633941, z: -0.0012359992, w: 0.97675425}
+  m_LocalRotation: {x: 0.21428472, y: 0.005633978, z: -0.0012360073, w: 0.97675425}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2509,7 +2509,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25200
+  m_Name: pb_Mesh25220
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3194,6 +3194,7 @@ GameObject:
   - component: {fileID: 1603932015}
   - component: {fileID: 1603932014}
   - component: {fileID: 1603932020}
+  - component: {fileID: 1603932021}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -3294,10 +3295,28 @@ MonoBehaviour:
   Xoffset: 0
   Yoffset: 0
   Shootpoint: {fileID: 1603932019}
-  mode: 0
-  bullet: {fileID: 5833300349897850176, guid: 3295404d2f90daa4187fc11d24cd8080, type: 3}
-  shootCooldown: 4
-  despawnTime: 0
+  hitscanDamage: 0.2
+  mode: 1
+  bullet: {fileID: 5311365928930379941, guid: 9ada07786c596ab44a87952a093a7458, type: 3}
+  aimVariation: {x: 0.05, y: 0.05, z: 0.05}
+  shootCooldown: 0.7
+  despawnTime: 2
+--- !u!114 &1603932021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603932013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 15
+  deathScript: {fileID: 1603932014}
+  deathFunction: Die
+  health: 0
 --- !u!1 &1685940864
 GameObject:
   m_ObjectHideFlags: 0

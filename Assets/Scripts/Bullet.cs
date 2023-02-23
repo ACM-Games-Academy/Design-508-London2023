@@ -20,7 +20,12 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.AddForce(transform.forward * speed * Time.deltaTime, ForceMode.Force);
+        if(speed != 0)
+        {
+            rb.AddForce(transform.forward * speed * Time.deltaTime, ForceMode.Force);
+        }
+        
+        
     }
 
 
@@ -28,4 +33,5 @@ public class Bullet : MonoBehaviour
     {
         collisionScript.Invoke(collisionFunction, 0);
     }
+
 }
