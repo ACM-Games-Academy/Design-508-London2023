@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float moveSpeed;
     [SerializeField] float sprintMultiplier;
+    [SerializeField] float fallSpeed;
 
     [Header("Rotation Properties")]
     [SerializeField] float rotationSpeed;
@@ -154,6 +155,10 @@ public class PlayerController : MonoBehaviour
             if (!isFlying)
             {
                 GroundMovement();
+                if (!grounded)
+                {
+                b.AddForce(Vector3.down * fallSpeed * 100 * Time.deltaTime, ForceMode.Force);
+            }
             }
             //flight movement
             else
@@ -303,6 +308,8 @@ public class PlayerController : MonoBehaviour
     {
         ani.SetBool("dead", true);
         disableInputs = true;
+        laser1.enabled = false;
+        laser2.enabled = false;
         GameObject blood = Instantiate(bloodEffect,bloodSpawn.position,bloodSpawn.rotation,bloodSpawn);
         if (isFlying)
         {

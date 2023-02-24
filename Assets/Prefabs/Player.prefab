@@ -230,6 +230,7 @@ MonoBehaviour:
   jumpForce: 300
   moveSpeed: 150
   sprintMultiplier: 1.5
+  fallSpeed: 200
   rotationSpeed: 4
   guy: {fileID: 80169871075909019}
   punchTime: 0.8
