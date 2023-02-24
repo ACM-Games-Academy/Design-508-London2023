@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb6528a16f789645b633de1df9e1743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTargetRange: 100
+  playerTargetRange: 37
   showRangeInSceneView: 0
   playerTag: Player
   ani: {fileID: 7217879924005627587}
