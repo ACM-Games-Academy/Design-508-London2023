@@ -227,10 +227,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   GroundRaycastLength: 0.3
-  jumpForce: 300
+  jumpForce: 600
   moveSpeed: 150
   sprintMultiplier: 1.5
-  fallSpeed: 200
+  fallSpeed: 250
   rotationSpeed: 4
   guy: {fileID: 80169871075909019}
   punchTime: 0.8
@@ -249,9 +249,10 @@ MonoBehaviour:
   LaserLayers:
     serializedVersion: 2
     m_Bits: 201
-  directionOffset: {x: 0, y: 0.3, z: 0}
+  directionOffset: {x: 0, y: 0.1, z: 0}
   laserEffect: {fileID: 3291674522085086469, guid: b4bf419f154085c4a813974361552760,
     type: 3}
+  crosshair: {fileID: 0}
   headAimConstraint: {fileID: 2100138735}
   laserVisionTarget: {fileID: 1506270966}
   WeightLerpSpeed: 10
@@ -286,10 +287,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.39647418
-  m_Height: 1.7912111
+  m_Radius: 0.2543687
+  m_Height: 1.724478
   m_Direction: 1
-  m_Center: {x: 0, y: 0.8705344, z: 0}
+  m_Center: {x: 0, y: 0.83716786, z: 0.14210549}
 --- !u!114 &80169870468695942
 MonoBehaviour:
   m_ObjectHideFlags: 0

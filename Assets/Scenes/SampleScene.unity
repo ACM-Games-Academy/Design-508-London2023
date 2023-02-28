@@ -1602,7 +1602,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62669148}
-  m_LocalRotation: {x: 0.22965084, y: 0.0056138006, z: -0.0013246401, w: 0.973256}
+  m_LocalRotation: {x: 0.22965086, y: 0.005613763, z: -0.0013246315, w: 0.973256}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1884,7 +1884,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.21428476, y: 0.0056339786, z: -0.0012360077, w: 0.97675425}
+  m_LocalRotation: {x: 0.21428476, y: 0.005633941, z: -0.0012359994, w: 0.97675425}
   m_LocalPosition: {x: 0, y: 5, z: -7.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2690,7 +2690,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605523239}
-  m_LocalRotation: {x: 0.21428472, y: 0.005633978, z: -0.0012360073, w: 0.97675425}
+  m_LocalRotation: {x: 0.21428472, y: 0.005633941, z: -0.0012359992, w: 0.97675425}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4725,46 +4725,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 80169870468695961, guid: ff60915e26741f34c96ed2926457e9fa,
-        type: 3}
-      propertyPath: m_Height
-      value: 1.724478
-      objectReference: {fileID: 0}
-    - target: {fileID: 80169870468695961, guid: ff60915e26741f34c96ed2926457e9fa,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.2543687
-      objectReference: {fileID: 0}
-    - target: {fileID: 80169870468695961, guid: ff60915e26741f34c96ed2926457e9fa,
-        type: 3}
-      propertyPath: m_Center.y
-      value: 0.83716786
-      objectReference: {fileID: 0}
-    - target: {fileID: 80169870468695961, guid: ff60915e26741f34c96ed2926457e9fa,
-        type: 3}
-      propertyPath: m_Center.z
-      value: 0.14210549
-      objectReference: {fileID: 0}
     - target: {fileID: 80169870468695963, guid: ff60915e26741f34c96ed2926457e9fa,
         type: 3}
       propertyPath: crosshair
       value: 
       objectReference: {fileID: 1845011002}
-    - target: {fileID: 80169870468695963, guid: ff60915e26741f34c96ed2926457e9fa,
-        type: 3}
-      propertyPath: fallSpeed
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 80169870468695963, guid: ff60915e26741f34c96ed2926457e9fa,
-        type: 3}
-      propertyPath: jumpForce
-      value: 600
-      objectReference: {fileID: 0}
-    - target: {fileID: 80169870468695963, guid: ff60915e26741f34c96ed2926457e9fa,
-        type: 3}
-      propertyPath: directionOffset.y
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 80169870468695964, guid: ff60915e26741f34c96ed2926457e9fa,
         type: 3}
       propertyPath: m_Name
