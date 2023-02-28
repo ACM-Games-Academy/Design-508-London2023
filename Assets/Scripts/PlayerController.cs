@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float moveSpeed;
     [SerializeField] float sprintMultiplier;
+    [SerializeField] float fallSpeed;
 
     [Header("Rotation Properties")]
     [SerializeField] float rotationSpeed;
@@ -48,6 +49,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask LaserLayers;
     [SerializeField] Vector3 directionOffset;
     [SerializeField] GameObject laserEffect;
+    [SerializeField] Transform crosshair;
+    Vector3 hitpoint1;
+    Vector3 hitpoint2;
+    Vector3 laserMidpoint;
 
     [Header("Aim Constraint")]
     [SerializeField] MultiAimConstraint headAimConstraint;
@@ -131,7 +136,6 @@ public class PlayerController : MonoBehaviour
             ani.SetBool("moving", false);
         }
     }
-
     void Inputs()
     {
         //PLAYER MOVEMENT
@@ -154,6 +158,10 @@ public class PlayerController : MonoBehaviour
             if (!isFlying)
             {
                 GroundMovement();
+                if (!grounded)
+                {
+                b.AddForce(Vector3.down * fallSpeed * 100 * Time.deltaTime, ForceMode.Force);
+            }
             }
             //flight movement
             else
@@ -162,8 +170,11 @@ public class PlayerController : MonoBehaviour
             }
             if (laserVision)
             {
-                LaserVision(eyeball1,laser1);
-                LaserVision(eyeball2, laser2);
+                hitpoint1 = LaserVision(eyeball1,laser1);
+                hitpoint2 = LaserVision(eyeball2, laser2);
+                
+                laserMidpoint = hitpoint1 + (hitpoint2 - hitpoint1) / 2;
+                crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);               
             }
             ani.SetBool("punch",punching);
             punchCollider.enabled = punching;
@@ -221,16 +232,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void LaserVision(Transform eyeball,LineRenderer laser)
+    Vector3 LaserVision(Transform eyeball,LineRenderer laser)
     {
         laser.SetPosition(0, eyeball.position);
+
+        //laser raycast
+        Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
+        bool hit = Physics.Raycast(eyeball.position, direction.normalized, out RaycastHit ray, maxDistance, LaserLayers);
+
+        
         //when firing laser
         if (Input.GetMouseButton(0))
         {
-            Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
-            //Vector3 maxDirection = Quaternion.AngleAxis(angleLimit, Vector3.up) * guy.forward;
-            //Vector3 minDirection = Quaternion.AngleAxis(-angleLimit, Vector3.up) * guy.forward;
-            bool hit = Physics.Raycast(eyeball.position, direction.normalized, out RaycastHit ray, maxDistance, LaserLayers);
             if (hit)
             {
                 laser.SetPosition(1, ray.point);
@@ -262,7 +275,16 @@ public class PlayerController : MonoBehaviour
             laser.SetPosition(1, eyeball.position);
             headAimConstraint.weight = Mathf.Lerp(headAimConstraint.weight,0, WeightLerpSpeed * Time.deltaTime);
         }
+        if (hit)
+        {
+            return ray.point;
+        }
+        else
+        {
+            return laser.GetPosition(1);
+        }
     }
+    
 
 
     void AwaitSecondPress()
@@ -303,6 +325,8 @@ public class PlayerController : MonoBehaviour
     {
         ani.SetBool("dead", true);
         disableInputs = true;
+        laser1.enabled = false;
+        laser2.enabled = false;
         GameObject blood = Instantiate(bloodEffect,bloodSpawn.position,bloodSpawn.rotation,bloodSpawn);
         if (isFlying)
         {

@@ -23,8 +23,10 @@ public class Shooter : MonoBehaviour
     [Header("Shooting at the Target")]
     [SerializeField] Transform Shootpoint;
     enum bulletType { projectile,hitscan};
+    [SerializeField] float hitscanDamage;
     [SerializeField] bulletType mode;
     [SerializeField] GameObject bullet;
+    [SerializeField] Vector3 aimVariation;
     [SerializeField] float shootCooldown;
     [SerializeField] float despawnTime;
     GameObject previousBullet;
@@ -110,17 +112,35 @@ public class Shooter : MonoBehaviour
         }
         else
         {
-            Vector3 aim = Quaternion.Euler(Random.Range(0, 5), Random.Range(0,5), Random.Range(0, 5)) * pointer.forward;
-            bool hit = Physics.Raycast(pointer.position, pointer.forward, out RaycastHit ray, WhatBlocksMyView);
+            Vector3 aim = new Vector3(Random.Range(-aimVariation.x, aimVariation.x), Random.Range(-aimVariation.y, aimVariation.y), Random.Range(-aimVariation.z, aimVariation.z)) + pointer.forward;
+            bool hit = Physics.Raycast(pointer.position, aim.normalized, out RaycastHit ray, WhatBlocksMyView);
             if (hit)
             {
-                if(ray.collider.gameObject == target.gameObject)
+                print("hit");
+                StartCoroutine(SpawnTrail(Shootpoint, ray));
+                if (ray.collider == targetCollider && targetCollider.TryGetComponent(out HealthManager healthManager))
                 {
-
+                    healthManager.HealthChange(-hitscanDamage);
                 }
             }
         }
 
+    }
+
+    private IEnumerator SpawnTrail(Transform place, RaycastHit rc)
+    {
+        GameObject trail = Instantiate(bullet, place.position, place.rotation);
+        float travelTime = trail.GetComponent<TrailRenderer>().time;
+        float currentTime = Time.time;
+        while(Time.time < currentTime + travelTime)
+        {
+            float lerpTime = (Time.time - currentTime) / travelTime;
+            trail.transform.position = Vector3.Lerp(trail.transform.position, rc.point, lerpTime);
+            yield return new WaitForEndOfFrame();
+        }
+        trail.transform.position = rc.point;
+        trail.transform.GetChild(0).gameObject.SetActive(true);
+        Destroy(trail, despawnTime);
     }
 
     void DestroyPrevious()
