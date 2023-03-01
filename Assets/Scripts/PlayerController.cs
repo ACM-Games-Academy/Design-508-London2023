@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,12 +11,14 @@ public class PlayerController : MonoBehaviour
     int presses;
     bool doublePressed;
     [SerializeField] float doublePressWait;
+    public bool disableInputs;
     [Header("Physics Properties")]
     [SerializeField] LayerMask GroundLayers;
     [SerializeField] float GroundRaycastLength;
     [SerializeField] float jumpForce;
     [SerializeField] float moveSpeed;
     [SerializeField] float sprintMultiplier;
+    [SerializeField] float fallSpeed;
 
     [Header("Rotation Properties")]
     [SerializeField] float rotationSpeed;
@@ -39,6 +42,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Laser Vision")]
     [SerializeField] bool laserVision;
+    [SerializeField] float angleDiff;
     [SerializeField] Transform head;
     [SerializeField] Transform eyeball1;
     [SerializeField] Transform eyeball2;
@@ -46,6 +50,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask LaserLayers;
     [SerializeField] Vector3 directionOffset;
     [SerializeField] GameObject laserEffect;
+    [SerializeField] Transform crosshair;
+    Vector3 hitpoint1;
+    Vector3 hitpoint2;
+    Vector3 laserMidpoint;
 
     [Header("Aim Constraint")]
     [SerializeField] MultiAimConstraint headAimConstraint;
@@ -56,11 +64,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float laserDamage;
     [SerializeField] float punchDamage;
 
+    [Header("Death")]
+    [SerializeField] GameObject bloodEffect;
+    [SerializeField] Transform bloodSpawn;
+
     List<GameObject> spawnedEffects = new List<GameObject>();
     LineRenderer laser1;
     LineRenderer laser2;
     Animator ani;
     public static HealthManager playerHealth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,12 +97,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GroundCheck();
-        Inputs();
+        if (!disableInputs)
+        {
+            Inputs();
+        }
+
     }
     private void FixedUpdate()
     {
         //JUMPING
-        if (grounded && Input.GetKeyDown("space"))
+        if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
         {
             //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
             b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
@@ -120,7 +137,6 @@ public class PlayerController : MonoBehaviour
             ani.SetBool("moving", false);
         }
     }
-
     void Inputs()
     {
         //PLAYER MOVEMENT
@@ -143,6 +159,10 @@ public class PlayerController : MonoBehaviour
             if (!isFlying)
             {
                 GroundMovement();
+                if (!grounded)
+                {
+                b.AddForce(Vector3.down * fallSpeed * 100 * Time.deltaTime, ForceMode.Force);
+            }
             }
             //flight movement
             else
@@ -151,8 +171,11 @@ public class PlayerController : MonoBehaviour
             }
             if (laserVision)
             {
-                LaserVision(eyeball1,laser1);
-                LaserVision(eyeball2, laser2);
+                hitpoint1 = LaserVision(eyeball1,laser1);
+                hitpoint2 = LaserVision(eyeball2, laser2);
+                
+                laserMidpoint = hitpoint1 + (hitpoint2 - hitpoint1) / 2;
+                crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);               
             }
             ani.SetBool("punch",punching);
             punchCollider.enabled = punching;
@@ -210,15 +233,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void LaserVision(Transform eyeball,LineRenderer laser)
+    Vector3 LaserVision(Transform eyeball,LineRenderer laser)
     {
         laser.SetPosition(0, eyeball.position);
+
+        //laser raycast
+        Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
+        bool hit = Physics.Raycast(eyeball.position, direction.normalized, out RaycastHit ray, maxDistance, LaserLayers);
+
+        
         //when firing laser
         if (Input.GetMouseButton(0))
         {
-            Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
-            //print(Mathf.Abs(direction.y - guy.forward.y)*360);
-            bool hit = Physics.Raycast(eyeball.position, direction.normalized, out RaycastHit ray, maxDistance, LaserLayers);
             if (hit)
             {
                 laser.SetPosition(1, ray.point);
@@ -230,6 +256,12 @@ public class PlayerController : MonoBehaviour
                 if(ray.collider.gameObject.TryGetComponent(out HealthManager health))
                 {
                     health.HealthChange(-laserDamage*Time.deltaTime);
+                }
+
+                float angle = head.localRotation.eulerAngles.y;             
+                if (Vector3.Angle(head.forward, direction) > angleDiff)
+                {
+                    guy.rotation = Quaternion.Slerp(guy.rotation, Quaternion.Euler(0, cam.eulerAngles.y, 0),rotationSpeed*Time.deltaTime/2);
                 }
             }   
             else
@@ -244,7 +276,16 @@ public class PlayerController : MonoBehaviour
             laser.SetPosition(1, eyeball.position);
             headAimConstraint.weight = Mathf.Lerp(headAimConstraint.weight,0, WeightLerpSpeed * Time.deltaTime);
         }
+        if (hit)
+        {
+            return ray.point;
+        }
+        else
+        {
+            return laser.GetPosition(1);
+        }
     }
+    
 
 
     void AwaitSecondPress()
@@ -264,6 +305,13 @@ public class PlayerController : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, GroundRaycastLength, GroundLayers);
         ani.SetBool("airborn", !grounded);
         Debug.DrawRay(transform.position, Vector3.down*GroundRaycastLength, Color.magenta);
+
+        //Death Event
+        if (playerHealth.health <= 0 && grounded)
+        {
+            b.isKinematic = true;
+            //reload scene or whatever
+        }
     }
 
 
@@ -271,5 +319,20 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(spawnedEffects[0]);
         spawnedEffects.Remove(spawnedEffects[0]);
+    }
+
+
+    public void Die()
+    {
+        ani.SetBool("dead", true);
+        disableInputs = true;
+        laser1.enabled = false;
+        laser2.enabled = false;
+        GameObject blood = Instantiate(bloodEffect,bloodSpawn.position,bloodSpawn.rotation,bloodSpawn);
+        if (isFlying)
+        {
+            isFlying = false;
+            b.useGravity = true;
+        }
     }
 }

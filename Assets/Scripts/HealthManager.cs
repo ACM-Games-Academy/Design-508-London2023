@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-    [SerializeField] float maxHealth;
+    public float maxHealth;
     [Header("What Happens Upon Death?")]
     [SerializeField] MonoBehaviour deathScript;
     [SerializeField] string deathFunction;
@@ -23,15 +23,18 @@ public class HealthManager : MonoBehaviour
     }
     public void HealthChange(float amount)
     {
-        health += amount;
-        if(health <= 0)
+        if(health != 0)
         {
-            health = 0;
-            deathScript.Invoke(deathFunction, 0);
-        }
-        else if(health > maxHealth)
-        {
-            health = maxHealth;
+            health += amount;
+            if (health <= 0)
+            {
+                health = 0;
+                deathScript.Invoke(deathFunction, 0);
+            }
+            else if (health > maxHealth)
+            {
+                health = maxHealth;
+            }
         }
     }
 
