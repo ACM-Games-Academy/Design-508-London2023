@@ -6,6 +6,7 @@ TagManager:
   tags:
   - previousBullet
   - PlayerTargetPoint
+  - tutorialText
   layers:
   - Default
   - TransparentFX
