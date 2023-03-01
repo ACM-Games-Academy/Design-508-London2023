@@ -435,8 +435,10 @@ MonoBehaviour:
   Xoffset: 260
   Yoffset: 180
   Shootpoint: {fileID: 5339765707011454472}
+  hitscanDamage: 0
   mode: 0
   bullet: {fileID: 5833300349897850176, guid: 3295404d2f90daa4187fc11d24cd8080, type: 3}
+  aimVariation: {x: 0, y: 0, z: 0}
   shootCooldown: 3
   despawnTime: 20
 --- !u!65 &1201852095781724705
@@ -465,9 +467,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
-  explosionDamage: 10
-  explosionForce: 1000000
+  blastDamage: 15
+  force: 1000000
   affectedRadius: 4
+  radiusOffset: {x: 0, y: 0, z: 0}
   affectedLayers:
     serializedVersion: 2
     m_Bits: 457

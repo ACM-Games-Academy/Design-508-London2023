@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     bool doublePressed;
     [SerializeField] float doublePressWait;
     public bool disableInputs;
-    [Header("Physics Properties")]
+    [Header("[Physics Properties]")]
     [SerializeField] LayerMask GroundLayers;
     [SerializeField] float GroundRaycastLength;
     [SerializeField] float jumpForce;
@@ -20,26 +20,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float sprintMultiplier;
     [SerializeField] float fallSpeed;
 
-    [Header("Rotation Properties")]
+    [Header("[Rotation Properties]")]
     [SerializeField] float rotationSpeed;
     [SerializeField] Transform guy;
     Transform cam;
 
-    [Header("Punch")]
+    [Header("[PUNCH]")]
     [SerializeField] float punchTime;
     [SerializeField] float punchCooldown;
+    [SerializeField] float punchForce;
     [SerializeField] BoxCollider punchCollider;
+    [SerializeField] float punchWaitTime;
+    MeleeHitbox meleeScript;
     bool canPunch;
-    bool punching;
 
-    [Header("Flight")]
+    [Header("[FLIGHT]")]
     bool isFlying;
     [SerializeField] bool flight;
     [SerializeField] float flightSpeed;
     [SerializeField] float riseSpeed;
     [SerializeField] float lowerSpeed;
 
-    [Header("Laser Vision")]
+    [Header("[LASER VISION]")]
     [SerializeField] bool laserVision;
     [SerializeField] float angleDiff;
     [SerializeField] Transform head;
@@ -54,16 +56,16 @@ public class PlayerController : MonoBehaviour
     Vector3 hitpoint2;
     Vector3 laserMidpoint;
 
-    [Header("Aim Constraint")]
+    [Header("[Aim Constraint]")]
     [SerializeField] MultiAimConstraint headAimConstraint;
     [SerializeField] Transform laserVisionTarget;
     [SerializeField] float WeightLerpSpeed;
 
-    [Header("Damage Values")]
+    [Header("[DAMAGE VALUES]")]
     [SerializeField] float laserDamage;
     [SerializeField] float punchDamage;
 
-    [Header("Death")]
+    [Header("[Death]")]
     [SerializeField] GameObject bloodEffect;
     [SerializeField] Transform bloodSpawn;
 
@@ -83,9 +85,11 @@ public class PlayerController : MonoBehaviour
         laser2 = eyeball2.GetComponent<LineRenderer>();
         ani = GetComponentInChildren<Animator>();
         playerHealth = GetComponent<HealthManager>();
-        punchCollider.GetComponent<MeleeHitbox>().damage = punchDamage;
+        meleeScript = punchCollider.GetComponent<MeleeHitbox>();
 
         //OTHER STUFF
+        meleeScript.meleeDamage = punchDamage;
+        meleeScript.force = punchForce;
         Application.targetFrameRate = 60;
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
@@ -175,13 +179,11 @@ public class PlayerController : MonoBehaviour
                 
                 laserMidpoint = hitpoint1 + (hitpoint2 - hitpoint1) / 2;
                 crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);               
-            }
-            ani.SetBool("punch",punching);
-            punchCollider.enabled = punching;
+            }                   
             if((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch)
             {
-                punching = true;
-                Invoke("DisablePunch",punchTime);
+                ani.SetBool("punch", true);
+                Invoke("Punch", punchWaitTime);
             }
             
     }
@@ -190,10 +192,16 @@ public class PlayerController : MonoBehaviour
     {
         WASDmovement(moveSpeed);
     }
+    void Punch()
+    {
+        punchCollider.enabled = true;
+        Invoke("DisablePunch", punchTime);
+    }
 
     void DisablePunch()
     {
-        punching = false;
+        punchCollider.enabled = false;
+        ani.SetBool("punch", false);
         canPunch = false;
         Invoke("EnablePunch", punchCooldown);
     }
