@@ -6,12 +6,21 @@ using UnityEngine.AI;
 [ExecuteInEditMode]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] float playerTargetRange;
-    [SerializeField] bool showRangeInSceneView;
-    [SerializeField] string playerTag;
     [SerializeField] Animator ani;
     NavMeshAgent agent;
+    Collider coll;
+
+    [Header("Range")]
+    [SerializeField] float playerTargetRange;
+    [SerializeField] bool showRangeInSceneView;
+
+    [Header("Player Detection")]
+    [SerializeField] string playerTag;
     Transform player;
+
+    [Header("Ragdoll")]
+    public bool canRagdoll;
+    public bool ragdoll;
 
     //[Header("Ranged Settings")]
     bool isRanged;
@@ -22,6 +31,7 @@ public class Enemy : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag(playerTag).transform;
+        coll = GetComponent<Collider>();
         if (TryGetComponent(out Shooter s))
         {
             shootScript = s;
@@ -43,30 +53,66 @@ public class Enemy : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            bool targetPlayer = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
-            agent.isStopped = !targetPlayer;
-            if (targetPlayer)
+            RagdollCheck();
+            if (!ragdoll)
             {
-                agent.destination = player.position;
-                if (isRanged)
+                bool withinRange = PlayerInRange();
+                if (withinRange && !ragdoll)
                 {
-                    if (shootScript.state == Shooter.behaviours.aim)
-                    {
-                        agent.isStopped = true;
-                        ani.SetBool("Aiming",true);
-                    }
-                    else
-                    {
-                        agent.isStopped = false;
-                        ani.SetBool("Walking", true);
-                    }
+                    Agro();
+                }
+                else
+                {
+                    //idle animation
                 }
             }
+            
+        }
+    }
+    public bool PlayerInRange()
+    {
+        //checking if the player is close enough to be targeted
+        bool targetPlayer = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
+        agent.isStopped = (!targetPlayer);//stopping movement if within shoot range
+                                          
+        return targetPlayer;
+    }
+
+    public void RagdollCheck()
+    {
+        ani.enabled = !ragdoll;
+        agent.enabled = !ragdoll;
+        coll.enabled = !ragdoll;
+        if (ragdoll)
+        {
+            shootScript.state = Shooter.behaviours.disabled;
+        }
+        else
+        {
+            shootScript.state = Shooter.behaviours.search;
         }
     }
 
     public void Die()
     {
         Destroy(gameObject);
+    }
+
+    public void Agro()
+    {
+        agent.destination = player.position;
+        if (isRanged)
+        {
+            if (shootScript.state == Shooter.behaviours.aim)
+            {
+                agent.isStopped = true;
+                ani.SetBool("Aiming", true);
+            }
+            else
+            {
+                agent.isStopped = false;
+                ani.SetBool("Walking", true);
+            }
+        }
     }
 }

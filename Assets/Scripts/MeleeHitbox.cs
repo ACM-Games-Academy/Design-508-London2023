@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeHitbox : MonoBehaviour
+public class MeleeHitbox : Explodable
 {
-    public float damage;
+    [Header("Melee Properties")]
+    public float meleeDamage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,14 +19,22 @@ public class MeleeHitbox : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+     private void OnTriggerEnter(Collider other)
     {
-        print("a");
         GameObject collisionObject = other.gameObject;
         if(collisionObject.TryGetComponent(out HealthManager health))
         {
-            print("b");
-            health.HealthChange(-damage);
+            health.HealthChange(-meleeDamage);
+        }
+        if(collisionObject.TryGetComponent(out Enemy enemyScript))
+        {
+            enemyScript.ragdoll = true;
+        }
+        if (collisionObject.TryGetComponent(out Rigidbody rb))
+        {
+            //ExplosionForce(rb);
+            rb.AddForce(transform.forward* force, ForceMode.Impulse);
+            print(rb.gameObject.name);
         }
     }
 }
