@@ -25,6 +25,11 @@ public class Shooter : MonoBehaviour
     void Start()
     {
         target = GameObject.FindGameObjectWithTag(targetTag).transform;
+<<<<<<< Updated upstream
+=======
+        targetCollider = target.GetComponentInParent<PlayerController>().GetComponent<Collider>();
+
+>>>>>>> Stashed changes
         pointer = Instantiate(new GameObject("pointer")).transform;
         pointer.position = Shootpoint.position;
     }

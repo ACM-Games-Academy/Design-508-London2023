@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [Header("Punch")]
     [SerializeField] float punchTime;
     [SerializeField] float punchCooldown;
+    [SerializeField] float punchForce;
     [SerializeField] BoxCollider punchCollider;
     bool canPunch;
     bool punching;
