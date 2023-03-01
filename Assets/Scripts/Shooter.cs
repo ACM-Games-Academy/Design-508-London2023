@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shooter : MonoBehaviour
 {
-    public enum behaviours{search,aim};
+    public enum behaviours{search,aim,disabled};
     public behaviours state;
     [SerializeField] string targetTag;
     Collider targetCollider;
@@ -116,7 +116,6 @@ public class Shooter : MonoBehaviour
             bool hit = Physics.Raycast(pointer.position, aim.normalized, out RaycastHit ray, WhatBlocksMyView);
             if (hit)
             {
-                print("hit");
                 StartCoroutine(SpawnTrail(Shootpoint, ray));
                 if (ray.collider == targetCollider && targetCollider.TryGetComponent(out HealthManager healthManager))
                 {

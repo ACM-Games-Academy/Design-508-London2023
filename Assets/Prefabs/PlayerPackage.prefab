@@ -2228,7 +2228,7 @@ MonoBehaviour:
   guy: {fileID: 5856801781880337727}
   punchTime: 0.8
   punchCooldown: 0.8
-  punchForce: 50
+  punchForce: 500
   punchCollider: {fileID: 5856801781880337724}
   flight: 1
   flightSpeed: 300
@@ -2565,7 +2565,7 @@ MonoBehaviour:
   radiusOffset: {x: 0, y: 0, z: 0}
   affectedLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 193
   destructionMode: 2
   meleeDamage: 0
 --- !u!1 &5856801781970846719
