@@ -48,7 +48,10 @@ public class Shooter : MonoBehaviour
         {
             pointer.position = Shootpoint.position;
         }
-        Detection();
+        if(state != behaviours.disabled)
+        {
+            Detection();
+        }     
         if(state == behaviours.search)
         {
             //look around animation
