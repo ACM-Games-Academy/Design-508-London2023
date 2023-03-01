@@ -33,7 +33,7 @@ public class MeleeHitbox : Explodable
         if (collisionObject.TryGetComponent(out Rigidbody rb))
         {
             //ExplosionForce(rb);
-            rb.AddForce(transform.forward * force, ForceMode.Impulse);
+            rb.AddForce(transform.forward* force, ForceMode.Impulse);
             print(rb.gameObject.name);
         }
     }

@@ -11,6 +11,7 @@ public class Explodable : MonoBehaviour
     [Header("Explosion Properties:")]
     [SerializeField] float blastDamage;
     public float force;
+    [SerializeField] float upwardModifier;
     [SerializeField] float affectedRadius;
     [SerializeField] Vector3 radiusOffset;
     [SerializeField] LayerMask affectedLayers;
@@ -65,7 +66,7 @@ public class Explodable : MonoBehaviour
 
     public void ExplosionForce(Rigidbody rb)
     {
-        rb.AddExplosionForce(force * Time.deltaTime, transform.position + radiusOffset, affectedRadius);
+        rb.AddExplosionForce(force * Time.deltaTime, transform.position + radiusOffset, affectedRadius,upwardModifier);
         print("added explosion force");
     }
 }

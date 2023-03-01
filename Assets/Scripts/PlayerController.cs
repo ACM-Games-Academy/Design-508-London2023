@@ -30,9 +30,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float punchCooldown;
     [SerializeField] float punchForce;
     [SerializeField] BoxCollider punchCollider;
+    [SerializeField] float punchWaitTime;
     MeleeHitbox meleeScript;
     bool canPunch;
-    bool punching;
 
     [Header("[FLIGHT]")]
     bool isFlying;
@@ -179,13 +179,11 @@ public class PlayerController : MonoBehaviour
                 
                 laserMidpoint = hitpoint1 + (hitpoint2 - hitpoint1) / 2;
                 crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);               
-            }
-            ani.SetBool("punch",punching);
-            punchCollider.enabled = punching;
+            }                   
             if((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch)
             {
-                punching = true;
-                Invoke("DisablePunch",punchTime);
+                ani.SetBool("punch", true);
+                Invoke("Punch", punchWaitTime);
             }
             
     }
@@ -194,10 +192,16 @@ public class PlayerController : MonoBehaviour
     {
         WASDmovement(moveSpeed);
     }
+    void Punch()
+    {
+        punchCollider.enabled = true;
+        Invoke("DisablePunch", punchTime);
+    }
 
     void DisablePunch()
     {
-        punching = false;
+        punchCollider.enabled = false;
+        ani.SetBool("punch", false);
         canPunch = false;
         Invoke("EnablePunch", punchCooldown);
     }
