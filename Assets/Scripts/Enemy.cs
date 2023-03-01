@@ -53,25 +53,28 @@ public class Enemy : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            bool withinRange = PlayerInRange();
-
             RagdollCheck();
-            if (withinRange && !ragdoll)
+            if (!ragdoll)
             {
-                Agro();
+                bool withinRange = PlayerInRange();
+                if (withinRange && !ragdoll)
+                {
+                    Agro();
+                }
+                else
+                {
+                    //idle animation
+                }
             }
-            else
-            {
-                //idle animation
-            }
+            
         }
     }
     public bool PlayerInRange()
     {
         //checking if the player is close enough to be targeted
         bool targetPlayer = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
-
-        agent.isStopped = (!targetPlayer && !ragdoll);//stopping movement if within shoot range        
+        agent.isStopped = (!targetPlayer);//stopping movement if within shoot range
+                                          
         return targetPlayer;
     }
 

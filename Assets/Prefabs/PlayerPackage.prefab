@@ -2228,6 +2228,7 @@ MonoBehaviour:
   guy: {fileID: 5856801781880337727}
   punchTime: 0.8
   punchCooldown: 0.8
+  punchForce: 50
   punchCollider: {fileID: 5856801781880337724}
   flight: 1
   flightSpeed: 300
@@ -2557,7 +2558,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 977119e48ade83c4eb9a41e5b94c716b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  explosion: {fileID: 0}
+  blastDamage: 0
+  force: 0
+  affectedRadius: 0
+  radiusOffset: {x: 0, y: 0, z: 0}
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  destructionMode: 2
+  meleeDamage: 0
 --- !u!1 &5856801781970846719
 GameObject:
   m_ObjectHideFlags: 0
