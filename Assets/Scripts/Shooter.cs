@@ -35,7 +35,7 @@ public class Shooter : MonoBehaviour
     void Start()
     {
         target = GameObject.FindGameObjectWithTag(targetTag).transform;
-        targetCollider = target.root.GetComponent<Collider>();
+        targetCollider = target.GetComponentInParent<PlayerController>().GetComponent<Collider>();
         pointer = Instantiate(new GameObject("pointer")).transform;
         pointer.position = Shootpoint.position;
         StartCoroutine(ShootCooldown());
