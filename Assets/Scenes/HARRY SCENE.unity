@@ -1609,6 +1609,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1873607434, guid: 6d51c4ad3c374d44ba8398f45d10c0ad, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873607434, guid: 6d51c4ad3c374d44ba8398f45d10c0ad, type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 82329877592005758, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_Name
@@ -1682,17 +1690,17 @@ PrefabInstance:
     - target: {fileID: 5856801781755219116, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.22965086
+      value: 0.22965084
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781755219116, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.005613763
+      value: 0.0056138006
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781755219116, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0013246315
+      value: -0.0013246401
       objectReference: {fileID: 0}
     - target: {fileID: 5856801782382903515, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
