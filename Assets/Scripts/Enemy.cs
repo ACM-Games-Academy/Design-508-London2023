@@ -99,11 +99,13 @@ public class Enemy : MonoBehaviour
             {
                 agent.isStopped = true;
                 ani.SetBool("Aiming", true);
+                ani.SetBool("Walking", false);
             }
             else
             {
                 agent.isStopped = false;
                 ani.SetBool("Walking", true);
+                ani.SetBool("Aiming", false);
             }
         }
     }
