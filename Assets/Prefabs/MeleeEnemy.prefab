@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ani: {fileID: 1096622014952240380}
-  playerTargetRange: 37
+  playerTargetRange: 25
   showRangeInSceneView: 0
   playerTag: Player
   canRagdoll: 1
@@ -108,7 +108,7 @@ MonoBehaviour:
   WhatBlocksMyView:
     serializedVersion: 2
     m_Bits: 265
-  detectionDistance: 2.7
+  shootDistance: 1
   isStatic: 0
   rotateAtTarget: 0
   Xrotater: {fileID: 0}
@@ -116,8 +116,7 @@ MonoBehaviour:
   Xoffset: 0
   Yoffset: 0
   Shootpoint: {fileID: 4857036700290356335}
-  backToSearchTime: 0
-  hitscanDamage: 2
+  hitscanDamage: 0.25
   mode: 2
   bullet: {fileID: 0}
   aimVariation: {x: 0.05, y: 0.05, z: 0.05}
