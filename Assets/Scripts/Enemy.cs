@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
             if (!ragdoll)
             {
                 bool withinRange = PlayerInRange();
-                if (withinRange && !ragdoll)
+                if (withinRange)
                 {
                     Agro();
                 }

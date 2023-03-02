@@ -23,6 +23,7 @@ public class Shooter : MonoBehaviour
     [Header("Shooting at the Target")]
     [SerializeField] Transform Shootpoint;
     enum bulletType { projectile,hitscan};
+    [SerializeField] float backToSearchTime;
     [SerializeField] float hitscanDamage;
     [SerializeField] bulletType mode;
     [SerializeField] GameObject bullet;
@@ -55,9 +56,11 @@ public class Shooter : MonoBehaviour
         if(state == behaviours.search)
         {
             //look around animation
+            print("search state");
         }
         if(state == behaviours.aim)
         {
+            print("aim state");
             AimAtPlayer();
             if (fire)
             {
