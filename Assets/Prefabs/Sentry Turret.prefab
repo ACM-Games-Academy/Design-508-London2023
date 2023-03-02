@@ -427,7 +427,7 @@ MonoBehaviour:
   WhatBlocksMyView:
     serializedVersion: 2
     m_Bits: 265
-  detectionDistance: 80
+  shootDistance: 20
   isStatic: 1
   rotateAtTarget: 1
   Xrotater: {fileID: 7649749184598558257}
@@ -469,6 +469,7 @@ MonoBehaviour:
   explosion: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
   blastDamage: 15
   force: 1000000
+  upwardModifier: 0
   affectedRadius: 4
   radiusOffset: {x: 0, y: 0, z: 0}
   affectedLayers:
