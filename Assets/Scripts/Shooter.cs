@@ -47,20 +47,19 @@ public class Shooter : MonoBehaviour
     {
         if (!isStatic)
         {
-            pointer.position = Shootpoint.position;
+            //pointer.position = Shootpoint.position;
         }
         if(state != behaviours.disabled)
         {
-            Detection();
-        }     
-        if(state == behaviours.search)
+            
+        }
+        Detection();
+        if (state == behaviours.search)
         {
             //look around animation
-            print("search state");
         }
         if(state == behaviours.aim)
         {
-            print("aim state");
             AimAtPlayer();
             if (fire)
             {
@@ -78,12 +77,13 @@ public class Shooter : MonoBehaviour
         bool hit = Physics.Raycast(pointer.position, pointer.forward, out RaycastHit ray, detectionDistance, WhatBlocksMyView);
         if (hit)
         {
-            if(ray.collider == targetCollider && state != behaviours.aim)
+            print(ray.collider.name);
+            if (ray.collider == targetCollider && state != behaviours.aim)
             {
                 state = behaviours.aim;
             }
             else if(ray.collider != targetCollider)
-            {
+            {                
                 state = behaviours.search;
             }
         }

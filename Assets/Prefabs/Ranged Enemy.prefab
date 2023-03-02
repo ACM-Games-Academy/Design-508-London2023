@@ -116,6 +116,7 @@ MonoBehaviour:
   Xoffset: 0
   Yoffset: 0
   Shootpoint: {fileID: 2917027714152597072}
+  backToSearchTime: 0
   hitscanDamage: 0.2
   mode: 1
   bullet: {fileID: 5311365928930379941, guid: 9ada07786c596ab44a87952a093a7458, type: 3}
