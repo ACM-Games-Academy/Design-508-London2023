@@ -67,6 +67,5 @@ public class Explodable : MonoBehaviour
     public void ExplosionForce(Rigidbody rb)
     {
         rb.AddExplosionForce(force * Time.deltaTime, transform.position + radiusOffset, affectedRadius,upwardModifier);
-        print("added explosion force");
     }
 }
