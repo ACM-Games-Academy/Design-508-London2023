@@ -172,8 +172,8 @@ public class PlayerController : MonoBehaviour
                 GroundMovement();
                 if (!grounded)
                 {
-                b.AddForce(Vector3.down * fallSpeed * 100 * Time.deltaTime, ForceMode.Force);
-            }
+                    b.AddForce(Vector3.down * fallSpeed * 100 * Time.deltaTime, ForceMode.Force);
+                }
             }
             //flight movement
             else
@@ -190,10 +190,10 @@ public class PlayerController : MonoBehaviour
             }                   
             if((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch)
             {
+                canPunch = false;
                 ani.SetBool("punch", true);
                 Invoke("Punch", punchWaitTime);
-            }
-            
+            }        
     }
 
     void GroundMovement()
@@ -209,8 +209,7 @@ public class PlayerController : MonoBehaviour
     void DisablePunch()
     {
         punchCollider.enabled = false;
-        ani.SetBool("punch", false);
-        canPunch = false;
+        ani.SetBool("punch", false);        
         Invoke("EnablePunch", punchCooldown);
     }
 

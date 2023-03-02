@@ -2362,7 +2362,7 @@ MonoBehaviour:
   rotationSpeed: 4
   guy: {fileID: 5856801781880337727}
   punchTime: 0.3
-  punchCooldown: 0.2
+  punchCooldown: 1.5
   punchForce: 10
   punchCollider: {fileID: 5856801781880337724}
   punchWaitTime: 0.6
@@ -2383,6 +2383,8 @@ MonoBehaviour:
   laserEffect: {fileID: 3291674522085086469, guid: b4bf419f154085c4a813974361552760,
     type: 3}
   crosshair: {fileID: 5856801783327879112}
+  superSpeed: 0
+  speedMultiplier: 0
   headAimConstraint: {fileID: 5790318650894105163}
   laserVisionTarget: {fileID: 5790318650413479506}
   WeightLerpSpeed: 10
@@ -2437,6 +2439,9 @@ MonoBehaviour:
   deathScript: {fileID: 5856801781413637951}
   deathFunction: Die
   health: 0
+  hasRegen: 0
+  regenSpeed: 0
+  regen: 0
 --- !u!1 &5856801781487310901
 GameObject:
   m_ObjectHideFlags: 0
