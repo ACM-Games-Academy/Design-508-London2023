@@ -10,6 +10,10 @@ public class HealthManager : MonoBehaviour
     [SerializeField] string deathFunction;
     [Header("Set Automatically by Script:")]
     public float health;
+    [Header("Regen")]
+    [SerializeField] bool hasRegen;
+    [SerializeField] float regenSpeed;
+    public bool regen;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +23,20 @@ public class HealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (regen)
+        {
+            Mathf.Lerp(health, maxHealth, regenSpeed * Time.deltaTime);
+        }
+    }
+
+    public void DisableRegen()
+    {
+        regen = false;
+    }
+
+    public void EnableRegen()
+    {
+        regen = true;
     }
     public void HealthChange(float amount)
     {
