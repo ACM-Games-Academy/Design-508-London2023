@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GroundCheck();
+        crosshair.gameObject.SetActive(laserVision);
         if (!disableInputs)
         {
             Inputs();
@@ -187,7 +188,15 @@ public class PlayerController : MonoBehaviour
                 
                 laserMidpoint = hitpoint1 + (hitpoint2 - hitpoint1) / 2;
                 crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);               
-            }                   
+            }
+            if (ani.GetBool("punch"))
+            {
+                Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
+                if (Vector3.Angle(head.forward, direction) > angleDiff)
+                {
+                    guy.rotation = Quaternion.Slerp(guy.rotation, Quaternion.Euler(0, cam.eulerAngles.y, 0), rotationSpeed * Time.deltaTime);
+                }
+            }
             if((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch)
             {
                 canPunch = false;
