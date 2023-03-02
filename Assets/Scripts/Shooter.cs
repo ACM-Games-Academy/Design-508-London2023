@@ -12,7 +12,7 @@ public class Shooter : MonoBehaviour
     Transform pointer;
     [Header("Detecting The Target")]
     [SerializeField] LayerMask WhatBlocksMyView;
-    [SerializeField] [Range(1,100)]float detectionDistance;
+    [SerializeField] [Range(1,100)]float shootDistance;
     [Header("Aiming at the Target")]
     [SerializeField] bool isStatic;
     [SerializeField] bool rotateAtTarget;
@@ -23,7 +23,6 @@ public class Shooter : MonoBehaviour
     [Header("Shooting at the Target")]
     [SerializeField] Transform Shootpoint;
     enum bulletType { projectile,hitscan,melee};
-    [SerializeField] float backToSearchTime;
     [SerializeField] float hitscanDamage;
     [SerializeField] bulletType mode;
     [SerializeField] GameObject bullet;
@@ -76,8 +75,8 @@ public class Shooter : MonoBehaviour
     void Detection()
     {
         pointer.LookAt(target);
-        bool hit = Physics.Raycast(pointer.position, pointer.forward, out RaycastHit ray, detectionDistance, WhatBlocksMyView);
-        Debug.DrawRay(pointer.position, pointer.forward * detectionDistance, Color.red);
+        bool hit = Physics.Raycast(pointer.position, pointer.forward, out RaycastHit ray, shootDistance, WhatBlocksMyView);
+        Debug.DrawRay(pointer.position, pointer.forward * shootDistance, Color.red);
         if (hit)
         {
             print(ray.collider.name);
@@ -125,7 +124,7 @@ public class Shooter : MonoBehaviour
             bool hit = Physics.Raycast(pointer.position, aim.normalized, out RaycastHit ray, WhatBlocksMyView);
             if (hit)
             {
-                if (mode == bulletType.melee)
+                if (mode != bulletType.melee)
                 {
                     StartCoroutine(SpawnTrail(Shootpoint, ray));
                 }            
