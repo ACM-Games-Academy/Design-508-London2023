@@ -22,7 +22,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] float Yoffset; 
     [Header("Shooting at the Target")]
     [SerializeField] Transform Shootpoint;
-    enum bulletType { projectile,hitscan};
+    enum bulletType { projectile,hitscan,melee};
     [SerializeField] float backToSearchTime;
     [SerializeField] float hitscanDamage;
     [SerializeField] bulletType mode;
@@ -125,7 +125,10 @@ public class Shooter : MonoBehaviour
             bool hit = Physics.Raycast(pointer.position, aim.normalized, out RaycastHit ray, WhatBlocksMyView);
             if (hit)
             {
-                StartCoroutine(SpawnTrail(Shootpoint, ray));
+                if (mode == bulletType.melee)
+                {
+                    StartCoroutine(SpawnTrail(Shootpoint, ray));
+                }            
                 if (ray.collider == targetCollider && targetCollider.TryGetComponent(out HealthManager healthManager))
                 {
                     healthManager.HealthChange(-hitscanDamage);
