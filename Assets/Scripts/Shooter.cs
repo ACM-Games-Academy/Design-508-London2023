@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shooter : MonoBehaviour
 {
-    public enum behaviours{search,aim,disabled};
+    public enum behaviours{search,aim};
     public behaviours state;
     [SerializeField] string targetTag;
     Collider targetCollider;
@@ -47,19 +47,21 @@ public class Shooter : MonoBehaviour
     {
         if (!isStatic)
         {
-            //pointer.position = Shootpoint.position;
-        }
-        if(state != behaviours.disabled)
-        {
-            
+            pointer.position = Shootpoint.position;
         }
         Detection();
         if (state == behaviours.search)
         {
             //look around animation
+            print("search");
         }
         if(state == behaviours.aim)
         {
+            if(TryGetComponent(out Enemy enemy))
+            {
+                fire = !enemy.ragdoll;
+            }
+            print("fire");
             AimAtPlayer();
             if (fire)
             {
@@ -75,6 +77,7 @@ public class Shooter : MonoBehaviour
     {
         pointer.LookAt(target);
         bool hit = Physics.Raycast(pointer.position, pointer.forward, out RaycastHit ray, detectionDistance, WhatBlocksMyView);
+        Debug.DrawRay(pointer.position, pointer.forward * detectionDistance, Color.red);
         if (hit)
         {
             print(ray.collider.name);
@@ -91,7 +94,7 @@ public class Shooter : MonoBehaviour
         {
             state = behaviours.search;
         }
-        Debug.DrawRay(Shootpoint.position, pointer.forward*detectionDistance, Color.blue);
+        //Debug.DrawRay(Shootpoint.position, pointer.forward*detectionDistance, Color.blue);
     }
 
     void AimAtPlayer()

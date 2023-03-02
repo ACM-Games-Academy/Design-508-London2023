@@ -83,14 +83,6 @@ public class Enemy : MonoBehaviour
         ani.enabled = !ragdoll;
         agent.enabled = !ragdoll;
         coll.enabled = !ragdoll;
-        if (ragdoll)
-        {
-            shootScript.state = Shooter.behaviours.disabled;
-        }
-        else
-        {
-            shootScript.state = Shooter.behaviours.search;
-        }
     }
 
     public void Die()
