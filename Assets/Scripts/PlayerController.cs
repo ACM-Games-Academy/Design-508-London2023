@@ -56,6 +56,10 @@ public class PlayerController : MonoBehaviour
     Vector3 hitpoint2;
     Vector3 laserMidpoint;
 
+    [Header("[SUPER SPEED]")]
+    [SerializeField] bool superSpeed;
+    [SerializeField] float speedMultiplier;
+
     [Header("[Aim Constraint]")]
     [SerializeField] MultiAimConstraint headAimConstraint;
     [SerializeField] Transform laserVisionTarget;
@@ -147,6 +151,10 @@ public class PlayerController : MonoBehaviour
             //sprinting
             if (Input.GetKeyDown("left shift"))
             {
+                if (superSpeed)
+                {
+                    sprintMultiplier = speedMultiplier;
+                }
                 moveSpeed *= sprintMultiplier;
                 flightSpeed *= sprintMultiplier;
                 ani.SetBool("sprinting", true);
