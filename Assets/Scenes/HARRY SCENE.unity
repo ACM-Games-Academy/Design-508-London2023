@@ -2054,6 +2054,16 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.001236
       objectReference: {fileID: 0}
+    - target: {fileID: 5856801782505301307, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 107.8999
+      objectReference: {fileID: 0}
+    - target: {fileID: 5856801782505301307, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -24.099854
+      objectReference: {fileID: 0}
     - target: {fileID: 5856801783289176080, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -2067,12 +2077,12 @@ PrefabInstance:
     - target: {fileID: 5856801783289176080, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.005652719
+      value: 0.0056526856
       objectReference: {fileID: 0}
     - target: {fileID: 5856801783289176080, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.001147244
+      value: -0.001147237
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d51c4ad3c374d44ba8398f45d10c0ad, type: 3}
@@ -2520,7 +2530,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27650
+  m_Name: pb_Mesh61758
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3035,29 +3045,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5701579798403427392, guid: e06d62b5fe4df99468cccfdbec3acc9f,
         type: 3}
-      propertyPath: shootCooldown
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5701579798403427392, guid: e06d62b5fe4df99468cccfdbec3acc9f,
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 5311365928930379941, guid: 9ada07786c596ab44a87952a093a7458,
         type: 3}
-      propertyPath: aimVariation.x
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 5701579798403427392, guid: e06d62b5fe4df99468cccfdbec3acc9f,
-        type: 3}
-      propertyPath: aimVariation.y
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 5701579798403427392, guid: e06d62b5fe4df99468cccfdbec3acc9f,
-        type: 3}
-      propertyPath: aimVariation.z
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 5701579798403427396, guid: e06d62b5fe4df99468cccfdbec3acc9f,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5701579798403427399, guid: e06d62b5fe4df99468cccfdbec3acc9f,
         type: 3}
       propertyPath: m_RootOrder

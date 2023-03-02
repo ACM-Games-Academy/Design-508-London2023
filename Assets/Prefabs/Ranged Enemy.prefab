@@ -46,7 +46,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 5701579798403427417}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.25215292
   m_Height: 1.8482083
   m_Direction: 1
@@ -120,8 +120,8 @@ MonoBehaviour:
   hitscanDamage: 0.2
   mode: 1
   bullet: {fileID: 5311365928930379941, guid: 9ada07786c596ab44a87952a093a7458, type: 3}
-  aimVariation: {x: 0.05, y: 0.05, z: 0.05}
-  shootCooldown: 0.7
+  aimVariation: {x: 0.01, y: 0.01, z: 0.01}
+  shootCooldown: 1.2
   despawnTime: 2
 --- !u!114 &5701579798403427393
 MonoBehaviour:
