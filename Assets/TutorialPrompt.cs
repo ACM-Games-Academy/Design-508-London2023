@@ -28,7 +28,7 @@ public class TutorialPrompt : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == setOffTag)
         {
             tutorialText.gameObject.SetActive(true);
             tutorialText.text = tutorialMessage;
@@ -36,7 +36,7 @@ public class TutorialPrompt : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == setOffTag)
         {
             tutorialText.gameObject.SetActive(false);
             tutorialText.text = null;
