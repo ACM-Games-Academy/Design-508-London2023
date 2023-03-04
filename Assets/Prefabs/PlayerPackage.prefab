@@ -2351,6 +2351,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doublePressWait: 0.5
   disableInputs: 0
+  maxEnergy: 100
+  energy: 0
+  laserVision: 1
+  superSpeed: 0
+  flight: 1
   GroundLayers:
     serializedVersion: 2
     m_Bits: 72
@@ -2366,11 +2371,9 @@ MonoBehaviour:
   punchForce: 10
   punchCollider: {fileID: 5856801781880337724}
   punchWaitTime: 0.6
-  flight: 1
   flightSpeed: 300
   riseSpeed: 200
   lowerSpeed: 150
-  laserVision: 1
   angleDiff: 10
   head: {fileID: 45495294131082424}
   eyeball1: {fileID: 5782222353903378165}
@@ -2383,7 +2386,6 @@ MonoBehaviour:
   laserEffect: {fileID: 3291674522085086469, guid: b4bf419f154085c4a813974361552760,
     type: 3}
   crosshair: {fileID: 5856801783327879112}
-  superSpeed: 0
   speedMultiplier: 5
   headAimConstraint: {fileID: 5790318650894105163}
   laserVisionTarget: {fileID: 5790318650413479506}
@@ -3541,6 +3543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27b9c80283fcee448959e38be6d8fc36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  barType: 0
 --- !u!1 &5856801782962698050
 GameObject:
   m_ObjectHideFlags: 0

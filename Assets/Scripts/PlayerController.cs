@@ -12,6 +12,13 @@ public class PlayerController : MonoBehaviour
     bool doublePressed;
     [SerializeField] float doublePressWait;
     public bool disableInputs;
+    [Header("[POWER SETTINGS]")]
+    [SerializeField] float maxEnergy;
+    public float energy;
+    [SerializeField] bool laserVision;
+    [SerializeField] bool superSpeed;
+    [SerializeField] bool flight;
+
     [Header("[Physics Properties]")]
     [SerializeField] LayerMask GroundLayers;
     [SerializeField] float GroundRaycastLength;
@@ -36,13 +43,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("[FLIGHT]")]
     bool isFlying;
-    [SerializeField] bool flight;
     [SerializeField] float flightSpeed;
     [SerializeField] float riseSpeed;
     [SerializeField] float lowerSpeed;
 
     [Header("[LASER VISION]")]
-    [SerializeField] bool laserVision;
     [SerializeField] float angleDiff;
     [SerializeField] Transform head;
     [SerializeField] Transform eyeball1;
@@ -56,8 +61,7 @@ public class PlayerController : MonoBehaviour
     Vector3 hitpoint2;
     Vector3 laserMidpoint;
 
-    [Header("[SUPER SPEED]")]
-    [SerializeField] bool superSpeed;
+    [Header("[SUPER SPEED]")] 
     [SerializeField] float speedMultiplier;
 
     [Header("[Aim Constraint]")]
@@ -109,22 +113,10 @@ public class PlayerController : MonoBehaviour
         {
             Inputs();
         }
-
     }
     private void FixedUpdate()
     {
-        //JUMPING
-        if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
-        {
-            //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
-            b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
-        }
-        //Activating Flight
-        else if (!grounded && Input.GetKeyDown("space") && flight)
-        {
-            isFlying = true;
-            ani.SetBool("flying", true);
-        }
+
     }
     void WASDmovement(float speed)
     {
@@ -175,6 +167,18 @@ public class PlayerController : MonoBehaviour
                 {
                     b.AddForce(Vector3.down * fallSpeed * 100 * Time.deltaTime, ForceMode.Force);
                 }
+            }
+            //JUMPING
+            if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
+            {
+                //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
+                b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
+            }
+            //Activating Flight
+            else if (!grounded && Input.GetKeyDown("space") && flight)
+            {
+                isFlying = true;
+                ani.SetBool("flying", true);
             }
             //flight movement
             else
