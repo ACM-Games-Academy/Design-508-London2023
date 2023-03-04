@@ -10,11 +10,17 @@ public class PlayerController : MonoBehaviour
     bool grounded;
     int presses;
     bool doublePressed;
+    List<GameObject> spawnedEffects = new List<GameObject>();
+    LineRenderer laser1;
+    LineRenderer laser2;
+    Animator ani;
+    public static HealthManager playerHealth;
+
     [SerializeField] float doublePressWait;
     public bool disableInputs;
     [Header("[POWER SETTINGS]")]
     [SerializeField] float maxEnergy;
-    public float energy;
+    public static float energy;
     [SerializeField] bool laserVision;
     [SerializeField] bool superSpeed;
     [SerializeField] bool flight;
@@ -77,12 +83,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject bloodEffect;
     [SerializeField] Transform bloodSpawn;
 
-    List<GameObject> spawnedEffects = new List<GameObject>();
-    LineRenderer laser1;
-    LineRenderer laser2;
-    Animator ani;
-    public static HealthManager playerHealth;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -113,10 +113,6 @@ public class PlayerController : MonoBehaviour
         {
             Inputs();
         }
-    }
-    private void FixedUpdate()
-    {
-
     }
     void WASDmovement(float speed)
     {
@@ -362,4 +358,10 @@ public class PlayerController : MonoBehaviour
             b.useGravity = true;
         }
     }
+
+    public void Dialogue()
+    {
+        disableInputs = !disableInputs;
+    }
+
 }

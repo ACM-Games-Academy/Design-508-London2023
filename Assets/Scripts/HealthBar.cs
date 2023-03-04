@@ -22,7 +22,7 @@ public class HealthBar : MonoBehaviour
         }
         else
         {
-            //health = PlayerController.energy;
+            health = PlayerController.energy;
         }
         
         transform.localScale = new Vector3(Mathf.Lerp(transform.localScale.x,health / PlayerController.playerHealth.maxHealth,Time.deltaTime*3), 1, 1);
