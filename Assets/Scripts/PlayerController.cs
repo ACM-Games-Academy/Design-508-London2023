@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
         canPunch = true;
+        energy = maxEnergy;
     }
 
     // Update is called once per frame
@@ -114,6 +115,25 @@ public class PlayerController : MonoBehaviour
             Inputs();
         }
     }
+    private void FixedUpdate()
+    {
+        if (!disableInputs)
+        {
+            //JUMPING
+            if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
+            {
+                //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
+                b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
+            }
+            //Activating Flight
+            else if (!grounded && Input.GetKeyDown("space") && flight)
+            {
+                isFlying = true;
+                ani.SetBool("flying", true);
+            }
+        }
+    }
+
     void WASDmovement(float speed)
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -152,7 +172,7 @@ public class PlayerController : MonoBehaviour
             {
                 moveSpeed /= sprintMultiplier;
                 flightSpeed /= sprintMultiplier;
-            ani.SetBool("sprinting", false);
+                ani.SetBool("sprinting", false);
             }
 
             //regular movement
@@ -163,18 +183,6 @@ public class PlayerController : MonoBehaviour
                 {
                     b.AddForce(Vector3.down * fallSpeed * 100 * Time.deltaTime, ForceMode.Force);
                 }
-            }
-            //JUMPING
-            if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
-            {
-                //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
-                b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
-            }
-            //Activating Flight
-            else if (!grounded && Input.GetKeyDown("space") && flight)
-            {
-                isFlying = true;
-                ani.SetBool("flying", true);
             }
             //flight movement
             else
@@ -229,6 +237,7 @@ public class PlayerController : MonoBehaviour
 
     void Flying()
     {
+        EnergyDrain(1);
         b.useGravity = false;
         //WASD controls
         WASDmovement(flightSpeed);
@@ -362,6 +371,11 @@ public class PlayerController : MonoBehaviour
     public void Dialogue()
     {
         disableInputs = !disableInputs;
+    }
+
+    public void EnergyDrain(float rate)
+    {
+        energy -= (Time.deltaTime * rate);
     }
 
 }
