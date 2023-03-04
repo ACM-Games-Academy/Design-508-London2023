@@ -20,10 +20,12 @@ public class PlayerController : MonoBehaviour
     public bool disableInputs;
     [Header("[POWER SETTINGS]")]
     [SerializeField] float maxEnergy;
+    [SerializeField] float energyRegenRate;
     public static float energy;
     [SerializeField] bool laserVision;
     [SerializeField] bool superSpeed;
     [SerializeField] bool flight;
+    bool regen;
 
     [Header("[Physics Properties]")]
     [SerializeField] LayerMask GroundLayers;
@@ -48,10 +50,11 @@ public class PlayerController : MonoBehaviour
     bool canPunch;
 
     [Header("[FLIGHT]")]
-    bool isFlying;
     [SerializeField] float flightSpeed;
     [SerializeField] float riseSpeed;
     [SerializeField] float lowerSpeed;
+    [SerializeField] float flightDrain;
+    bool isFlying;
 
     [Header("[LASER VISION]")]
     [SerializeField] float angleDiff;
@@ -63,6 +66,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector3 directionOffset;
     [SerializeField] GameObject laserEffect;
     [SerializeField] Transform crosshair;
+    [SerializeField] float laserDrain;
     Vector3 hitpoint1;
     Vector3 hitpoint2;
     Vector3 laserMidpoint;
@@ -108,11 +112,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        regen = true;
         GroundCheck();
         crosshair.gameObject.SetActive(laserVision);
         if (!disableInputs)
         {
             Inputs();
+        }
+        if (regen)
+        {
+            EnergyRegen(energyRegenRate);
         }
     }
     private void FixedUpdate()
@@ -237,7 +246,7 @@ public class PlayerController : MonoBehaviour
 
     void Flying()
     {
-        EnergyDrain(1);
+        EnergyDrain(flightDrain);
         b.useGravity = false;
         //WASD controls
         WASDmovement(flightSpeed);
@@ -279,6 +288,7 @@ public class PlayerController : MonoBehaviour
         {
             if (hit)
             {
+                EnergyDrain(laserDrain / 2);
                 laser.SetPosition(1, ray.point);
                 GameObject effect = Instantiate(laserEffect,ray.point,Quaternion.Euler(0,0,0));
                 spawnedEffects.Add(effect);
@@ -375,7 +385,13 @@ public class PlayerController : MonoBehaviour
 
     public void EnergyDrain(float rate)
     {
+        regen = false;
         energy -= (Time.deltaTime * rate);
+    }
+
+    public void EnergyRegen(float rate)
+    {
+        energy += (Time.deltaTime * rate);
     }
 
 }
