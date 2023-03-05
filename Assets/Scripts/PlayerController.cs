@@ -121,25 +121,7 @@ public class PlayerController : MonoBehaviour
         }
         if (regen)
         {
-            EnergyRegen(energyRegenRate);
-        }
-    }
-    private void FixedUpdate()
-    {
-        if (!disableInputs)
-        {
-            //JUMPING
-            if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
-            {
-                //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
-                b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
-            }
-            //Activating Flight
-            else if (!grounded && Input.GetKeyDown("space") && flight)
-            {
-                isFlying = true;
-                ani.SetBool("flying", true);
-            }
+            Invoke("EnergyRegen",3);
         }
     }
 
@@ -160,6 +142,24 @@ public class PlayerController : MonoBehaviour
         else
         {
             ani.SetBool("moving", false);
+        }
+    }
+    private void FixedUpdate()
+    {
+        if (!disableInputs)
+        {
+            //JUMPING
+            if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
+            {
+                //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
+                b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
+            }
+            //Activating Flight
+            else if (!grounded && Input.GetKeyDown("space") && flight && energy >= 0)
+            {
+                isFlying = true;
+                ani.SetBool("flying", true);
+            }
         }
     }
     void Inputs()
@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour
             b.AddForce(Vector3.down * lowerSpeed * 100 * Time.deltaTime, ForceMode.Force);
         }
         //Deactivating Flight
-        if (grounded || doublePressed)
+        if (grounded || doublePressed || energy <= 0)
         {
             doublePressed = false;
             isFlying = false;
@@ -286,9 +286,11 @@ public class PlayerController : MonoBehaviour
         //when firing laser
         if (Input.GetMouseButton(0))
         {
-            if (hit)
+            regen = false;
+            if (hit && energy >= 0)
             {
                 EnergyDrain(laserDrain / 2);
+                
                 laser.SetPosition(1, ray.point);
                 GameObject effect = Instantiate(laserEffect,ray.point,Quaternion.Euler(0,0,0));
                 spawnedEffects.Add(effect);
@@ -389,9 +391,9 @@ public class PlayerController : MonoBehaviour
         energy -= (Time.deltaTime * rate);
     }
 
-    public void EnergyRegen(float rate)
+    public void EnergyRegen()
     {
-        energy += (Time.deltaTime * rate);
+        energy += (Time.deltaTime * energyRegenRate);
     }
 
 }
