@@ -17,10 +17,7 @@ public class Enemy : MonoBehaviour
     [Header("Player Detection")]
     [SerializeField] string playerTag;
     Transform player;
-
-    [Header("Ragdoll")]
-    public bool canRagdoll;
-    public bool ragdoll;
+    Ragdoll ragdollScript;
 
     //[Header("Ranged Settings")]
     bool isRanged;
@@ -32,6 +29,7 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag(playerTag).transform;
         coll = GetComponent<Collider>();
+        ragdollScript = GetComponent<Ragdoll>();
         if (TryGetComponent(out Shooter s))
         {
             shootScript = s;
@@ -53,8 +51,7 @@ public class Enemy : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            RagdollCheck();
-            if (!ragdoll)
+            if (!ragdollScript.ragdoll)
             {
                 bool withinRange = PlayerInRange();
                 if (withinRange)
@@ -76,13 +73,6 @@ public class Enemy : MonoBehaviour
         agent.isStopped = (!targetPlayer);//stopping movement if within shoot range
                                           
         return targetPlayer;
-    }
-
-    public void RagdollCheck()
-    {
-        ani.enabled = !ragdoll;
-        agent.enabled = !ragdoll;
-        coll.enabled = !ragdoll;
     }
 
     public void Die()

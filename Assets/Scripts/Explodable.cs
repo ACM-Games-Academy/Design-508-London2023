@@ -53,9 +53,9 @@ public class Explodable : MonoBehaviour
             {
                 health.HealthChange(-blastDamage);
             }
-            if (col.TryGetComponent(out Enemy enemyScript))
+            if (col.TryGetComponent(out Ragdoll rd))
             {
-                enemyScript.ragdoll = true;
+                rd.StartRagdoll();
             }
             if (col.TryGetComponent(out Rigidbody rb))
             {

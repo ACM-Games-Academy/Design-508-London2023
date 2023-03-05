@@ -56,9 +56,9 @@ public class Shooter : MonoBehaviour
         }
         if(state == behaviours.aim)
         {
-            if(TryGetComponent(out Enemy enemy))
+            if(TryGetComponent(out Ragdoll rs))
             {
-                fire = !enemy.ragdoll;
+                fire = !rs.ragdoll;
             }
             print("fire");
             AimAtPlayer();
