@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Animator ani;
     NavMeshAgent agent;
     Collider coll;
+    float normalMoveSpeed;
 
     [Header("Range")]
     [SerializeField] float playerTargetRange;
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag(playerTag).transform;
         coll = GetComponent<Collider>();
         ragdollScript = GetComponent<Ragdoll>();
+        normalMoveSpeed = agent.speed;
         if (TryGetComponent(out Shooter s))
         {
             shootScript = s;
@@ -70,8 +72,7 @@ public class Enemy : MonoBehaviour
     {
         //checking if the player is close enough to be targeted
         bool targetPlayer = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
-        agent.isStopped = (!targetPlayer);//stopping movement if within shoot range
-                                          
+        agent.isStopped = (!targetPlayer);//stopping movement if within shoot range                                        
         return targetPlayer;
     }
 
@@ -87,13 +88,13 @@ public class Enemy : MonoBehaviour
         {
             if (shootScript.state == Shooter.behaviours.aim)
             {
-                agent.isStopped = true;
+                agent.speed = 0;
                 ani.SetBool("Aiming", true);
                 ani.SetBool("Walking", false);
             }
             else
             {
-                agent.isStopped = false;
+                agent.speed = normalMoveSpeed;
                 ani.SetBool("Walking", true);
                 ani.SetBool("Aiming", false);
             }

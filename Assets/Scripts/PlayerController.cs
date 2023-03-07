@@ -171,8 +171,10 @@ public class PlayerController : MonoBehaviour
             {
                 if (superSpeed)
                 {
-                    sprintMultiplier = speedMultiplier;
-                }
+                    sprintMultiplier *= speedMultiplier;
+                    Time.timeScale /= speedMultiplier;
+                    Application.targetFrameRate = 120;
+            }
                 moveSpeed *= sprintMultiplier;
                 flightSpeed *= sprintMultiplier;
                 ani.SetBool("sprinting", true);
@@ -182,7 +184,13 @@ public class PlayerController : MonoBehaviour
                 moveSpeed /= sprintMultiplier;
                 flightSpeed /= sprintMultiplier;
                 ani.SetBool("sprinting", false);
+                if (superSpeed)
+                {
+                    sprintMultiplier /= speedMultiplier;
+                    Time.timeScale *= speedMultiplier;
+                    Application.targetFrameRate = 120;
             }
+        }
 
             //regular movement
             if (!isFlying)
@@ -289,8 +297,7 @@ public class PlayerController : MonoBehaviour
             regen = false;
             if (hit && energy >= 0)
             {
-                EnergyDrain(laserDrain / 2);
-                
+                EnergyDrain(laserDrain / 2);                
                 laser.SetPosition(1, ray.point);
                 GameObject effect = Instantiate(laserEffect,ray.point,Quaternion.Euler(0,0,0));
                 spawnedEffects.Add(effect);

@@ -15,7 +15,7 @@ public class Ragdoll : MonoBehaviour
     Collider coll;
 
     [SerializeField] Animator ani;
-    [SerializeField] AnimationClip getUpClip;
+    [SerializeField] string getUpState;
     [SerializeField] float getUpDelay;
     [SerializeField] Transform hips;
     [SerializeField] List<Transform> bones;
@@ -62,6 +62,7 @@ public class Ragdoll : MonoBehaviour
         Vector3 previousHipsPosition = hips.position;
         transform.position = hips.position;
         hips.position = previousHipsPosition;
+        ani.Play(getUpState);
         RagdollCheck();
     }
 }

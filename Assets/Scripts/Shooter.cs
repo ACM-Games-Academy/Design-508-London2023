@@ -31,6 +31,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] float despawnTime;
     GameObject previousBullet;
     bool fire;
+    GameObject currentTrail;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,26 +47,16 @@ public class Shooter : MonoBehaviour
     {
         if (!isStatic)
         {
-            //pointer.position = Shootpoint.position;
+            pointer.position = Shootpoint.position;
         }
         Detection();
         if (state == behaviours.search)
         {
             //look around animation
-            print("search");
         }
         if(state == behaviours.aim)
         {
-            if(TryGetComponent(out Ragdoll rs))
-            {
-                fire = !rs.ragdoll;
-            }
-            print("fire");
             AimAtPlayer();
-            if (fire)
-            {
-                Shoot();
-            }
         }
         
 
@@ -76,10 +67,8 @@ public class Shooter : MonoBehaviour
     {
         pointer.LookAt(target);
         bool hit = Physics.Raycast(pointer.position, pointer.forward, out RaycastHit ray, shootDistance, WhatBlocksMyView);
-        Debug.DrawRay(pointer.position, pointer.forward * shootDistance, Color.red);
         if (hit)
         {
-            print(ray.collider.name);
             if (ray.collider == targetCollider && state != behaviours.aim)
             {
                 state = behaviours.aim;
@@ -110,7 +99,7 @@ public class Shooter : MonoBehaviour
 
     void Shoot()
     {
-        if(mode == bulletType.projectile)
+        if(mode == bulletType.projectile && isRagdolling())
         {
             GameObject firedBullet = Instantiate(bullet, pointer.position, pointer.rotation);
             previousBullet = firedBullet;
@@ -120,18 +109,19 @@ public class Shooter : MonoBehaviour
         }
         else
         {
-            Vector3 aim = new Vector3(Random.Range(-aimVariation.x, aimVariation.x), Random.Range(-aimVariation.y, aimVariation.y), Random.Range(-aimVariation.z, aimVariation.z)) + pointer.forward;
-            bool hit = Physics.Raycast(pointer.position, aim.normalized, out RaycastHit ray, WhatBlocksMyView);
+            Vector3 aim = new Vector3(Random.Range(-aimVariation.x, aimVariation.x), Random.Range(-aimVariation.y, aimVariation.y), Random.Range(-aimVariation.z, aimVariation.z)) + pointer.forward;          
+            bool hit = Physics.Raycast(Shootpoint.position, aim.normalized, out RaycastHit ray, WhatBlocksMyView);
+            Debug.DrawRay(Shootpoint.position, aim.normalized * shootDistance, Color.red);
             if (hit)
             {
-                if (mode != bulletType.melee)
-                {
-                    Debug.DrawRay(pointer.position, aim.normalized, Color.yellow);
-                    StartCoroutine(SpawnTrail(ray));
-                }            
+                //print(ray.collider.name);
                 if (ray.collider == targetCollider && targetCollider.TryGetComponent(out HealthManager healthManager))
                 {
                     healthManager.HealthChange(-hitscanDamage);
+                    if (mode != bulletType.melee && currentTrail == null)
+                    {
+                        StartCoroutine(SpawnTrail(ray));
+                    }
                 }
             }
         }
@@ -140,19 +130,22 @@ public class Shooter : MonoBehaviour
 
     private IEnumerator SpawnTrail(RaycastHit rc)
     {
-        GameObject trail = Instantiate(bullet, Shootpoint.position, Shootpoint.rotation);
-        
-        float travelTime = trail.GetComponent<TrailRenderer>().time;
+        currentTrail = Instantiate(bullet, Shootpoint.position,Shootpoint.rotation);
+        float travelTime = currentTrail.GetComponent<TrailRenderer>().time;
         float currentTime = Time.time;
+        print("shootpoint" + currentTrail.transform.position);
+        print("trail" + currentTrail.transform.position);
         while(Time.time < currentTime + travelTime)
         {
             float lerpTime = (Time.time - currentTime) / travelTime;
-            trail.transform.position = Vector3.Lerp(trail.transform.position, rc.point, lerpTime);
+            currentTrail.transform.position = Vector3.Lerp(currentTrail.transform.position, rc.point, lerpTime);
+            Debug.DrawLine(currentTrail.transform.position, rc.point, Color.black);
             yield return new WaitForEndOfFrame();
         }
-        trail.transform.position = rc.point;
-        trail.transform.GetChild(0).gameObject.SetActive(true);
-        Destroy(trail, despawnTime);
+        currentTrail.transform.position = rc.point;
+        currentTrail.transform.GetChild(0).gameObject.SetActive(true);
+        Destroy(currentTrail, despawnTime);
+        currentTrail = null;
     }
 
     void DestroyPrevious()
@@ -165,9 +158,33 @@ public class Shooter : MonoBehaviour
 
     IEnumerator ShootCooldown()
     {
-        yield return new WaitForSeconds(shootCooldown);
-        fire = true;
+        float coolDownOver = Time.time + shootCooldown;
+        fire = false;
+        while(Time.time < coolDownOver)
+        {
+            //print("time: "+ Time.time);
+            //print("end of cooldown: "+ (previousShotTime + shootCooldown).ToString());
+            yield return new WaitForEndOfFrame();
+        }
+        if (state == behaviours.aim && !isRagdolling())
+        {
+            Shoot();
+            print("bang");
+        }
         yield return new WaitForEndOfFrame();
         StartCoroutine(ShootCooldown());
     }
+
+
+    bool isRagdolling()
+    {
+        bool isRagdolled = false;
+        if (TryGetComponent(out Ragdoll rs))
+        {
+            isRagdolled = rs.ragdoll;
+        }
+        return isRagdolled;
+    }
 }
+
+
