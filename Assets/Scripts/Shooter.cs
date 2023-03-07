@@ -36,7 +36,7 @@ public class Shooter : MonoBehaviour
     {
         target = GameObject.FindGameObjectWithTag(targetTag).transform;
         targetCollider = target.GetComponentInParent<PlayerController>().GetComponent<Collider>();
-        pointer = Instantiate(new GameObject("pointer")).transform;
+        pointer = Instantiate(new GameObject("pointer"),Shootpoint).transform;
         pointer.position = Shootpoint.position;
         StartCoroutine(ShootCooldown());
     }
@@ -46,7 +46,7 @@ public class Shooter : MonoBehaviour
     {
         if (!isStatic)
         {
-            pointer.position = Shootpoint.position;
+            //pointer.position = Shootpoint.position;
         }
         Detection();
         if (state == behaviours.search)
@@ -56,9 +56,9 @@ public class Shooter : MonoBehaviour
         }
         if(state == behaviours.aim)
         {
-            if(TryGetComponent(out Enemy enemy))
+            if(TryGetComponent(out Ragdoll rs))
             {
-                fire = !enemy.ragdoll;
+                fire = !rs.ragdoll;
             }
             print("fire");
             AimAtPlayer();
@@ -126,7 +126,8 @@ public class Shooter : MonoBehaviour
             {
                 if (mode != bulletType.melee)
                 {
-                    StartCoroutine(SpawnTrail(Shootpoint, ray));
+                    Debug.DrawRay(pointer.position, aim.normalized, Color.yellow);
+                    StartCoroutine(SpawnTrail(ray));
                 }            
                 if (ray.collider == targetCollider && targetCollider.TryGetComponent(out HealthManager healthManager))
                 {
@@ -137,9 +138,10 @@ public class Shooter : MonoBehaviour
 
     }
 
-    private IEnumerator SpawnTrail(Transform place, RaycastHit rc)
+    private IEnumerator SpawnTrail(RaycastHit rc)
     {
-        GameObject trail = Instantiate(bullet, place.position, place.rotation);
+        GameObject trail = Instantiate(bullet, Shootpoint.position, Shootpoint.rotation);
+        
         float travelTime = trail.GetComponent<TrailRenderer>().time;
         float currentTime = Time.time;
         while(Time.time < currentTime + travelTime)

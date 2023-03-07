@@ -26,9 +26,9 @@ public class MeleeHitbox : Explodable
         {
             health.HealthChange(-meleeDamage);
         }
-        if(collisionObject.TryGetComponent(out Enemy enemyScript))
+        if(collisionObject.TryGetComponent(out Ragdoll rd))
         {
-            enemyScript.ragdoll = true;
+            rd.StartRagdoll();
         }
         if (collisionObject.TryGetComponent(out Rigidbody rb))
         {
