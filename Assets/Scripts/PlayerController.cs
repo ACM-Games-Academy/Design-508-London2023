@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool superSpeed;
     [SerializeField] bool flight;
     bool regen;
+    float currentRegenRate;
 
     [Header("[Physics Properties]")]
     [SerializeField] LayerMask GroundLayers;
@@ -121,9 +122,17 @@ public class PlayerController : MonoBehaviour
         }
         if (regen)
         {
+            currentRegenRate = energyRegenRate;
             Invoke("EnergyRegen",3);
         }
+        else
+        {
+            currentRegenRate = 0;
+        }
+        print(energy);
     }
+
+    
 
     void WASDmovement(float speed)
     {
@@ -375,6 +384,8 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
+        crosshair.gameObject.SetActive(false);
+        
         ani.SetBool("dead", true);
         disableInputs = true;
         laser1.enabled = false;
@@ -396,11 +407,19 @@ public class PlayerController : MonoBehaviour
     {
         regen = false;
         energy -= (Time.deltaTime * rate);
+        if(energy < 0)
+        {
+            energy = 0;
+        }
     }
 
     public void EnergyRegen()
     {
-        energy += (Time.deltaTime * energyRegenRate);
+        energy += (Time.deltaTime * currentRegenRate);
+        if(energy > maxEnergy)
+        {
+            energy = maxEnergy;
+        }
     }
 
 }
