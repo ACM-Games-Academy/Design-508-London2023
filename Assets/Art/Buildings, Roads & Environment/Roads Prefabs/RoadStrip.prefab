@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4620247977391842806}
   - component: {fileID: 7283675237278178092}
   m_Layer: 3
-  m_Name: PavementLong
+  m_Name: RoadStrip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
