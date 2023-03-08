@@ -20,7 +20,9 @@ public class Enemy : MonoBehaviour
     Transform player;
     Ragdoll ragdollScript;
 
-    //[Header("Ranged Settings")]
+    [Header("Death")]
+    [SerializeField] GameObject bloodEffect;
+
     bool isRanged;
     Shooter shootScript;
 
@@ -78,8 +80,13 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
+        Transform hips = ani.GetBoneTransform(HumanBodyBones.Hips);
+        Instantiate(bloodEffect, hips.position, hips.rotation, hips);
         ragdollScript.getBackUp = false;
-        ragdollScript.StartRagdoll();
+        if (!ragdollScript.ragdoll)
+        {
+            ragdollScript.StartRagdoll();
+        }             
     }
 
     public void Agro()

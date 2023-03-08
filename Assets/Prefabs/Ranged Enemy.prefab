@@ -92,6 +92,7 @@ MonoBehaviour:
   getUpDelay: 5
   boneResetTime: 0.5
   ragdoll: 0
+  getBackUp: 0
 --- !u!114 &5701579798403427418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,6 +109,8 @@ MonoBehaviour:
   playerTargetRange: 37
   showRangeInSceneView: 0
   playerTag: Player
+  bloodEffect: {fileID: 1000012909287652, guid: 78b0e7f97bd38df4cbae856c27751eea,
+    type: 3}
 --- !u!114 &5701579798403427392
 MonoBehaviour:
   m_ObjectHideFlags: 0
