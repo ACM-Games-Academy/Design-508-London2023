@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 15
+  maxHealth: 30
   deathScript: {fileID: 5701579798403427418}
   deathFunction: Die
   health: 0
@@ -717,7 +717,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 0.8
   m_Drag: 0.2
-  m_AngularDrag: 0.08
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -798,7 +798,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 0.8
   m_Drag: 0.2
-  m_AngularDrag: 0.3
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -880,7 +880,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 0.8
   m_Drag: 0.2
-  m_AngularDrag: 0.08
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -962,7 +962,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0.2
-  m_AngularDrag: 0.08
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1050,7 +1050,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0.2
-  m_AngularDrag: 0.08
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1132,7 +1132,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0.2
-  m_AngularDrag: 0.08
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1214,7 +1214,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0.2
-  m_AngularDrag: 0.08
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1296,7 +1296,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 0.8
   m_Drag: 0.2
-  m_AngularDrag: 0.08
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1378,7 +1378,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 0.8
   m_Drag: 0.2
-  m_AngularDrag: 0.3
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1507,7 +1507,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 2
   m_Drag: 0.2
-  m_AngularDrag: 0.08
+  m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
