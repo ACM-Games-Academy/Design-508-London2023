@@ -423,7 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  targetTag: Player
+  targetTag: PlayerTargetPoint
   WhatBlocksMyView:
     serializedVersion: 2
     m_Bits: 265
@@ -492,6 +492,9 @@ MonoBehaviour:
   deathScript: {fileID: 1201852095781724707}
   deathFunction: Explode
   health: 0
+  hasRegen: 0
+  regenSpeed: 0
+  regen: 0
 --- !u!1 &1345675123571254848
 GameObject:
   m_ObjectHideFlags: 0

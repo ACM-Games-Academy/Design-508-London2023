@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] Animator ani;
     NavMeshAgent agent;
     Collider coll;
+    float normalMoveSpeed;
 
     [Header("Range")]
     [SerializeField] float playerTargetRange;
@@ -17,12 +18,11 @@ public class Enemy : MonoBehaviour
     [Header("Player Detection")]
     [SerializeField] string playerTag;
     Transform player;
+    Ragdoll ragdollScript;
 
-    [Header("Ragdoll")]
-    public bool canRagdoll;
-    public bool ragdoll;
+    [Header("Death")]
+    [SerializeField] GameObject bloodEffect;
 
-    //[Header("Ranged Settings")]
     bool isRanged;
     Shooter shootScript;
 
@@ -32,6 +32,8 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag(playerTag).transform;
         coll = GetComponent<Collider>();
+        ragdollScript = GetComponent<Ragdoll>();
+        normalMoveSpeed = agent.speed;
         if (TryGetComponent(out Shooter s))
         {
             shootScript = s;
@@ -53,8 +55,7 @@ public class Enemy : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            RagdollCheck();
-            if (!ragdoll)
+            if (!ragdollScript.ragdoll)
             {
                 bool withinRange = PlayerInRange();
                 if (withinRange)
@@ -73,21 +74,27 @@ public class Enemy : MonoBehaviour
     {
         //checking if the player is close enough to be targeted
         bool targetPlayer = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
-        agent.isStopped = (!targetPlayer);//stopping movement if within shoot range
-                                          
+        agent.isStopped = (!targetPlayer);//stopping movement if within shoot range                                        
         return targetPlayer;
-    }
-
-    public void RagdollCheck()
-    {
-        ani.enabled = !ragdoll;
-        agent.enabled = !ragdoll;
-        coll.enabled = !ragdoll;
     }
 
     public void Die()
     {
-        Destroy(gameObject);
+        Transform hips = ani.GetBoneTransform(HumanBodyBones.Hips);
+        Instantiate(bloodEffect, hips.position, hips.rotation, hips);
+        ragdollScript.getBackUp = false;
+        if (!ragdollScript.ragdoll)
+        {
+            ragdollScript.StartRagdoll();
+        }
+        foreach(MonoBehaviour script in GetComponents<MonoBehaviour>())
+        {
+            if(script != this)
+            {
+                Destroy(script, 5f);
+            }           
+        }
+        Destroy(this,1f);
     }
 
     public void Agro()
@@ -97,13 +104,15 @@ public class Enemy : MonoBehaviour
         {
             if (shootScript.state == Shooter.behaviours.aim)
             {
-                agent.isStopped = true;
+                agent.speed = 0;
                 ani.SetBool("Aiming", true);
+                ani.SetBool("Walking", false);
             }
             else
             {
-                agent.isStopped = false;
+                agent.speed = normalMoveSpeed;
                 ani.SetBool("Walking", true);
+                ani.SetBool("Aiming", false);
             }
         }
     }

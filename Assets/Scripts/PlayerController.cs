@@ -10,8 +10,24 @@ public class PlayerController : MonoBehaviour
     bool grounded;
     int presses;
     bool doublePressed;
+    List<GameObject> spawnedEffects = new List<GameObject>();
+    LineRenderer laser1;
+    LineRenderer laser2;
+    Animator ani;
+    public static HealthManager playerHealth;
+
     [SerializeField] float doublePressWait;
     public bool disableInputs;
+    [Header("[POWER SETTINGS]")]
+    [SerializeField] float maxEnergy;
+    [SerializeField] float energyRegenRate;
+    public static float energy;
+    [SerializeField] bool laserVision;
+    [SerializeField] bool superSpeed;
+    [SerializeField] bool flight;
+    bool regen;
+    float currentRegenRate;
+
     [Header("[Physics Properties]")]
     [SerializeField] LayerMask GroundLayers;
     [SerializeField] float GroundRaycastLength;
@@ -35,14 +51,13 @@ public class PlayerController : MonoBehaviour
     bool canPunch;
 
     [Header("[FLIGHT]")]
-    bool isFlying;
-    [SerializeField] bool flight;
     [SerializeField] float flightSpeed;
     [SerializeField] float riseSpeed;
     [SerializeField] float lowerSpeed;
+    [SerializeField] float flightDrain;
+    bool isFlying;
 
     [Header("[LASER VISION]")]
-    [SerializeField] bool laserVision;
     [SerializeField] float angleDiff;
     [SerializeField] Transform head;
     [SerializeField] Transform eyeball1;
@@ -52,12 +67,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector3 directionOffset;
     [SerializeField] GameObject laserEffect;
     [SerializeField] Transform crosshair;
+    [SerializeField] float laserDrain;
     Vector3 hitpoint1;
     Vector3 hitpoint2;
     Vector3 laserMidpoint;
 
-    [Header("[SUPER SPEED]")]
-    [SerializeField] bool superSpeed;
+    [Header("[SUPER SPEED]")] 
     [SerializeField] float speedMultiplier;
 
     [Header("[Aim Constraint]")]
@@ -72,12 +87,6 @@ public class PlayerController : MonoBehaviour
     [Header("[Death]")]
     [SerializeField] GameObject bloodEffect;
     [SerializeField] Transform bloodSpawn;
-
-    List<GameObject> spawnedEffects = new List<GameObject>();
-    LineRenderer laser1;
-    LineRenderer laser2;
-    Animator ani;
-    public static HealthManager playerHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -98,34 +107,33 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
         canPunch = true;
+        energy = maxEnergy;
     }
 
     // Update is called once per frame
     void Update()
     {
+        regen = true;
         GroundCheck();
         crosshair.gameObject.SetActive(laserVision);
         if (!disableInputs)
         {
             Inputs();
         }
+        if (regen)
+        {
+            currentRegenRate = energyRegenRate;
+            Invoke("EnergyRegen",3);
+        }
+        else
+        {
+            currentRegenRate = 0;
+        }
+        print(energy);
+    }
 
-    }
-    private void FixedUpdate()
-    {
-        //JUMPING
-        if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
-        {
-            //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
-            b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
-        }
-        //Activating Flight
-        else if (!grounded && Input.GetKeyDown("space") && flight)
-        {
-            isFlying = true;
-            ani.SetBool("flying", true);
-        }
-    }
+    
+
     void WASDmovement(float speed)
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -145,6 +153,24 @@ public class PlayerController : MonoBehaviour
             ani.SetBool("moving", false);
         }
     }
+    private void FixedUpdate()
+    {
+        if (!disableInputs)
+        {
+            //JUMPING
+            if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
+            {
+                //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
+                b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
+            }
+            //Activating Flight
+            else if (!grounded && Input.GetKeyDown("space") && flight && energy >= 0)
+            {
+                isFlying = true;
+                ani.SetBool("flying", true);
+            }
+        }
+    }
     void Inputs()
     {
         //PLAYER MOVEMENT
@@ -154,8 +180,10 @@ public class PlayerController : MonoBehaviour
             {
                 if (superSpeed)
                 {
-                    sprintMultiplier = speedMultiplier;
-                }
+                    sprintMultiplier *= speedMultiplier;
+                    Time.timeScale /= speedMultiplier;
+                    Application.targetFrameRate = 120;
+            }
                 moveSpeed *= sprintMultiplier;
                 flightSpeed *= sprintMultiplier;
                 ani.SetBool("sprinting", true);
@@ -164,8 +192,14 @@ public class PlayerController : MonoBehaviour
             {
                 moveSpeed /= sprintMultiplier;
                 flightSpeed /= sprintMultiplier;
-            ani.SetBool("sprinting", false);
+                ani.SetBool("sprinting", false);
+                if (superSpeed)
+                {
+                    sprintMultiplier /= speedMultiplier;
+                    Time.timeScale *= speedMultiplier;
+                    Application.targetFrameRate = 120;
             }
+        }
 
             //regular movement
             if (!isFlying)
@@ -229,6 +263,7 @@ public class PlayerController : MonoBehaviour
 
     void Flying()
     {
+        EnergyDrain(flightDrain);
         b.useGravity = false;
         //WASD controls
         WASDmovement(flightSpeed);
@@ -247,7 +282,7 @@ public class PlayerController : MonoBehaviour
             b.AddForce(Vector3.down * lowerSpeed * 100 * Time.deltaTime, ForceMode.Force);
         }
         //Deactivating Flight
-        if (grounded || doublePressed)
+        if (grounded || doublePressed || energy <= 0)
         {
             doublePressed = false;
             isFlying = false;
@@ -268,8 +303,10 @@ public class PlayerController : MonoBehaviour
         //when firing laser
         if (Input.GetMouseButton(0))
         {
-            if (hit)
+            regen = false;
+            if (hit && energy >= 0)
             {
+                EnergyDrain(laserDrain / 2);                
                 laser.SetPosition(1, ray.point);
                 GameObject effect = Instantiate(laserEffect,ray.point,Quaternion.Euler(0,0,0));
                 spawnedEffects.Add(effect);
@@ -347,6 +384,8 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
+        crosshair.gameObject.SetActive(false);
+        
         ani.SetBool("dead", true);
         disableInputs = true;
         laser1.enabled = false;
@@ -358,4 +397,29 @@ public class PlayerController : MonoBehaviour
             b.useGravity = true;
         }
     }
+
+    public void Dialogue()
+    {
+        disableInputs = !disableInputs;
+    }
+
+    public void EnergyDrain(float rate)
+    {
+        regen = false;
+        energy -= (Time.deltaTime * rate);
+        if(energy < 0)
+        {
+            energy = 0;
+        }
+    }
+
+    public void EnergyRegen()
+    {
+        energy += (Time.deltaTime * currentRegenRate);
+        if(energy > maxEnergy)
+        {
+            energy = maxEnergy;
+        }
+    }
+
 }
