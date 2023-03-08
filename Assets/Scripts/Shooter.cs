@@ -87,7 +87,7 @@ public class Shooter : MonoBehaviour
 
     void AimAtPlayer()
     {
-        if (rotateAtTarget)
+        if (rotateAtTarget && !isRagdolling())
         {
             float XAngle = 180 + Mathf.Atan2(Xrotater.position.y - target.position.y, Xrotater.position.z + Mathf.Abs(target.position.z)) * Mathf.Rad2Deg + Xoffset;//Find X angle toward target
             Xrotater.localRotation = Quaternion.Euler(XAngle, 0, 0);//Quaternion.Euler(Mathf.LerpAngle(Xrotater.localRotation.x, XAngle, rotationSpeed * Time.deltaTime), 0, 0);//Lerp rotation to target X angle
@@ -99,7 +99,7 @@ public class Shooter : MonoBehaviour
 
     void Shoot()
     {
-        if(mode == bulletType.projectile && isRagdolling())
+        if(mode == bulletType.projectile)
         {
             GameObject firedBullet = Instantiate(bullet, pointer.position, pointer.rotation);
             previousBullet = firedBullet;
@@ -169,7 +169,6 @@ public class Shooter : MonoBehaviour
         if (state == behaviours.aim && !isRagdolling())
         {
             Shoot();
-            print("bang");
         }
         yield return new WaitForEndOfFrame();
         StartCoroutine(ShootCooldown());
@@ -181,7 +180,7 @@ public class Shooter : MonoBehaviour
         bool isRagdolled = false;
         if (TryGetComponent(out Ragdoll rs))
         {
-            isRagdolled = rs.ragdoll;
+            isRagdolled = (rs.ragdoll || rs.isGettingUp());
         }
         return isRagdolled;
     }

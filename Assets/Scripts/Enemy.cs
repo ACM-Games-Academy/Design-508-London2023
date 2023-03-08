@@ -78,7 +78,8 @@ public class Enemy : MonoBehaviour
 
     public void Die()
     {
-        Destroy(gameObject);
+        ragdollScript.getBackUp = false;
+        ragdollScript.StartRagdoll();
     }
 
     public void Agro()
