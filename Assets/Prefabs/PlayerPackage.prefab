@@ -2924,7 +2924,7 @@ MonoBehaviour:
   laserVisionTarget: {fileID: 5790318650413479506}
   WeightLerpSpeed: 10
   laserDamage: 3
-  punchDamage: 4
+  punchDamage: 10
   bloodEffect: {fileID: 1000010675638318, guid: 1afa466a5d347f144939ca63607ad67b,
     type: 3}
   bloodSpawn: {fileID: 2230856686319670588}
