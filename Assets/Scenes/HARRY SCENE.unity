@@ -1600,25 +1600,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5856801781413637951, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 5856801781487310904, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.02450875
+      value: 0.024508744
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781487310904, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.021092966
+      value: -0.021092959
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781755219116, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.02450875
+      value: 0.024508744
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781755219116, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.021092966
+      value: -0.021092959
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d51c4ad3c374d44ba8398f45d10c0ad, type: 3}
@@ -3407,7 +3412,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27654
+  m_Name: pb_Mesh44974
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
