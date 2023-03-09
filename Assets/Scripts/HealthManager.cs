@@ -13,7 +13,8 @@ public class HealthManager : MonoBehaviour
     [Header("Regen")]
     [SerializeField] bool hasRegen;
     [SerializeField] float regenSpeed;
-    public bool regen;
+    [SerializeField] float regenTimer;
+    float startRegenTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,23 +24,17 @@ public class HealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (regen)
+        if (hasRegen)
         {
-            Mathf.Lerp(health, maxHealth, regenSpeed * Time.deltaTime);
+            Regen();
         }
-    }
-
-    public void DisableRegen()
-    {
-        regen = false;
-    }
-
-    public void EnableRegen()
-    {
-        regen = true;
     }
     public void HealthChange(float amount)
     {
+        if(amount < 0)
+        {
+            startRegenTime = Time.time + regenTimer;
+        }
         if(health != 0)
         {
             health += amount;
@@ -55,8 +50,18 @@ public class HealthManager : MonoBehaviour
         }
     }
 
+    void Regen()
+    {
+        if(Time.time >= startRegenTime && health < maxHealth)
+        {
+            health += Time.deltaTime * regenSpeed;
+        }       
+    }
+
     public void Death()
     {
         HealthChange(-health);
     }
+
+
 }
