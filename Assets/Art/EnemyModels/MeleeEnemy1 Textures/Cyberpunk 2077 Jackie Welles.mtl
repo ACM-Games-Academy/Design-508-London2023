@@ -1,0 +1,108 @@
+newmtl Model001_Material001
+map_Kd Mouth_D.png
+map_bump Mouth_N.png
+
+newmtl Model001_Material002
+map_Kd Jacket_D.png
+map_bump Jacket_N.png
+
+newmtl Model001_Material003
+map_Kd Logo_Back_D.png
+map_bump Jacket_N.png
+
+newmtl Model001_Material004
+map_Kd Stitches_D.png
+map_bump Stitches_N.png
+
+newmtl Model001_Material005
+map_Kd Stitches_D.png
+map_bump Stitches_N.png
+
+newmtl Model001_Material006
+map_Kd Stitches_D.png
+map_bump Stitches_N.png
+
+newmtl Model001_Material007
+map_Kd Belt_D.png
+map_bump Belt_N.png
+
+newmtl Model001_Material008
+map_Kd Body_D.png
+map_bump Body_N.png
+
+newmtl Model001_Material009
+map_Kd Hand_Tatoo_D.png
+map_bump bumpmap_flat.png
+
+newmtl Model001_Material010
+map_Kd Brows_D.png
+map_bump Brows_N.png
+
+newmtl Model001_Material011
+map_Kd Eyes_D.png
+map_bump Eyes_N.png
+
+newmtl Model001_Material012
+map_Kd Hair_Bun_D.png
+map_bump bumpmap_flat.png
+
+newmtl Model001_Material013
+map_Kd Hair_D.png
+map_bump Hair_N.png
+
+newmtl Model001_Material014
+map_Kd Hair_scalp.png
+map_bump bumpmap_flat.png
+
+newmtl Model001_Material015
+map_Kd Jacket_D.png
+map_bump Jacket_N.png
+
+newmtl Model001_Material016
+map_Kd Hand_Tatoo_D.png
+map_bump bumpmap_flat.png
+
+newmtl Model001_Material017
+map_Kd Face_Cyberware_D.png
+map_bump Face_Cyberware_N.png
+
+newmtl Model001_Material018
+map_Kd Face_Cyberware_D.png
+map_bump Face_Cyberware_N.png
+
+newmtl Model001_Material019
+map_Kd Face_Cyberware_D.png
+map_bump Face_Cyberware_N.png
+
+newmtl Model001_Material020
+map_Kd Head_D.png
+map_bump Head_N.png
+
+newmtl Model001_Material021
+map_Kd eyeshad_d.png
+map_bump bumpmap_flat.png
+
+newmtl Model001_Material022
+map_Kd Accessions_D.png
+map_bump Accessions_N.png
+
+newmtl Model001_Material023
+map_Kd Accessions_D.png
+map_bump Accessions_N.png
+
+newmtl Model001_Material024
+map_Kd Lashes_D.png
+map_bump bumpmap_flat.png
+
+newmtl Model001_Material025
+map_Kd Pants_D.png
+map_bump Pants_N.png
+
+newmtl Model001_Material026
+map_Kd Shoes_D.png
+map_bump Shoes_N.png
+
+newmtl Model001_Material027
+map_Kd Tanktop_D.png
+map_bump Tanktop_N.png
+
