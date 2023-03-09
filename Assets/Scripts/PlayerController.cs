@@ -291,6 +291,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void CameraMoveForce()
+    {
+
+    }
+
     Vector3 LaserVision(Transform eyeball,LineRenderer laser)
     {
         laser.SetPosition(0, eyeball.position);
