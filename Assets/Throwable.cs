@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Throwable : MonoBehaviour
 {
-    [SerializeField] Transform holdPoint;
+    public Transform holdPoint;
     // Start is called before the first frame update
     void Start()
     {

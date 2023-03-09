@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     bool grounded;
     int presses;
     bool doublePressed;
+    bool isPickingUp;
+
     List<GameObject> spawnedEffects = new List<GameObject>();
     LineRenderer laser1;
     LineRenderer laser2;
@@ -53,8 +55,9 @@ public class PlayerController : MonoBehaviour
     [Header("[PICK UP AND THROW]")]
     [SerializeField] float throwForce;
     [SerializeField] Transform holdPosition;
-    [SerializeField] float pickupSpeed;
+    [SerializeField] float pickupTime;
     GameObject currentlyTouchedPickup;
+    float elapsedThrowTime;
     bool pickingUp;
 
     [Header("[FLIGHT]")]
@@ -135,6 +138,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             currentRegenRate = 0;
+        }
+        if (pickingUp)
+        {
+            PickUp();
         }
         print(energy);
     }
@@ -243,7 +250,11 @@ public class PlayerController : MonoBehaviour
                 canPunch = false;
                 ani.SetBool("punch", true);
                 Invoke("Punch", punchWaitTime);
-            }        
+            }
+            if (Input.GetKeyDown("e"))
+            {
+                pickingUp = true;
+            }
     }
 
     void GroundMovement()
@@ -270,10 +281,18 @@ public class PlayerController : MonoBehaviour
 
     void PickUp()
     {
-        if( currentlyTouchedPickup != null)
+        elapsedThrowTime += Time.deltaTime;
+        float elapsedPercentage = elapsedThrowTime / pickupTime;
+        if( currentlyTouchedPickup != null && pickingUp)
         {
-            Throwable t = GetComponent<Throwable>();
-            currentlyTouchedPickup.
+            Throwable t = currentlyTouchedPickup.GetComponent<Throwable>();
+            Vector3 heldPoint =  holdPosition.position + t.holdPoint.position;
+            currentlyTouchedPickup.transform.position = Vector3.Lerp(currentlyTouchedPickup.transform.position, heldPoint, elapsedPercentage);
+        }
+        if(elapsedPercentage > 1)
+        {
+            pickingUp = false;
+            currentlyTouchedPickup.transform.SetParent(holdPosition.transform, true);
         }
     }
 
