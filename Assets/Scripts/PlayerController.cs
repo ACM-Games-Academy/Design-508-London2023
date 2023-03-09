@@ -50,6 +50,13 @@ public class PlayerController : MonoBehaviour
     MeleeHitbox meleeScript;
     bool canPunch;
 
+    [Header("[PICK UP AND THROW]")]
+    [SerializeField] float throwForce;
+    [SerializeField] Transform holdPosition;
+    [SerializeField] float pickupSpeed;
+    GameObject currentlyTouchedPickup;
+    bool pickingUp;
+
     [Header("[FLIGHT]")]
     [SerializeField] float flightSpeed;
     [SerializeField] float riseSpeed;
@@ -261,6 +268,15 @@ public class PlayerController : MonoBehaviour
         canPunch = true;
     }
 
+    void PickUp()
+    {
+        if( currentlyTouchedPickup != null)
+        {
+            Throwable t = GetComponent<Throwable>();
+            currentlyTouchedPickup.
+        }
+    }
+
     void Flying()
     {
         EnergyDrain(flightDrain);
@@ -427,4 +443,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent( out Throwable t))
+        {
+            currentlyTouchedPickup = t.gameObject;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out Throwable t))
+        {
+            currentlyTouchedPickup = null;
+        }
+    }
 }
