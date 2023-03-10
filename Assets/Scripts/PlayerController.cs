@@ -286,7 +286,8 @@ public class PlayerController : MonoBehaviour
         if( currentlyTouchedPickup != null && pickingUp)
         {
             Throwable t = currentlyTouchedPickup.GetComponent<Throwable>();
-            Vector3 heldPoint =  holdPosition.position + t.holdPoint.position;
+            Vector3 heldPoint =  holdPosition.position - t.holdPoint.position;
+
             currentlyTouchedPickup.transform.position = Vector3.Lerp(currentlyTouchedPickup.transform.position, heldPoint, elapsedPercentage);
         }
         if(elapsedPercentage > 1)
