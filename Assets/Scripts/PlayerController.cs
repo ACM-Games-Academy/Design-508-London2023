@@ -57,8 +57,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform holdPosition;
     [SerializeField] float pickupTime;
     GameObject currentlyTouchedPickup;
+    enum pickupStates {notholding,pickingUp,holding}
+    pickupStates pickUpState;
     float elapsedThrowTime;
-    bool pickingUp;
 
     [Header("[FLIGHT]")]
     [SerializeField] float flightSpeed;
@@ -139,11 +140,18 @@ public class PlayerController : MonoBehaviour
         {
             currentRegenRate = 0;
         }
-        if (pickingUp)
+        switch (pickUpState)
         {
-            PickUp();
+            case pickupStates.pickingUp:
+                PickUp();
+                break;
+            case pickupStates.holding:
+                if (Input.GetKeyDown("r"))
+                {
+                    Throw();
+                }
+                break;
         }
-        print(energy);
     }
 
     
@@ -251,9 +259,9 @@ public class PlayerController : MonoBehaviour
                 ani.SetBool("punch", true);
                 Invoke("Punch", punchWaitTime);
             }
-            if (Input.GetKeyDown("e"))
+            if (Input.GetKeyDown("e") && pickUpState == pickupStates.notholding)
             {
-                pickingUp = true;
+                pickUpState = pickupStates.pickingUp;
             }
     }
 
@@ -279,22 +287,48 @@ public class PlayerController : MonoBehaviour
         canPunch = true;
     }
 
+    void TogglePhysics(GameObject go,bool toggleState)
+    { 
+        if(go.TryGetComponent(out Collider collider))
+        {
+            foreach (Collider c in go.GetComponentsInChildren<Collider>())
+            {
+                c.enabled = toggleState;
+            }
+        }
+        if(go.TryGetComponent(out Rigidbody rb))
+        {
+            rb.isKinematic = !toggleState;
+            rb.useGravity = toggleState;
+        }
+    }
+
     void PickUp()
     {
-        elapsedThrowTime += Time.deltaTime;
-        float elapsedPercentage = elapsedThrowTime / pickupTime;
-        if( currentlyTouchedPickup != null && pickingUp)
+        if (currentlyTouchedPickup != null)
         {
+            //disabling physics
+            TogglePhysics(currentlyTouchedPickup, false);
+            elapsedThrowTime += Time.deltaTime;
+            float elapsedPercentage = elapsedThrowTime / pickupTime;
             Throwable t = currentlyTouchedPickup.GetComponent<Throwable>();
-            Vector3 heldPoint =  holdPosition.position - t.holdPoint.position;
-
-            currentlyTouchedPickup.transform.position = Vector3.Lerp(currentlyTouchedPickup.transform.position, heldPoint, elapsedPercentage);
-        }
-        if(elapsedPercentage > 1)
-        {
-            pickingUp = false;
             currentlyTouchedPickup.transform.SetParent(holdPosition.transform, true);
-        }
+            currentlyTouchedPickup.transform.position = Vector3.Lerp(currentlyTouchedPickup.transform.position, holdPosition.position, elapsedPercentage);
+            currentlyTouchedPickup.transform.localRotation = Quaternion.Lerp(currentlyTouchedPickup.transform.localRotation,Quaternion.Euler(t.holdRotation.x, t.holdRotation.y, t.holdRotation.z),elapsedPercentage);
+            if (elapsedPercentage >= 1)
+            {
+                pickUpState = pickupStates.holding;
+                currentlyTouchedPickup.transform.SetParent(holdPosition.transform, true);
+            }
+        }       
+    }
+
+    void Throw()
+    {
+        TogglePhysics(currentlyTouchedPickup, true);
+        currentlyTouchedPickup.GetComponent<Rigidbody>().AddForce(guy.forward * throwForce, ForceMode.Impulse);
+        pickUpState = pickupStates.notholding;
+        currentlyTouchedPickup.transform.SetParent(null);
     }
 
     void Flying()

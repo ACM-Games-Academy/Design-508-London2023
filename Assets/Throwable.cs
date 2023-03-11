@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Throwable : MonoBehaviour
 {
-    public Transform holdPoint;
+    public Vector3 holdRotation;
     // Start is called before the first frame update
     void Start()
     {
