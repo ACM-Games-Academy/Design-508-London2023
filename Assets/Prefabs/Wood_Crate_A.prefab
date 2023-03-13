@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8aa3a1f2554434d87e71ebdaa933ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdRotation: {x: -15, y: 55, z: -15}
+  holdRotation: {x: -35.473, y: 105.931, z: -94.134}
 --- !u!65 &1524713040015505111
 BoxCollider:
   m_ObjectHideFlags: 0
