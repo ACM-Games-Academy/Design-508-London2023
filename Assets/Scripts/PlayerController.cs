@@ -309,6 +309,8 @@ public class PlayerController : MonoBehaviour
         {
             //disabling physics
             TogglePhysics(currentlyTouchedPickup, false);
+            //setting animator boolean
+            ani.SetBool("carrying", true);
             elapsedThrowTime += Time.deltaTime;
             float elapsedPercentage = elapsedThrowTime / pickupTime;
             Throwable t = currentlyTouchedPickup.GetComponent<Throwable>();
@@ -329,6 +331,7 @@ public class PlayerController : MonoBehaviour
         currentlyTouchedPickup.GetComponent<Rigidbody>().AddForce(guy.forward * throwForce, ForceMode.Impulse);
         pickUpState = pickupStates.notholding;
         currentlyTouchedPickup.transform.SetParent(null);
+        ani.SetBool("carrying", false);
     }
 
     void Flying()

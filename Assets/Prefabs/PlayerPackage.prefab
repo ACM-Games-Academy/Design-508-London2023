@@ -2903,7 +2903,7 @@ MonoBehaviour:
   punchCollider: {fileID: 5856801781880337724}
   punchWaitTime: 0.6
   throwForce: 40
-  holdPosition: {fileID: 5256306573389667864}
+  holdPosition: {fileID: 827517633602024467}
   pickupTime: 0.2
   flightSpeed: 300
   riseSpeed: 200
