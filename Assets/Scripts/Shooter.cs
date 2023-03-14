@@ -133,8 +133,6 @@ public class Shooter : MonoBehaviour
         currentTrail = Instantiate(bullet, Shootpoint.position,Shootpoint.rotation);
         float travelTime = currentTrail.GetComponent<TrailRenderer>().time;
         float currentTime = Time.time;
-        print("shootpoint" + currentTrail.transform.position);
-        print("trail" + currentTrail.transform.position);
         while(Time.time < currentTime + travelTime)
         {
             float lerpTime = (Time.time - currentTime) / travelTime;

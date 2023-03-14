@@ -4,8 +4,12 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using TMPro;
 
+public delegate void freeze();
+
 public class PlayerController : MonoBehaviour
 {
+    public static event freeze freezeEvent;
+
     Rigidbody b;
     bool grounded;
     int presses;
@@ -202,10 +206,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (superSpeed)
                 {
-                    sprintMultiplier *= speedMultiplier;
-                    Time.timeScale /= speedMultiplier;
-                    Application.targetFrameRate = 120;
-            }
+                    freezeEvent();
+                }
                 moveSpeed *= sprintMultiplier;
                 flightSpeed *= sprintMultiplier;
                 ani.SetBool("sprinting", true);
@@ -217,10 +219,8 @@ public class PlayerController : MonoBehaviour
                 ani.SetBool("sprinting", false);
                 if (superSpeed)
                 {
-                    sprintMultiplier /= speedMultiplier;
-                    Time.timeScale *= speedMultiplier;
-                    Application.targetFrameRate = 120;
-            }
+
+                }
         }
 
             //regular movement

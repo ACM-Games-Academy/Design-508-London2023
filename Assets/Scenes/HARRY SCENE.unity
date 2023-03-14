@@ -1606,6 +1606,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781413637951, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
+      propertyPath: superSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5856801781413637951, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
+        type: 3}
       propertyPath: punchCooldown
       value: 0.75
       objectReference: {fileID: 0}
@@ -3655,6 +3660,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7167034802001215564, guid: 9c77712e4d9d1904dad4a3c09ab2002e,
+        type: 3}
+      propertyPath: shootDistance
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7167034802001215573, guid: 9c77712e4d9d1904dad4a3c09ab2002e,
         type: 3}

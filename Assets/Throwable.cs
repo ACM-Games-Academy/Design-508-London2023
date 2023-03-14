@@ -19,7 +19,8 @@ public class Throwable : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(thrown && collision.gameObject != gameObject)
+        // layermask == (layermask | (1 << layer))
+        if (thrown && destroyMask ==  (destroyMask | 1 << collision.gameObject.layer))
         {
             if(TryGetComponent(out HealthManager health))
             {
