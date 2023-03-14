@@ -12,6 +12,10 @@ GameObject:
   - component: {fileID: 1758478248352546599}
   - component: {fileID: 1758478248352546620}
   - component: {fileID: 1758478248352546621}
+  - component: {fileID: 4510552767248416076}
+  - component: {fileID: 557639577461443865}
+  - component: {fileID: 52123060017227321}
+  - component: {fileID: 2015220597}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -85,13 +89,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8aa3a1f2554434d87e71ebdaa933ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdRotation: {x: 0, y: 0, z: 0}
+  holdRotation: {x: -115.521, y: 95.088, z: 95.525}
   damageVelocity: 6
   printObjectVelocity: 0
   thrownDamage: 10
   disableMask:
     serializedVersion: 2
     m_Bits: 9
+--- !u!136 &4510552767248416076
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758478248352546597}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.68922746
+  m_Height: 2.071553
+  m_Direction: 1
+  m_Center: {x: 0.02497727, y: -0.754767, z: 0.67999995}
+--- !u!65 &557639577461443865
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758478248352546597}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.88, y: 1.04, z: 0.88}
+  m_Center: {x: 0, y: -1.27, z: 0.6799999}
+--- !u!65 &52123060017227321
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758478248352546597}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.194519, y: 2.4468598, z: 2.194519}
+  m_Center: {x: 0.0012814465, y: -0.55, z: 0.57}
+--- !u!114 &2015220597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758478248352546597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 12
+  deathScript: {fileID: 1758478248352546599}
+  deathFunction: Explode
+  health: 0
+  hasRegen: 0
+  regenSpeed: 0
+  regenTimer: 0
 --- !u!1001 &1758478247826203168
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -132,12 +195,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5e57001a106a9a44d839bda7fd221881,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.033
+      value: -0.76
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e57001a106a9a44d839bda7fd221881,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.653
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e57001a106a9a44d839bda7fd221881,
         type: 3}
@@ -232,42 +295,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1758478247826203168}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4023429576021123877 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -5786763474027380475, guid: 5e57001a106a9a44d839bda7fd221881,
-    type: 3}
-  m_PrefabInstance: {fileID: 1758478247826203168}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1758478247826203171
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4023429576021123877}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4522230124505927444, guid: 5e57001a106a9a44d839bda7fd221881, type: 3}
---- !u!114 &1758478247826203172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4023429576021123877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 12
-  deathScript: {fileID: 1758478248352546599}
-  deathFunction: Explode
-  health: 0
-  hasRegen: 0
-  regenSpeed: 0
-  regenTimer: 0

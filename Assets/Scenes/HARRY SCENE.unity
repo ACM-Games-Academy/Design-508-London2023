@@ -1662,17 +1662,17 @@ PrefabInstance:
     - target: {fileID: 5856801781755219116, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.22965086
+      value: 0.22965084
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781755219116, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.005613763
+      value: 0.0056138006
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781755219116, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0013246315
+      value: -0.0013246401
       objectReference: {fileID: 0}
     - target: {fileID: 5856801782150721974, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
@@ -1787,7 +1787,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27730
+  m_Name: pb_Mesh138540
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2295,7 +2295,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27688
+  m_Name: pb_Mesh138498
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2627,7 +2627,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27670
+  m_Name: pb_Mesh138480
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3418,7 +3418,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27656
+  m_Name: pb_Mesh138466
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3690,17 +3690,17 @@ PrefabInstance:
     - target: {fileID: 1758478248352546619, guid: ef833d83a57c9f047a8a78ee56e39747,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -34.15
+      value: -34.212
       objectReference: {fileID: 0}
     - target: {fileID: 1758478248352546619, guid: ef833d83a57c9f047a8a78ee56e39747,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.459
+      value: 0.972
       objectReference: {fileID: 0}
     - target: {fileID: 1758478248352546619, guid: ef833d83a57c9f047a8a78ee56e39747,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.34
+      value: 17.91
       objectReference: {fileID: 0}
     - target: {fileID: 1758478248352546619, guid: ef833d83a57c9f047a8a78ee56e39747,
         type: 3}
