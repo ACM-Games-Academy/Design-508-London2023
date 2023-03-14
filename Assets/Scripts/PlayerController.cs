@@ -144,18 +144,6 @@ public class PlayerController : MonoBehaviour
         {
             currentRegenRate = 0;
         }
-        switch (pickUpState)
-        {
-            case pickupStates.pickingUp:
-                PickUp();
-                break;
-            case pickupStates.holding:
-                if (Input.GetKeyDown("r"))
-                {
-                    Throw();
-                }
-                break;
-        }
     }
 
     
@@ -179,6 +167,7 @@ public class PlayerController : MonoBehaviour
             ani.SetBool("moving", false);
         }
     }
+
     private void FixedUpdate()
     {
         if (!disableInputs)
@@ -221,8 +210,7 @@ public class PlayerController : MonoBehaviour
                 {
 
                 }
-        }
-
+            }
             //regular movement
             if (!isFlying)
             {
@@ -237,32 +225,47 @@ public class PlayerController : MonoBehaviour
             {
                 Flying();
             }
-            if (laserVision)
+
+        //PLAYER ACTIONS
+            switch (pickUpState)
             {
-                hitpoint1 = LaserVision(eyeball1,laser1);
-                hitpoint2 = LaserVision(eyeball2, laser2);
-                
-                laserMidpoint = hitpoint1 + (hitpoint2 - hitpoint1) / 2;
-                crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);               
+                case pickupStates.pickingUp:
+                    PickUp();
+                    break;
+                case pickupStates.holding:
+                    RotatePlayerToCam();
+                    if (Input.GetKeyDown("r"))
+                    {
+                        Throw();
+                    }
+                    break;
+                case pickupStates.notholding:
+                    if (laserVision)
+                    {
+                        hitpoint1 = LaserVision(eyeball1, laser1);
+                        hitpoint2 = LaserVision(eyeball2, laser2);
+
+                        laserMidpoint = hitpoint1 + (hitpoint2 - hitpoint1) / 2;
+                        crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);
+                    }
+                    if (Input.GetKeyDown("e") && currentlyTouchedPickup != null)
+                    {
+                        pickUpState = pickupStates.pickingUp;
+                    }
+                    break;
             }
+            //Rotating the player to the camera direction
             if (ani.GetBool("punch"))
             {
-                Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
-                if (Vector3.Angle(head.forward, direction) > angleDiff)
-                {
-                    guy.rotation = Quaternion.Slerp(guy.rotation, Quaternion.Euler(0, cam.eulerAngles.y, 0), rotationSpeed * Time.deltaTime);
-                }
+                RotatePlayerToCam();
             }
-            if((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch)
+            if((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch && pickUpState == pickupStates.notholding)
             {
                 canPunch = false;
                 ani.SetBool("punch", true);
                 Invoke("Punch", punchWaitTime);
             }
-            if (Input.GetKeyDown("e") && pickUpState == pickupStates.notholding)
-            {
-                pickUpState = pickupStates.pickingUp;
-            }
+
     }
 
     void GroundMovement()
@@ -327,10 +330,11 @@ public class PlayerController : MonoBehaviour
 
     void Throw()
     {
-        TogglePhysics(currentlyTouchedPickup, true);
-        currentlyTouchedPickup.GetComponent<Rigidbody>().AddForce(guy.forward * throwForce, ForceMode.Impulse);
+        GameObject ob = currentlyTouchedPickup;
+        TogglePhysics(ob, true);
+        ob.GetComponent<Rigidbody>().AddForce(cam.forward * throwForce, ForceMode.Impulse);       
         pickUpState = pickupStates.notholding;
-        currentlyTouchedPickup.transform.SetParent(null);
+        ob.transform.SetParent(null);
         ani.SetBool("carrying", false);
     }
 
@@ -424,8 +428,6 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-
-
     void AwaitSecondPress()
     {
         if(presses % 2 == 0)
@@ -457,13 +459,12 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(spawnedEffects[0]);
         spawnedEffects.Remove(spawnedEffects[0]);
-    }
+    }//despawning old laser effects
 
 
     public void Die()
     {
         crosshair.gameObject.SetActive(false);
-        
         ani.SetBool("dead", true);
         disableInputs = true;
         laser1.enabled = false;
@@ -497,6 +498,15 @@ public class PlayerController : MonoBehaviour
         if(energy > maxEnergy)
         {
             energy = maxEnergy;
+        }
+    }
+
+    void RotatePlayerToCam()
+    {
+        Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
+        if (Vector3.Angle(head.forward, direction) > angleDiff)
+        {
+            guy.rotation = Quaternion.Slerp(guy.rotation, Quaternion.Euler(0, cam.eulerAngles.y, 0), rotationSpeed * Time.deltaTime);
         }
     }
 

@@ -2934,11 +2934,11 @@ MonoBehaviour:
   rotationSpeed: 4
   guy: {fileID: 5856801781880337727}
   punchTime: 0.3
-  punchCooldown: 1.5
-  punchForce: 18
+  punchCooldown: 0.75
+  punchForce: 40
   punchCollider: {fileID: 5856801781880337724}
   punchWaitTime: 0.6
-  throwForce: 40
+  throwForce: 350
   holdPosition: {fileID: 827517633602024467}
   pickupTime: 0.2
   flightSpeed: 300
@@ -3015,7 +3015,7 @@ MonoBehaviour:
   health: 0
   hasRegen: 1
   regenSpeed: 5
-  regenTimer: 5
+  regenTimer: 10
 --- !u!1 &5856801781487310901
 GameObject:
   m_ObjectHideFlags: 0
@@ -3028,7 +3028,6 @@ GameObject:
   - component: {fileID: 5856801781487310907}
   - component: {fileID: 5856801781487310906}
   - component: {fileID: 5856801781487310910}
-  - component: {fileID: 1323335384359185312}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3137,19 +3136,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1323335384359185312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5856801781487310901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f15c9a31a3fcac4b90d767ca09ae97b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parent: {fileID: 5856801781413637945}
 --- !u!1 &5856801781755219118
 GameObject:
   m_ObjectHideFlags: 3
@@ -3526,6 +3512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5856801782150721975}
   - component: {fileID: 5856801782150721974}
+  - component: {fileID: 9068946724396196483}
   m_Layer: 0
   m_Name: CM FreeLook1
   m_TagString: Untagged
@@ -3655,6 +3642,36 @@ MonoBehaviour:
   - {fileID: 5856801781755219119}
   - {fileID: 5856801782382903514}
   - {fileID: 5856801783289176083}
+--- !u!114 &9068946724396196483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5856801782150721969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e501d18bb52cf8c40b1853ca4904654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 9
+  m_IgnoreTag: 
+  m_TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_MinimumDistanceFromTarget: 0.1
+  m_AvoidObstacles: 1
+  m_DistanceLimit: 0
+  m_MinimumOcclusionTime: 0
+  m_CameraRadius: 0.1
+  m_Strategy: 1
+  m_MaximumEffort: 10
+  m_SmoothingTime: 0
+  m_Damping: 0
+  m_DampingWhenOccluded: 0
+  m_OptimalTargetDistance: 0
 --- !u!1 &5856801782222167185
 GameObject:
   m_ObjectHideFlags: 0

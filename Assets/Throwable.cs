@@ -3,28 +3,48 @@ using UnityEngine;
 public class Throwable : MonoBehaviour
 {
     public Vector3 holdRotation;
-    public bool thrown;
-    [SerializeField] LayerMask destroyMask;
+    [Header("At what speed does the object deal damage")]
+    [SerializeField] float damageVelocity;
+    [SerializeField] bool printObjectVelocity;
+    [Header("How much damage does it deal")]
+    [SerializeField] float thrownDamage;
+    [Header("What layers causes the object to destroy")]
+    [SerializeField] LayerMask disableMask;
+    Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();   
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (printObjectVelocity)
+        {
+            print(gameObject.name + " velocity: " + rb.velocity.magnitude);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // layermask == (layermask | (1 << layer))
-        if (thrown && destroyMask ==  (destroyMask | 1 << collision.gameObject.layer))
+        GameObject colOb = collision.gameObject;
+        if (rb.velocity.magnitude > damageVelocity)
         {
-            if(TryGetComponent(out HealthManager health))
+            if (disableMask == (disableMask | 1 << colOb.layer))
             {
-                health.Death();
+                if (TryGetComponent(out HealthManager health))
+                {
+                    health.Death();
+                }
+            }
+            if (colOb.TryGetComponent(out HealthManager hlth))
+            {
+                hlth.HealthChange(-thrownDamage);
+            }
+            if (colOb.TryGetComponent(out Ragdoll rd))
+            {
+                rd.StartRagdoll();
             }
         }
     }
