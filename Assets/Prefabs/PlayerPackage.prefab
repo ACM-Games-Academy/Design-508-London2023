@@ -2938,9 +2938,9 @@ MonoBehaviour:
   punchForce: 40
   punchCollider: {fileID: 5856801781880337724}
   punchWaitTime: 0.6
-  throwForce: 350
+  throwForce: 500
   holdPosition: {fileID: 827517633602024467}
-  pickupTime: 0.2
+  pickupTime: 0.5
   flightSpeed: 300
   riseSpeed: 200
   lowerSpeed: 150

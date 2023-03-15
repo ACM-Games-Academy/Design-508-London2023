@@ -81,7 +81,7 @@ public class Enemy : MonoBehaviour
     public void Die()
     {
         Transform hips = ani.GetBoneTransform(HumanBodyBones.Hips);
-        Instantiate(bloodEffect, hips.position, hips.rotation, hips);
+        Instantiate(bloodEffect, hips.position, hips.rotation);
         ragdollScript.getBackUp = false;
         if (!ragdollScript.ragdoll)
         {

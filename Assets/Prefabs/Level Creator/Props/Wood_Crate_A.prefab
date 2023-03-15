@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdRotation: {x: -35.473, y: 105.931, z: -94.134}
-  damageVelocity: 2
+  damageVelocity: 5
   printObjectVelocity: 0
   thrownDamage: 20
   disableMask:
