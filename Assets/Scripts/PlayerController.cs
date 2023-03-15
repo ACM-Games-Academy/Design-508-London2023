@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
         meleeScript.meleeDamage = punchDamage;
         meleeScript.force = punchForce;
         Application.targetFrameRate = 60;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         canPunch = true;
         energy = maxEnergy;
@@ -232,6 +232,7 @@ public class PlayerController : MonoBehaviour
                 case pickupStates.pickingUp:
                     PickUp();
                     break;
+
                 case pickupStates.holding:
                     RotatePlayerToCam();
                     if (Input.GetKeyDown("r"))
@@ -239,6 +240,7 @@ public class PlayerController : MonoBehaviour
                         Throw();
                     }
                     break;
+
                 case pickupStates.notholding:
                     if (laserVision)
                     {
@@ -247,6 +249,12 @@ public class PlayerController : MonoBehaviour
 
                         laserMidpoint = hitpoint1 + (hitpoint2 - hitpoint1) / 2;
                         crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);
+                    }
+                    if ((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch)
+                    {
+                        canPunch = false;
+                        ani.SetBool("punch", true);
+                        Invoke("Punch", punchWaitTime);
                     }
                     if (Input.GetKeyDown("e") && currentlyTouchedPickup != null)
                     {
@@ -258,12 +266,6 @@ public class PlayerController : MonoBehaviour
             if (ani.GetBool("punch"))
             {
                 RotatePlayerToCam();
-            }
-            if((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch && pickUpState == pickupStates.notholding)
-            {
-                canPunch = false;
-                ani.SetBool("punch", true);
-                Invoke("Punch", punchWaitTime);
             }
 
     }

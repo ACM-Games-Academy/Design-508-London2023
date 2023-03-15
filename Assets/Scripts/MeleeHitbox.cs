@@ -34,7 +34,6 @@ public class MeleeHitbox : Explodable
         {
             //ExplosionForce(rb);
             rb.AddForce(transform.forward* force, ForceMode.Impulse);
-            print(rb.gameObject.name);
         }
     }
 }

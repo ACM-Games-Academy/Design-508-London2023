@@ -2851,6 +2851,11 @@ PrefabInstance:
       propertyPath: destroyMask.m_Bits
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 7684864479990057291, guid: 4f5b9fd7f86fa4843b15412bae964517,
+        type: 3}
+      propertyPath: m_Mass
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f5b9fd7f86fa4843b15412bae964517, type: 3}
 --- !u!1001 &1029753519
@@ -4059,6 +4064,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MeleeEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7167034802001215573, guid: 9c77712e4d9d1904dad4a3c09ab2002e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c77712e4d9d1904dad4a3c09ab2002e, type: 3}
