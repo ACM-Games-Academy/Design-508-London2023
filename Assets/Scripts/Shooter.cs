@@ -12,7 +12,7 @@ public class Shooter : MonoBehaviour
     Transform pointer;
     [Header("Detecting The Target")]
     [SerializeField] LayerMask WhatBlocksMyView;
-    [SerializeField] [Range(1,100)]float shootDistance;
+    [SerializeField] [Range(0.01f,100)]float shootDistance;
     [Header("Aiming at the Target")]
     [SerializeField] bool isStatic;
     [SerializeField] bool rotateAtTarget;
