@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     bool doublePressed;
     bool isPickingUp;
 
+
     List<GameObject> spawnedEffects = new List<GameObject>();
     LineRenderer laser1;
     LineRenderer laser2;
@@ -71,6 +72,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float lowerSpeed;
     [SerializeField] float flightDrain;
     bool isFlying;
+
+    [Header("[ROLL]")]
+    [SerializeField] float rollSpeed;
+    [SerializeField] float iFrames;
 
     [Header("[LASER VISION]")]
     [SerializeField] float angleDiff;
@@ -228,11 +233,11 @@ public class PlayerController : MonoBehaviour
 
         //PLAYER ACTIONS
             switch (pickUpState)
-            {
+            {              
                 case pickupStates.pickingUp:
                     PickUp();
+                    currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;
                     break;
-
                 case pickupStates.holding:
                     RotatePlayerToCam();
                     if (Input.GetKeyDown("r"))
@@ -292,6 +297,11 @@ public class PlayerController : MonoBehaviour
         canPunch = true;
     }
 
+    void Roll()
+    {
+
+    }
+
     void TogglePhysics(GameObject go,bool toggleState)
     { 
         if(go.TryGetComponent(out Collider collider))
@@ -310,23 +320,26 @@ public class PlayerController : MonoBehaviour
 
     void PickUp()
     {
-        if (currentlyTouchedPickup != null)
+        if (currentlyTouchedPickup != null )
         {
-            //disabling physics
-            TogglePhysics(currentlyTouchedPickup, false);
-            //setting animator boolean
-            ani.SetBool("carrying", true);
-            elapsedThrowTime += Time.deltaTime;
-            float elapsedPercentage = elapsedThrowTime / pickupTime;
             Throwable t = currentlyTouchedPickup.GetComponent<Throwable>();
-            currentlyTouchedPickup.transform.SetParent(holdPosition.transform, true);
-            currentlyTouchedPickup.transform.position = Vector3.Lerp(currentlyTouchedPickup.transform.position, holdPosition.position, elapsedPercentage);
-            currentlyTouchedPickup.transform.localRotation = Quaternion.Lerp(currentlyTouchedPickup.transform.localRotation,Quaternion.Euler(t.holdRotation.x, t.holdRotation.y, t.holdRotation.z),elapsedPercentage);
-            if (elapsedPercentage >= 1)
+            if (t.enabled)
             {
-                pickUpState = pickupStates.holding;
+                //disabling physics
+                TogglePhysics(currentlyTouchedPickup, false);
+                //setting animator boolean
+                ani.SetBool("carrying", true);
+                elapsedThrowTime += Time.deltaTime;
+                float elapsedPercentage = elapsedThrowTime / pickupTime;
                 currentlyTouchedPickup.transform.SetParent(holdPosition.transform, true);
-            }
+                currentlyTouchedPickup.transform.position = Vector3.Lerp(currentlyTouchedPickup.transform.position, holdPosition.position, elapsedPercentage);
+                currentlyTouchedPickup.transform.localRotation = Quaternion.Lerp(currentlyTouchedPickup.transform.localRotation, Quaternion.Euler(t.holdRotation.x, t.holdRotation.y, t.holdRotation.z), elapsedPercentage);
+                if (elapsedPercentage >= 1)
+                {
+                    pickUpState = pickupStates.holding;
+                    currentlyTouchedPickup.transform.SetParent(holdPosition.transform, true);
+                }
+            }           
         }       
     }
 
@@ -338,6 +351,11 @@ public class PlayerController : MonoBehaviour
         pickUpState = pickupStates.notholding;
         ob.transform.SetParent(null);
         ani.SetBool("carrying", false);
+        ob.GetComponent<Throwable>().beingHeld = false;
+        if(ob.TryGetComponent(out Ragdoll rs))
+        {
+            rs.StartRagdoll();
+        }
     }
 
     void Flying()

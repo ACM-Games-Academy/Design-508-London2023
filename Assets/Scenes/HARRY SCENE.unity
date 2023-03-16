@@ -2559,6 +2559,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &425601105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4012362741881370135, guid: 9c77712e4d9d1904dad4a3c09ab2002e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2039894027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &425601109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425601105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8aa3a1f2554434d87e71ebdaa933ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdRotation: {x: 0, y: 0, z: 0}
+  damageVelocity: 1
+  printObjectVelocity: 0
+  thrownDamage: 5
+  disableMask:
+    serializedVersion: 2
+    m_Bits: 0
+  beingHeld: 0
+--- !u!65 &425601110
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425601105}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0.004304886, y: 0.0032941848, z: -0.08191935}
 --- !u!1001 &469596828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3216,6 +3255,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 284428461582560525, guid: e06d62b5fe4df99468cccfdbec3acc9f,
+        type: 3}
+      propertyPath: getUpDelay
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5701579798403427399, guid: e06d62b5fe4df99468cccfdbec3acc9f,
         type: 3}
       propertyPath: m_RootOrder
@@ -4908,7 +4952,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh27664
+  m_Name: pb_Mesh109948
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5093,6 +5137,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3432876089706774785, guid: 9c77712e4d9d1904dad4a3c09ab2002e,
+        type: 3}
+      propertyPath: getUpDelay
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7167034802001215563, guid: 9c77712e4d9d1904dad4a3c09ab2002e,
         type: 3}
       propertyPath: m_RootOrder

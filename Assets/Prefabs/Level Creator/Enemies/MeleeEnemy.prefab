@@ -128,7 +128,7 @@ MonoBehaviour:
   WhatBlocksMyView:
     serializedVersion: 2
     m_Bits: 265
-  shootDistance: 1.5
+  shootDistance: 1
   isStatic: 0
   rotateAtTarget: 1
   Xrotater: {fileID: 0}
@@ -281,7 +281,7 @@ Animator:
   m_GameObject: {fileID: 129415592418659815}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: ca21e0350d771be4badac1e4a209a7c9, type: 3}
-  m_Controller: {fileID: 9100000, guid: 551d269098cdd9445ae9898d5fd90ac2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3762e19aa8eb4a648b1553acd28835f3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
