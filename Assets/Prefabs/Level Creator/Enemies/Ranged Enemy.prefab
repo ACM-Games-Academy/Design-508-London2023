@@ -1057,6 +1057,39 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.39841634, y: 0.15076962, z: 0.24781507}
   m_Center: {x: 0.014147028, y: 0.0214843, z: 0.00248947}
+--- !u!65 &954547958
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7552046503830797876}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.97, y: 0.7, z: 0.61}
+  m_Center: {x: 0.014147028, y: 0.23, z: 0.00248947}
+--- !u!114 &954547959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7552046503830797876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8aa3a1f2554434d87e71ebdaa933ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdRotation: {x: -35.473, y: 105.931, z: -94.134}
+  damageVelocity: 5
+  printObjectVelocity: 1
+  thrownDamage: 20
+  disableMask:
+    serializedVersion: 2
+    m_Bits: 8
+  beingHeld: 0
 --- !u!1 &8246703595847453829 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4123271412932705059, guid: 2207f245b863a01498a55868f50cefe2,

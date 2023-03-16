@@ -352,6 +352,10 @@ public class PlayerController : MonoBehaviour
         ob.transform.SetParent(null);
         ani.SetBool("carrying", false);
         ob.GetComponent<Throwable>().beingHeld = false;
+        if(ob.TryGetComponent(out Ragdoll rs))
+        {
+            rs.StartRagdoll();
+        }
     }
 
     void Flying()
