@@ -30,6 +30,8 @@ public class Ragdoll : MonoBehaviour
     public bool ragdoll;
     public bool getBackUp;
     bool resettingBones;
+    bool throwable;
+    Throwable throwScript;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +58,12 @@ public class Ragdoll : MonoBehaviour
         {
             animationTransforms[x] = new BoneTransform();
             ragdollTransforms[x] = new BoneTransform();
+        }
+        if(hips.TryGetComponent(out Throwable t))
+        {
+            throwable = true;
+            throwScript = t;
+            t.enabled = false;
         }
         //
         StartAnimationTransforms();
@@ -85,6 +93,10 @@ public class Ragdoll : MonoBehaviour
         ani.enabled = !ragdoll;
         agent.enabled = !ragdoll;
         coll.enabled = !ragdoll;
+        if(throwScript != null)
+        {
+            throwScript.enabled = ragdoll;
+        }     
         foreach(Rigidbody rb in ragdollBones)
         {
             rb.isKinematic = !ragdoll;
@@ -122,10 +134,18 @@ public class Ragdoll : MonoBehaviour
 
     public void GetUp()
     {
-        HipRotationReset();
-        HipPositionReset();
-        ragdollTransforms = PopulateTransforms(bones);
-        resettingBones = true;
+        bool beingHeld = false;
+        if(throwScript != null)
+        {
+            beingHeld = throwScript.beingHeld;
+        }
+        if (!beingHeld)
+        {
+            HipRotationReset();
+            HipPositionReset();
+            ragdollTransforms = PopulateTransforms(bones);
+            resettingBones = true;
+        }      
     }
 
 

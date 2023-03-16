@@ -1,5 +1,7 @@
 using UnityEngine;
 
+
+
 public class Throwable : MonoBehaviour
 {
     public Vector3 holdRotation;
@@ -11,6 +13,8 @@ public class Throwable : MonoBehaviour
     [Header("What layers causes the object to destroy")]
     [SerializeField] LayerMask disableMask;
     Rigidbody rb;
+    [Header("don't fiddle")]
+    public bool beingHeld;
     // Start is called before the first frame update
     void Start()
     {
