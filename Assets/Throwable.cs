@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-
+[RequireComponent(typeof(Rigidbody))]
 public class Throwable : MonoBehaviour
 {
     public Vector3 holdRotation;
