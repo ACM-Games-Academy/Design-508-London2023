@@ -58,10 +58,11 @@ public class PlayerController : MonoBehaviour
     bool canPunch;
 
     [Header("[PICK UP AND THROW]")]
-    [SerializeField] float throwForce;
+    [SerializeField] float throwAccelaration;
     [SerializeField] Transform holdPosition;
     [SerializeField] float pickupTime;
     GameObject currentlyTouchedPickup;
+
     enum pickupStates {notholding,pickingUp,holding}
     pickupStates pickUpState;
     float elapsedThrowTime;
@@ -235,7 +236,7 @@ public class PlayerController : MonoBehaviour
             switch (pickUpState)
             {              
                 case pickupStates.pickingUp:
-                    PickUp();
+                    PickUp();                   
                     currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;
                     break;
                 case pickupStates.holding:
@@ -347,7 +348,11 @@ public class PlayerController : MonoBehaviour
     {
         GameObject ob = currentlyTouchedPickup;
         TogglePhysics(ob, true);
-        ob.GetComponent<Rigidbody>().AddForce(cam.forward * throwForce, ForceMode.Impulse);       
+        foreach ( Rigidbody rb in ob.GetComponentsInChildren<Rigidbody>())
+        {
+            float throwForce = rb.mass * throwAccelaration;
+            rb.AddForce(cam.forward * throwForce, ForceMode.Impulse);
+        }           
         pickUpState = pickupStates.notholding;
         ob.transform.SetParent(null);
         ani.SetBool("carrying", false);

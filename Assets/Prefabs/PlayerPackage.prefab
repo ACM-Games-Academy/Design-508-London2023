@@ -2928,7 +2928,7 @@ MonoBehaviour:
     m_Bits: 72
   GroundRaycastLength: 0.3
   jumpForce: 600
-  moveSpeed: 150
+  moveSpeed: 200
   sprintMultiplier: 1.5
   fallSpeed: 250
   rotationSpeed: 4
@@ -2938,13 +2938,15 @@ MonoBehaviour:
   punchForce: 40
   punchCollider: {fileID: 5856801781880337724}
   punchWaitTime: 0.6
-  throwForce: 500
+  throwAccelaration: 0
   holdPosition: {fileID: 827517633602024467}
   pickupTime: 0.5
   flightSpeed: 300
   riseSpeed: 200
   lowerSpeed: 150
   flightDrain: 0
+  rollSpeed: 0
+  iFrames: 0
   angleDiff: 10
   head: {fileID: 45495294131082424}
   eyeball1: {fileID: 5782222353903378165}
