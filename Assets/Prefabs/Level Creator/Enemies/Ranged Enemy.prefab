@@ -1044,19 +1044,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &1056469597
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7552046503830797876}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.39841634, y: 0.15076962, z: 0.24781507}
-  m_Center: {x: 0.014147028, y: 0.0214843, z: 0.00248947}
 --- !u!65 &954547958
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1070,7 +1057,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.97, y: 0.7, z: 0.61}
   m_Center: {x: 0.014147028, y: 0.23, z: 0.00248947}
---- !u!114 &954547959
+--- !u!65 &1056469597
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7552046503830797876}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.39841634, y: 0.15076962, z: 0.24781507}
+  m_Center: {x: 0.014147028, y: 0.0214843, z: 0.00248947}
+--- !u!65 &3888251702696164508
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7552046503830797876}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.97, y: 0.7, z: 0.61}
+  m_Center: {x: 0.014147028, y: 0.23, z: 0.00248947}
+--- !u!114 &3493783289921672854
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1083,13 +1096,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdRotation: {x: -35.473, y: 105.931, z: -94.134}
-  damageVelocity: 5
-  printObjectVelocity: 1
+  damageVelocity: 10
+  printObjectVelocity: 0
   thrownDamage: 20
-  disableMask:
+  takesDamageMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 9
+  impactHealthLoss: 30
+  useDraggedInHealthManager: 1
+  draggedInHM: {fileID: 5701579798403427393}
   beingHeld: 0
+  originalParent: {fileID: 0}
 --- !u!1 &8246703595847453829 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4123271412932705059, guid: 2207f245b863a01498a55868f50cefe2,

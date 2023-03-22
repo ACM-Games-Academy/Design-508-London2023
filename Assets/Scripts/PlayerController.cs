@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     [Header("[PUNCH]")]
     [SerializeField] float punchTime;
     [SerializeField] float punchCooldown;
-    [SerializeField] float punchForce;
+    [SerializeField] float punchAccelaration;
     [SerializeField] BoxCollider punchCollider;
     [SerializeField] float punchWaitTime;
     MeleeHitbox meleeScript;
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
         //OTHER STUFF
         meleeScript.meleeDamage = punchDamage;
-        meleeScript.force = punchForce;
+        meleeScript.meleeAccelaration = punchAccelaration;
         Application.targetFrameRate = 60;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -236,12 +236,12 @@ public class PlayerController : MonoBehaviour
             switch (pickUpState)
             {              
                 case pickupStates.pickingUp:
-                    PickUp();                   
+                    PickUp();                      
                     currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;
                     break;
                 case pickupStates.holding:
                     RotatePlayerToCam();
-                    if (Input.GetKeyDown("r"))
+                    if (Input.GetKeyDown("e"))
                     {
                         Throw();
                     }
@@ -341,12 +341,17 @@ public class PlayerController : MonoBehaviour
                     currentlyTouchedPickup.transform.SetParent(holdPosition.transform, true);
                 }
             }           
-        }       
+        }
+        else
+        {
+            pickUpState = pickupStates.notholding;
+        }
     }
 
     void Throw()
     {
         GameObject ob = currentlyTouchedPickup;
+        Throwable ts = ob.GetComponent<Throwable>();
         TogglePhysics(ob, true);
         foreach ( Rigidbody rb in ob.GetComponentsInChildren<Rigidbody>())
         {
@@ -354,9 +359,9 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(cam.forward * throwForce, ForceMode.Impulse);
         }           
         pickUpState = pickupStates.notholding;
-        ob.transform.SetParent(null);
+        ob.transform.SetParent(ts.originalParent);
         ani.SetBool("carrying", false);
-        ob.GetComponent<Throwable>().beingHeld = false;
+        ts.beingHeld = false;
         if(ob.TryGetComponent(out Ragdoll rs))
         {
             rs.StartRagdoll();

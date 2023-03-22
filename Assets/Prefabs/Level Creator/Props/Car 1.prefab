@@ -984,6 +984,8 @@ GameObject:
   - component: {fileID: 5405262511742200859}
   - component: {fileID: 5405262511742200861}
   - component: {fileID: 5405262511742200860}
+  - component: {fileID: 5719891138197208785}
+  - component: {fileID: 2565703900103255114}
   m_Layer: 0
   m_Name: Car 1
   m_TagString: Untagged
@@ -1028,9 +1030,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4348643187096890043}
   serializedVersion: 2
-  m_Mass: 50
+  m_Mass: 500
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1062,13 +1064,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdRotation: {x: 0, y: 0, z: 0}
-  damageVelocity: 0
+  damageVelocity: 20
   printObjectVelocity: 0
-  thrownDamage: 0
-  disableMask:
+  thrownDamage: 30
+  takesDamageMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 73
+  impactHealthLoss: 20
+  useDraggedInHealthManager: 0
+  draggedInHM: {fileID: 0}
   beingHeld: 0
+  originalParent: {fileID: 0}
+--- !u!114 &5719891138197208785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348643187096890043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c311336d7681a614c84a36a07323c43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
+  blastDamage: 50
+  force: 10000
+  upwardModifier: 20
+  affectedRadius: 4
+  radiusOffset: {x: 0, y: 0, z: 0}
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 329
+  destructionMode: 0
+--- !u!114 &2565703900103255114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348643187096890043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  deathScript: {fileID: 5719891138197208785}
+  deathFunction: Explode
+  health: 50
+  hasRegen: 0
+  regenSpeed: 0
+  regenTimer: 0
 --- !u!1 &4783089605383547170
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7167034802001215563
 Transform:
   m_ObjectHideFlags: 0
@@ -571,19 +571,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &939755999678987000
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4012362741881370135}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.38578415, y: 0.2698957, z: 0.23121543}
-  m_Center: {x: 0.004304886, y: 0.0032941848, z: -0.08191935}
 --- !u!65 &425601110
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -596,6 +583,19 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0.004304886, y: 0.0032941848, z: -0.08191935}
+--- !u!65 &939755999678987000
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4012362741881370135}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.38578415, y: 0.2698957, z: 0.23121543}
   m_Center: {x: 0.004304886, y: 0.0032941848, z: -0.08191935}
 --- !u!114 &425601109
 MonoBehaviour:
@@ -610,13 +610,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdRotation: {x: 0, y: 0, z: 0}
-  damageVelocity: 1
+  damageVelocity: 10
   printObjectVelocity: 0
-  thrownDamage: 5
-  disableMask:
+  thrownDamage: 20
+  takesDamageMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 72
+  impactHealthLoss: 30
+  useDraggedInHealthManager: 1
+  draggedInHM: {fileID: 7167034802001215565}
   beingHeld: 0
+  originalParent: {fileID: 0}
 --- !u!1 &4072480382539049652 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3859290550598588930, guid: ca21e0350d771be4badac1e4a209a7c9,

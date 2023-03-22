@@ -6,6 +6,7 @@ public class MeleeHitbox : Explodable
 {
     [Header("Melee Properties")]
     public float meleeDamage;
+    public float meleeAccelaration;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +34,8 @@ public class MeleeHitbox : Explodable
         if (collisionObject.TryGetComponent(out Rigidbody rb))
         {
             //ExplosionForce(rb);
-            rb.AddForce(transform.forward* force, ForceMode.Impulse);
+            float meleeForce = rb.mass * meleeAccelaration;
+            rb.AddForce(transform.forward* meleeForce, ForceMode.Impulse);
         }
     }
 }
