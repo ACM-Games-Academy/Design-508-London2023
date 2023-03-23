@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5077590921675784060}
   - component: {fileID: 8674027976857670589}
   - component: {fileID: 888457416}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pasted__polySurface4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1011,7 +1011,7 @@ GameObject:
   - component: {fileID: 5186018049944172525}
   - component: {fileID: 6210509400228761804}
   - component: {fileID: 1069576698}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pasted__polySurface1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2867,7 +2867,7 @@ GameObject:
   - component: {fileID: 7944148402698238431}
   - component: {fileID: 2281715607132056881}
   - component: {fileID: 540235048}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: pasted__polySurface2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
