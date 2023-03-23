@@ -82,6 +82,10 @@ public class Ragdoll : MonoBehaviour
     {
         ragdoll = true;
         RagdollCheck();
+        if (throwScript != null)
+        {
+            throwScript.enabled = true;
+        }
         if (getBackUp)
         {
             Invoke("GetUp", getUpDelay);
@@ -92,11 +96,7 @@ public class Ragdoll : MonoBehaviour
     {
         ani.enabled = !ragdoll;
         agent.enabled = !ragdoll;
-        coll.enabled = !ragdoll;
-        if(throwScript != null)
-        {
-            throwScript.enabled = ragdoll;
-        }     
+        coll.enabled = !ragdoll;   
         foreach(Rigidbody rb in ragdollBones)
         {
             rb.isKinematic = !ragdoll;
@@ -138,6 +138,7 @@ public class Ragdoll : MonoBehaviour
         if(throwScript != null)
         {
             beingHeld = throwScript.beingHeld;
+            throwScript.enabled = false;
         }
         if (!beingHeld)
         {
