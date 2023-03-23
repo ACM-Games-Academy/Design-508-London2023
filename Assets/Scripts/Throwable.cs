@@ -24,9 +24,8 @@ public class Throwable : MonoBehaviour
     [SerializeField] HealthManager draggedInHM;
     Rigidbody rb;
 
-    [Header("AUTOFILLED DO NOT CHANGE")]
-    public bool beingHeld;  
-    public Transform originalParent;
+    [HideInInspector] public bool beingHeld;  
+    [HideInInspector]public Transform originalParent;
     // Start is called before the first frame update
     void Awake()
     {
