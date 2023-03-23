@@ -264,8 +264,11 @@ public class PlayerController : MonoBehaviour
                     }
                     if (Input.GetKeyDown("e") && currentlyTouchedPickup != null)
                     {
-                        pickUpState = pickupStates.pickingUp;
-                        print("picking up");
+                        if (currentlyTouchedPickup.GetComponent<Throwable>().enabled)
+                        {
+                            pickUpState = pickupStates.pickingUp;
+                            print("picking up");
+                        }
                     }
                     break;
             }
