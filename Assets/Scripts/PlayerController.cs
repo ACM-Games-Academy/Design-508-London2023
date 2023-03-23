@@ -236,7 +236,7 @@ public class PlayerController : MonoBehaviour
             switch (pickUpState)
             {              
                 case pickupStates.pickingUp:
-                    PickUp();                      
+                    PickUp();
                     currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;
                     break;
                 case pickupStates.holding:
