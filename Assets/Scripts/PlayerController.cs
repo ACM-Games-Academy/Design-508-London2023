@@ -237,7 +237,7 @@ public class PlayerController : MonoBehaviour
             {              
                 case pickupStates.pickingUp:
                     PickUp();
-                    currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;//this line is a problem
+                    currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;
                     break;
                 case pickupStates.holding:
                     RotatePlayerToCam();
@@ -265,7 +265,6 @@ public class PlayerController : MonoBehaviour
                     if (Input.GetKeyDown("e") && currentlyTouchedPickup != null)
                     {
                         pickUpState = pickupStates.pickingUp;
-                        print("picking up");
                     }
                     break;
             }
@@ -545,10 +544,7 @@ public class PlayerController : MonoBehaviour
     {
         if(other.TryGetComponent( out Throwable t))
         {
-            if (t.enabled)
-            {
-                currentlyTouchedPickup = t.gameObject;
-            }       
+            currentlyTouchedPickup = t.gameObject;
         }
     }
     private void OnTriggerExit(Collider other)
