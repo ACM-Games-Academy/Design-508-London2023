@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
     [Header("[ROLL]")]
     [SerializeField] float rollSpeed;
     [SerializeField] float iFrames;
+    bool isRolling;
 
     [Header("[LASER VISION]")]
     [SerializeField] float angleDiff;
@@ -283,6 +284,10 @@ public class PlayerController : MonoBehaviour
     void GroundMovement()
     {
         WASDmovement(moveSpeed);
+        if(Input.GetKeyDown("left ctrl"))
+        {
+            Roll();
+        }
     }
     void Punch()
     {
@@ -304,7 +309,9 @@ public class PlayerController : MonoBehaviour
 
     void Roll()
     {
-
+        b.AddForce(guy.forward * rollSpeed, ForceMode.Impulse);
+        ani.Play("Roll");
+        isRolling = true;
     }
 
     void TogglePhysics(GameObject go,bool toggleState)
@@ -544,9 +551,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    bool NotHolding()
+    {
+        return pickUpState == pickupStates.notholding;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent( out Throwable t))
+        if(other.TryGetComponent( out Throwable t) && NotHolding())
         {
             if (t.enabled)
             {
@@ -556,7 +568,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out Throwable t))
+        if (other.TryGetComponent(out Throwable t) && NotHolding())
         {
             currentlyTouchedPickup = null;
         }
