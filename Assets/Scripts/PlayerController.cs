@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float sprintMultiplier;
     [SerializeField] float fallSpeed;
     bool sprinting;
+    bool moving;
+    Vector3 directionalInput;
 
     [Header("[Rotation Properties]")]
     [SerializeField] float rotationSpeed;
@@ -129,6 +131,7 @@ public class PlayerController : MonoBehaviour
         meleeScript.meleeAccelaration = punchAccelaration;
         Application.targetFrameRate = 60;
         Cursor.lockState = CursorLockMode.Locked;
+        crosshair.gameObject.SetActive(laserVision);
         Cursor.visible = false;
         canPunch = true;
         energy = maxEnergy;
@@ -136,15 +139,19 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        regen = true;
+    {       
+        //getting and setting
         GroundCheck();
-        crosshair.gameObject.SetActive(laserVision);
+
+        //inputs
         if (!disableInputs)
         {
-            Inputs();
+            ButtonInputs();
+            DirectionalInputs();
         }
 
+        //regen
+        regen = true;
         if (regen)
         {
             currentRegenRate = energyRegenRate;
@@ -153,32 +160,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             currentRegenRate = 0;
-        }
-    }
-
-    
-
-    void WASDmovement(float speed)
-    {
-        if (sprinting)
-        {
-            speed *= sprintMultiplier;
-        }
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-        if (direction.magnitude >= 0.1f)
-        {
-            ani.SetBool("moving", true);
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
-            guy.rotation = Quaternion.Slerp(guy.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            Vector3 moveDir = targetRotation * Vector3.forward;
-            b.AddForce(moveDir.normalized * speed * 100 * Time.deltaTime, ForceMode.Force);
-        }
-        else
-        {
-            ani.SetBool("moving", false);
         }
     }
 
@@ -200,16 +181,106 @@ public class PlayerController : MonoBehaviour
             }
         }
         //Rotating the player to the camera direction
-        if (ani.GetBool("punch") || isRolling)
+        if (ani.GetBool("punch"))
         {
             RotatePlayerToCam();
         }
+        //rolling movement
+        if (isRolling)
+        {
+            DirectionalMovement(rollForce,0f);
+        }
+        //regular movement
+        else if (!isFlying)
+        {
+            DirectionalMovement(moveSpeed);
+            if (!grounded)
+            {
+                b.AddForce(Vector3.down * fallSpeed * 100 * Time.deltaTime, ForceMode.Force);
+            }
+        }
+        //flight movement
+        else
+        {
+            Flying();
+        }
     }
-    void Inputs()
+
+
+    void DirectionalMovement(float speed,float minMagnitude = 0.1f)
+    {
+        if (sprinting)
+        {
+            speed *= sprintMultiplier;
+        }
+        if (directionalInput.magnitude >= minMagnitude)
+        {
+            ani.SetBool("moving", true);
+            float targetAngle = Mathf.Atan2(directionalInput.x, directionalInput.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+            guy.rotation = Quaternion.Slerp(guy.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            Vector3 moveDir = targetRotation * Vector3.forward;
+            b.AddForce(moveDir.normalized * speed * 100 * Time.deltaTime, ForceMode.Force);
+        }
+        else
+        {
+            ani.SetBool("moving", false);
+        }
+
+    }
+
+    void Flying()
+    {
+        EnergyDrain(flightDrain);
+        b.useGravity = false;
+        //Movement
+        DirectionalMovement(flightSpeed);
+        if (Input.GetButtonDown("Jump"))
+        {
+            presses += 1;
+            Invoke("AwaitSecondPress", doublePressWait);
+        }
+        //rising of player height
+        if (Input.GetButton("Jump"))
+        {
+            b.AddForce(Vector3.up * riseSpeed * 100 * Time.deltaTime, ForceMode.Force);
+        }
+        else if (Input.GetButton("Crouch"))
+        {
+            b.AddForce(Vector3.down * lowerSpeed * 100 * Time.deltaTime, ForceMode.Force);
+        }
+        //Deactivating Flight
+        if (grounded || doublePressed || energy <= 0)
+        {
+            doublePressed = false;
+            isFlying = false;
+            b.useGravity = true;
+            ani.SetBool("flying", false);
+        }
+    }
+
+    public IEnumerator Roll()
+    {
+        sprinting = false;
+        isRolling = true;
+        ani.Play("Roll");
+        playerHealth.canTakeDamage = false;
+        disableInputs = true;
+        yield return new WaitForSeconds(iTime);
+        playerHealth.canTakeDamage = true;
+        if (iTime < rollCooldown)
+        {
+            yield return new WaitForSeconds(rollCooldown - iTime);
+        }
+        isRolling = false;
+        disableInputs = false;
+    }
+
+    void ButtonInputs()
     {
         //PLAYER MOVEMENT
 
-            //sprinting
+            //enabling sprinting
             if (Input.GetKeyDown("left shift"))
             {
                 if (superSpeed)
@@ -219,6 +290,7 @@ public class PlayerController : MonoBehaviour
                 sprinting = true;
                 ani.SetBool("sprinting", true);
             }
+            //disabling sprint
             if (Input.GetKeyUp("left shift"))
             {
                 sprinting = false;
@@ -228,23 +300,14 @@ public class PlayerController : MonoBehaviour
 
                 }
             }
-            //regular movement
-            if (!isFlying)
+            //initiating roll
+            if (Input.GetKeyDown("left ctrl") && grounded && !isFlying)
             {
-                GroundMovement();
-                if (!grounded)
-                {
-                    b.AddForce(Vector3.down * fallSpeed * 100 * Time.deltaTime, ForceMode.Force);
-                }
-            }
-            //flight movement
-            else
-            {
-                Flying();
+                StartCoroutine(Roll());
             }
 
         //PLAYER ACTIONS
-            switch (pickUpState)
+        switch (pickUpState)
             {              
                 case pickupStates.pickingUp:
                     PickUp();
@@ -252,6 +315,7 @@ public class PlayerController : MonoBehaviour
                     break;
                 case pickupStates.holding:
                     RotatePlayerToCam();
+                    
                     if (Input.GetKeyDown("e"))
                     {
                         Throw();
@@ -265,6 +329,7 @@ public class PlayerController : MonoBehaviour
                         hitpoint2 = LaserVision(eyeball2, laser2);
 
                         laserMidpoint = hitpoint1 + (hitpoint2 - hitpoint1) / 2;
+                        crosshair.gameObject.SetActive(true);
                         crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);
                     }
                     if ((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch)
@@ -275,6 +340,7 @@ public class PlayerController : MonoBehaviour
                     }
                     if (Input.GetKeyDown("e") && currentlyTouchedPickup != null)
                     {
+                        crosshair.gameObject.SetActive(false);
                         if (currentlyTouchedPickup.GetComponent<Throwable>().enabled)
                         {
                             pickUpState = pickupStates.pickingUp;
@@ -285,15 +351,13 @@ public class PlayerController : MonoBehaviour
             }
 
     }
-
-    void GroundMovement()
+    void DirectionalInputs()
     {
-        WASDmovement(moveSpeed);
-        if(Input.GetKeyDown("left ctrl"))
-        {
-            StartCoroutine(Roll());
-        }
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        directionalInput = new Vector3(horizontal, 0f, vertical).normalized;
     }
+
     void Punch()
     {
         punchCollider.enabled = true;
@@ -312,23 +376,6 @@ public class PlayerController : MonoBehaviour
         canPunch = true;
     }
 
-    public IEnumerator Roll()
-    {
-        sprinting = false;
-        isRolling = true;
-        b.AddForce(cam.forward * rollForce, ForceMode.Impulse);
-        ani.Play("Roll");        
-        playerHealth.canTakeDamage = false;
-        disableInputs = true;
-        yield return new WaitForSeconds(iTime);
-        playerHealth.canTakeDamage = true;
-        if(iTime < rollCooldown)
-        {
-            yield return new WaitForSeconds(rollCooldown - iTime);
-        }
-        isRolling = false;
-        disableInputs = false;
-    }
 
     void TogglePhysics(GameObject go,bool toggleState)
     { 
@@ -395,35 +442,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Flying()
-    {
-        EnergyDrain(flightDrain);
-        b.useGravity = false;
-        //WASD controls
-        WASDmovement(flightSpeed);
-        if (Input.GetButtonDown("Jump"))
-        {
-            presses += 1;
-            Invoke("AwaitSecondPress", doublePressWait);
-        }
-        //rising of player height
-        if (Input.GetButton("Jump"))
-        {
-            b.AddForce(Vector3.up * riseSpeed * 100 * Time.deltaTime, ForceMode.Force);
-        }
-        else if (Input.GetButton("Crouch"))
-        {
-            b.AddForce(Vector3.down * lowerSpeed * 100 * Time.deltaTime, ForceMode.Force);
-        }
-        //Deactivating Flight
-        if (grounded || doublePressed || energy <= 0)
-        {
-            doublePressed = false;
-            isFlying = false;
-            b.useGravity = true;
-            ani.SetBool("flying", false);
-        }
-    }
+
 
     void CameraMoveForce()
     {
