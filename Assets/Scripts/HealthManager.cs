@@ -20,6 +20,7 @@ public class HealthManager : MonoBehaviour
     void Start()
     {
         health = maxHealth;
+        canTakeDamage = true;
     }
 
     // Update is called once per frame

@@ -1686,13 +1686,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781413637951, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
-      propertyPath: rollSpeed
-      value: 500
+      propertyPath: moveSpeed
+      value: 248
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781413637951, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
-      propertyPath: rollCooldown
-      value: 1
+      propertyPath: rollForce
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 5856801781413637951, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
+        type: 3}
+      propertyPath: rollSpeed
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781413637951, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
