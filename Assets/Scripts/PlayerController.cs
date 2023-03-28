@@ -209,7 +209,7 @@ public class PlayerController : MonoBehaviour
 
     void DirectionalMovement(float speed,float minMagnitude = 0.1f)
     {
-        if (sprinting)
+        if (sprinting && !isRolling)
         {
             speed *= sprintMultiplier;
         }
@@ -261,7 +261,6 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator Roll()
     {
-        sprinting = false;
         isRolling = true;
         ani.Play("Roll");
         playerHealth.canTakeDamage = false;
