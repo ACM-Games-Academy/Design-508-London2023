@@ -2928,8 +2928,8 @@ MonoBehaviour:
     m_Bits: 72
   GroundRaycastLength: 0.3
   jumpForce: 600
-  moveSpeed: 200
-  sprintMultiplier: 1.5
+  moveSpeed: 300
+  sprintMultiplier: 1.6
   fallSpeed: 250
   rotationSpeed: 4
   guy: {fileID: 5856801781880337727}
@@ -2945,8 +2945,9 @@ MonoBehaviour:
   riseSpeed: 200
   lowerSpeed: 150
   flightDrain: 0
-  rollSpeed: 300
-  iFrames: 0
+  rollForce: 0
+  iTime: 0.5
+  rollCooldown: 1
   angleDiff: 10
   head: {fileID: 45495294131082424}
   eyeball1: {fileID: 5782222353903378165}
@@ -3014,10 +3015,11 @@ MonoBehaviour:
   maxHealth: 100
   deathScript: {fileID: 5856801781413637951}
   deathFunction: Die
-  health: 0
   hasRegen: 1
   regenSpeed: 5
   regenTimer: 10
+  health: 0
+  canTakeDamage: 0
 --- !u!1 &5856801781487310901
 GameObject:
   m_ObjectHideFlags: 0

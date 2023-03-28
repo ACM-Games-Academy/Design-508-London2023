@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveSpeed;
     [SerializeField] float sprintMultiplier;
     [SerializeField] float fallSpeed;
+    bool sprinting;
 
     [Header("[Rotation Properties]")]
     [SerializeField] float rotationSpeed;
@@ -75,8 +76,9 @@ public class PlayerController : MonoBehaviour
     bool isFlying;
 
     [Header("[ROLL]")]
-    [SerializeField] float rollSpeed;
-    [SerializeField] float iFrames;
+    [SerializeField] float rollForce;
+    [SerializeField] float iTime = 0.5f;
+    [SerializeField] float rollCooldown;
     bool isRolling;
 
     [Header("[LASER VISION]")]
@@ -142,6 +144,7 @@ public class PlayerController : MonoBehaviour
         {
             Inputs();
         }
+
         if (regen)
         {
             currentRegenRate = energyRegenRate;
@@ -157,6 +160,10 @@ public class PlayerController : MonoBehaviour
 
     void WASDmovement(float speed)
     {
+        if (sprinting)
+        {
+            speed *= sprintMultiplier;
+        }
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
@@ -192,6 +199,11 @@ public class PlayerController : MonoBehaviour
                 ani.SetBool("flying", true);
             }
         }
+        //Rotating the player to the camera direction
+        if (ani.GetBool("punch") || isRolling)
+        {
+            RotatePlayerToCam();
+        }
     }
     void Inputs()
     {
@@ -204,14 +216,12 @@ public class PlayerController : MonoBehaviour
                 {
                     freezeEvent();
                 }
-                moveSpeed *= sprintMultiplier;
-                flightSpeed *= sprintMultiplier;
+                sprinting = true;
                 ani.SetBool("sprinting", true);
             }
             if (Input.GetKeyUp("left shift"))
             {
-                moveSpeed /= sprintMultiplier;
-                flightSpeed /= sprintMultiplier;
+                sprinting = false;
                 ani.SetBool("sprinting", false);
                 if (superSpeed)
                 {
@@ -273,11 +283,6 @@ public class PlayerController : MonoBehaviour
                     }
                     break;
             }
-            //Rotating the player to the camera direction
-            if (ani.GetBool("punch"))
-            {
-                RotatePlayerToCam();
-            }
 
     }
 
@@ -286,7 +291,7 @@ public class PlayerController : MonoBehaviour
         WASDmovement(moveSpeed);
         if(Input.GetKeyDown("left ctrl"))
         {
-            Roll();
+            StartCoroutine(Roll());
         }
     }
     void Punch()
@@ -307,11 +312,22 @@ public class PlayerController : MonoBehaviour
         canPunch = true;
     }
 
-    void Roll()
+    public IEnumerator Roll()
     {
-        b.AddForce(guy.forward * rollSpeed, ForceMode.Impulse);
-        ani.Play("Roll");
+        sprinting = false;
         isRolling = true;
+        b.AddForce(cam.forward * rollForce, ForceMode.Impulse);
+        ani.Play("Roll");        
+        playerHealth.canTakeDamage = false;
+        disableInputs = true;
+        yield return new WaitForSeconds(iTime);
+        playerHealth.canTakeDamage = true;
+        if(iTime < rollCooldown)
+        {
+            yield return new WaitForSeconds(rollCooldown - iTime);
+        }
+        isRolling = false;
+        disableInputs = false;
     }
 
     void TogglePhysics(GameObject go,bool toggleState)
@@ -332,7 +348,7 @@ public class PlayerController : MonoBehaviour
 
     void PickUp()
     {
-        if (currentlyTouchedPickup != null )
+        if (currentlyTouchedPickup != null)
         {
             Throwable t = currentlyTouchedPickup.GetComponent<Throwable>();
             if (t.enabled)
