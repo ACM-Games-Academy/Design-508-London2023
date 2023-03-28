@@ -2945,7 +2945,7 @@ MonoBehaviour:
   riseSpeed: 200
   lowerSpeed: 150
   flightDrain: 0
-  rollForce: 0
+  rollForce: 200
   iTime: 0.5
   rollCooldown: 1
   angleDiff: 10
