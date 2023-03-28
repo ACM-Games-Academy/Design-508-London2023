@@ -122,6 +122,11 @@ public class Enemy : MonoBehaviour
         Debug.Log("whatever");
     }
 
+    public void unFreezeMethod()
+    {
+
+    }
+
     private void OnEnable()
     {
         PlayerController.freezeEvent += freezeMethod;
