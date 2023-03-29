@@ -880,6 +880,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5048724349808789129}
+  - component: {fileID: 5451435218059287153}
   m_Layer: 0
   m_Name: old_residential_building
   m_TagString: Untagged
@@ -896,7 +897,7 @@ Transform:
   m_GameObject: {fileID: 5574186022205889587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 382.09, y: 1.28, z: 334.73}
-  m_LocalScale: {x: 1.6717, y: 1.6717, z: 1.6717}
+  m_LocalScale: {x: 1.6717002, y: 1.6717, z: 1.6717002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8757897012546181275}
@@ -929,6 +930,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5451435218059287153
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5574186022205889587}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 28.266768, y: 20.99374, z: 13.903788}
+  m_Center: {x: -11.770982, y: 9.996859, z: -7.709201}
 --- !u!1 &6021273736153691161
 GameObject:
   m_ObjectHideFlags: 0
