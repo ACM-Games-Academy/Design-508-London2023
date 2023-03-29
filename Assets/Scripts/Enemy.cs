@@ -116,24 +116,4 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-
-    public void freezeMethod()
-    {
-        Debug.Log("whatever");
-    }
-
-    public void unFreezeMethod()
-    {
-
-    }
-
-    private void OnEnable()
-    {
-        PlayerController.freezeEvent += freezeMethod;
-    }
-
-    private void OnDisable()
-    {
-        PlayerController.freezeEvent -= freezeMethod;
-    }
 }

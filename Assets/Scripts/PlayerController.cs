@@ -5,10 +5,12 @@ using UnityEngine.Animations.Rigging;
 using TMPro;
 
 public delegate void freeze();
+public delegate void unfreeze();
 
 public class PlayerController : MonoBehaviour
 {
     public static event freeze freezeEvent;
+    public static event unfreeze unFreezeEvent;
 
     Rigidbody b;
     bool grounded;
