@@ -428,6 +428,7 @@ public class PlayerController : MonoBehaviour
         GameObject ob = currentlyTouchedPickup;
         Throwable ts = ob.GetComponent<Throwable>();
         TogglePhysics(ob, true);
+        ts.beenThrown = true;
         foreach ( Rigidbody rb in ob.GetComponentsInChildren<Rigidbody>())
         {
             float throwForce = rb.mass * throwAccelaration;

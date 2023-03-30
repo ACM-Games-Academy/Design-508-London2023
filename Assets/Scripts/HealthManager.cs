@@ -8,6 +8,7 @@ public class HealthManager : MonoBehaviour
     [Header("What Happens Upon Death?")]
     [SerializeField] MonoBehaviour deathScript;
     [SerializeField] string deathFunction;
+    [HideInInspector] public bool dead;
     [Header("Regen")]
     [SerializeField] bool hasRegen;
     [SerializeField] float regenSpeed;
@@ -46,6 +47,7 @@ public class HealthManager : MonoBehaviour
                 {
                     health = 0;
                     deathScript.Invoke(deathFunction, 0);
+                    dead = true;
                 }
                 else if (health > maxHealth)
                 {

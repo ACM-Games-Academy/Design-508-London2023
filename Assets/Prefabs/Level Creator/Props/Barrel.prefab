@@ -96,8 +96,8 @@ MonoBehaviour:
   beenThrown: 0
   takesDamageMask:
     serializedVersion: 2
-    m_Bits: 0
-  impactHealthLoss: 0
+    m_Bits: 73
+  impactHealthLoss: 12
   useDraggedInHealthManager: 0
   draggedInHM: {fileID: 0}
   beingHeld: 0
