@@ -134,19 +134,30 @@ public class Ragdoll : MonoBehaviour
 
     public void GetUp()
     {
-        bool beingHeld = false;
-        if(throwScript != null)
+        bool cancel = false;
+        if(TryGetComponent(out HealthManager hm))
         {
-            beingHeld = throwScript.beingHeld;
-            throwScript.enabled = false;
+            if (hm.dead)
+            {
+                cancel = true;
+            }  
         }
-        if (!beingHeld)
+        bool beingHeld = false;
+        if (!cancel)
         {
-            HipRotationReset();
-            HipPositionReset();
-            ragdollTransforms = PopulateTransforms(bones);
-            resettingBones = true;
-        }      
+            if (throwScript != null)
+            {
+                beingHeld = throwScript.beingHeld;
+                throwScript.enabled = false;
+            }
+            if (!beingHeld)
+            {
+                HipRotationReset();
+                HipPositionReset();
+                ragdollTransforms = PopulateTransforms(bones);
+                resettingBones = true;
+            }
+        }       
     }
 
 

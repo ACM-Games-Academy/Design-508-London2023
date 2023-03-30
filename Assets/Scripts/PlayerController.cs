@@ -5,10 +5,12 @@ using UnityEngine.Animations.Rigging;
 using TMPro;
 
 public delegate void freeze();
+public delegate void unfreeze();
 
 public class PlayerController : MonoBehaviour
 {
     public static event freeze freezeEvent;
+    public static event unfreeze unFreezeEvent;
 
     Rigidbody b;
     bool grounded;
@@ -426,6 +428,7 @@ public class PlayerController : MonoBehaviour
         GameObject ob = currentlyTouchedPickup;
         Throwable ts = ob.GetComponent<Throwable>();
         TogglePhysics(ob, true);
+        ts.beenThrown = true;
         foreach ( Rigidbody rb in ob.GetComponentsInChildren<Rigidbody>())
         {
             float throwForce = rb.mass * throwAccelaration;

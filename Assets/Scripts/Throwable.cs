@@ -14,6 +14,7 @@ public class Throwable : MonoBehaviour
     [SerializeField] bool printObjectVelocity;
     [Tooltip("How much damage does it deal")]
     [SerializeField] float thrownDamage;
+    [HideInInspector] public bool beenThrown;
 
     [Header("Taking Damage")]
     [Tooltip("What layers cause the object to take damage?")]
@@ -46,7 +47,7 @@ public class Throwable : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         GameObject colOb = collision.gameObject;
-        if (rb.velocity.magnitude > damageVelocity && colOb.transform.root != transform.root)//invalid if colliding objects are part of the same root object
+        if (beenThrown && rb.velocity.magnitude > damageVelocity && colOb.transform.root != transform.root)//invalid if colliding objects are part of the same root object
         {
             if (takesDamageMask == (takesDamageMask | 1 << colOb.layer))
             {
