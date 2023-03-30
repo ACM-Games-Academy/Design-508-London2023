@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Freezable : MonoBehaviour
 {
+    bool isFrozen;
+    float prevDrag;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,13 +22,25 @@ public class Freezable : MonoBehaviour
     {
         if(TryGetComponent(out Rigidbody rb))
         {
-
+            prevDrag = rb.drag;
+            rb.drag = 5;
+            rb.angularDrag = 5;
+            rb.useGravity = false;
+        }
+        if(TryGetComponent(out Animator ani))
+        {
+            ani.enabled = false;
         }
     }
 
     public void unFreezeMethod()
     {
-
+        if (TryGetComponent(out Rigidbody rb))
+        {
+            rb.drag = prevDrag;
+            rb.angularDrag = 0.01f;
+            rb.useGravity = true;
+        }
     }
 
     private void OnEnable()
