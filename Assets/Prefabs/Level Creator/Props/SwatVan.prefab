@@ -534,9 +534,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdRotation: {x: 0, y: 0, z: 0}
-  damageVelocity: 20
+  damageVelocity: 8
   printObjectVelocity: 0
   thrownDamage: 30
+  beenThrown: 0
   takesDamageMask:
     serializedVersion: 2
     m_Bits: 73
@@ -560,10 +561,11 @@ MonoBehaviour:
   maxHealth: 0
   deathScript: {fileID: 8675469014613307424}
   deathFunction: Explode
-  health: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
+  health: 0
+  canTakeDamage: 0
 --- !u!114 &8675469014613307424
 MonoBehaviour:
   m_ObjectHideFlags: 0

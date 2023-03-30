@@ -14,6 +14,7 @@ public class Throwable : MonoBehaviour
     [SerializeField] bool printObjectVelocity;
     [Tooltip("How much damage does it deal")]
     [SerializeField] float thrownDamage;
+    [HideInInspector] public bool beenThrown;
 
     [Header("Taking Damage")]
     [Tooltip("What layers cause the object to take damage?")]

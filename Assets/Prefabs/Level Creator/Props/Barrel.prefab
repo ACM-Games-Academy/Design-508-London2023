@@ -90,9 +90,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdRotation: {x: -115.521, y: 95.088, z: 95.525}
-  damageVelocity: 20
+  damageVelocity: 8
   printObjectVelocity: 0
   thrownDamage: 10
+  beenThrown: 0
   takesDamageMask:
     serializedVersion: 2
     m_Bits: 0
@@ -156,10 +157,11 @@ MonoBehaviour:
   maxHealth: 12
   deathScript: {fileID: 1758478248352546599}
   deathFunction: Explode
-  health: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
+  health: 0
+  canTakeDamage: 0
 --- !u!1001 &1758478247826203168
 PrefabInstance:
   m_ObjectHideFlags: 0

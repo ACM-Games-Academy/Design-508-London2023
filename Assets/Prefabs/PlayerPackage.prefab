@@ -2928,7 +2928,7 @@ MonoBehaviour:
     m_Bits: 72
   GroundRaycastLength: 0.3
   jumpForce: 600
-  moveSpeed: 300
+  moveSpeed: 250
   sprintMultiplier: 1.6
   fallSpeed: 250
   rotationSpeed: 4

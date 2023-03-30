@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Freezable : MonoBehaviour
 {
@@ -31,6 +32,10 @@ public class Freezable : MonoBehaviour
         {
             ani.enabled = false;
         }
+        if(TryGetComponent(out NavMeshAgent nm))
+        {
+            nm.enabled = false;
+        }
     }
 
     public void unFreezeMethod()
@@ -40,6 +45,10 @@ public class Freezable : MonoBehaviour
             rb.drag = prevDrag;
             rb.angularDrag = 0.01f;
             rb.useGravity = true;
+        }
+        if (TryGetComponent(out Animator ani))
+        {
+            ani.enabled = false;
         }
     }
 

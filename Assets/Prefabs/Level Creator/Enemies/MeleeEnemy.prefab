@@ -157,10 +157,11 @@ MonoBehaviour:
   maxHealth: 30
   deathScript: {fileID: 7167034802001215574}
   deathFunction: Die
-  health: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
+  health: 0
+  canTakeDamage: 0
 --- !u!1001 &939755999715127478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -610,9 +611,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdRotation: {x: 0, y: 0, z: 0}
-  damageVelocity: 10
+  damageVelocity: 5
   printObjectVelocity: 0
   thrownDamage: 20
+  beenThrown: 0
   takesDamageMask:
     serializedVersion: 2
     m_Bits: 72
