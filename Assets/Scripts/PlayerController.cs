@@ -101,7 +101,8 @@ public class PlayerController : MonoBehaviour
     Vector3 laserMidpoint;
 
     [Header("[SUPER SPEED]")] 
-    [SerializeField] float speedMultiplier;
+    [SerializeField] float superSpeedMultiplier;
+    bool isSpeeding;
 
     [Header("[Aim Constraint]")]
     [SerializeField] MultiAimConstraint headAimConstraint;
@@ -213,7 +214,14 @@ public class PlayerController : MonoBehaviour
     {
         if (sprinting && !isRolling)
         {
-            speed *= sprintMultiplier;
+            if(isSpeeding)
+            {
+                speed *= superSpeedMultiplier;
+            }
+            else
+            {
+                speed *= sprintMultiplier;
+            }            
         }
         if (directionalInput.magnitude >= minMagnitude)
         {
@@ -284,10 +292,6 @@ public class PlayerController : MonoBehaviour
             //enabling sprinting
             if (Input.GetKeyDown("left shift"))
             {
-                if (superSpeed)
-                {
-                    freezeEvent();
-                }
                 sprinting = true;
                 ani.SetBool("sprinting", true);
             }
@@ -296,15 +300,26 @@ public class PlayerController : MonoBehaviour
             {
                 sprinting = false;
                 ani.SetBool("sprinting", false);
-                if (superSpeed)
-                {
-
-                }
             }
             //initiating roll
             if (Input.GetKeyDown("left ctrl") && grounded && !isFlying)
             {
                 StartCoroutine(Roll());
+            }
+            //enabling super speed
+            if(Input.GetKeyDown("c") && superSpeed)
+            {
+                if (isSpeeding)
+                {
+                    isSpeeding = false;
+                    unFreezeEvent();
+                }
+                else
+                {
+                    isSpeeding = true;
+                    freezeEvent();
+                }
+                
             }
 
         //PLAYER ACTIONS
@@ -344,8 +359,7 @@ public class PlayerController : MonoBehaviour
                         crosshair.gameObject.SetActive(false);
                         if (currentlyTouchedPickup.GetComponent<Throwable>().enabled)
                         {
-                            pickUpState = pickupStates.pickingUp;
-                            print("picking up");
+                            pickUpState = pickupStates.pickingUp;                            
                         }
                     }
                     break;

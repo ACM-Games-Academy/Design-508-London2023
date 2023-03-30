@@ -2961,7 +2961,7 @@ MonoBehaviour:
     type: 3}
   crosshair: {fileID: 5856801783327879112}
   laserDrain: 20
-  speedMultiplier: 3
+  superSpeedMultiplier: 3
   headAimConstraint: {fileID: 5790318650894105163}
   laserVisionTarget: {fileID: 5790318650413479506}
   WeightLerpSpeed: 10
@@ -3015,8 +3015,9 @@ MonoBehaviour:
   maxHealth: 100
   deathScript: {fileID: 5856801781413637951}
   deathFunction: Die
+  dead: 0
   hasRegen: 1
-  regenSpeed: 5
+  regenSpeed: 2
   regenTimer: 10
   health: 0
   canTakeDamage: 0
