@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : Freezable
 {
     [SerializeField] float speed;
 
@@ -20,12 +20,10 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(speed != 0)
+        if(speed != 0 && !isFrozen)
         {
             rb.AddForce(transform.forward * speed * Time.deltaTime, ForceMode.Force);
-        }
-        
-        
+        }              
     }
 
 

@@ -1702,7 +1702,7 @@ PrefabInstance:
     - target: {fileID: 5856801781413637951, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: laserVision
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781413637951, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
@@ -1710,20 +1710,26 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -203655887218126122, guid: 050f5c9f528cf3e4d8dddf99f76fb91d,
         type: 3}
+    - target: {fileID: 5856801781413637951, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
+        type: 3}
+      propertyPath: superSpeedEffect
+      value: 
+      objectReference: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
+        type: 3}
     - target: {fileID: 5856801781755219116, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.22965084
+      value: 0.22965086
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781755219116, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0056137634
+      value: 0.005613801
       objectReference: {fileID: 0}
     - target: {fileID: 5856801781755219116, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0013246313
+      value: -0.0013246405
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d51c4ad3c374d44ba8398f45d10c0ad, type: 3}
@@ -5434,7 +5440,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh80718
+  m_Name: pb_Mesh31328
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

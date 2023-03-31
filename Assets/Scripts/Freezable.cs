@@ -5,11 +5,14 @@ using UnityEngine.AI;
 
 public class Freezable : MonoBehaviour
 {
-    bool isFrozen;
+    [HideInInspector] public bool isFrozen;
 
     //for rigidbodies
     float prevDrag;
     float prevAngDrag;
+    Vector3 prevVelocity;
+    bool wasUsingGravity;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,11 +28,14 @@ public class Freezable : MonoBehaviour
 
     public void freezeMethod()
     {
-        print("FREEZE");
+
         if(TryGetComponent(out Rigidbody rb))
         {
             prevDrag = rb.drag;
             prevAngDrag = rb.angularDrag;
+            wasUsingGravity = rb.useGravity;
+            prevVelocity = rb.velocity;
+
             rb.drag = 7;
             rb.angularDrag = 7;
             rb.useGravity = false;
@@ -42,7 +48,6 @@ public class Freezable : MonoBehaviour
         {
             nm.enabled = false;
         }
-        print("UNFREEZE");
     }
 
     public void unFreezeMethod()
@@ -51,13 +56,14 @@ public class Freezable : MonoBehaviour
         {
             rb.drag = prevDrag;
             rb.angularDrag = prevAngDrag;
-            rb.useGravity = true;
+            rb.useGravity = wasUsingGravity;
+            rb.velocity = prevVelocity;
         }
         if (TryGetComponent(out Animator ani))
         {
             ani.enabled = true;
         }
-                if(TryGetComponent(out NavMeshAgent nm))
+        if(TryGetComponent(out NavMeshAgent nm))
         {
             nm.enabled = true;
         }

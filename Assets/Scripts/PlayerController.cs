@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("[SUPER SPEED]")] 
     [SerializeField] float superSpeedMultiplier;
+    [SerializeField] GameObject superSpeedEffect;
     bool isSpeeding;
 
     [Header("[Aim Constraint]")]
@@ -294,6 +295,10 @@ public class PlayerController : MonoBehaviour
             {
                 sprinting = true;
                 ani.SetBool("sprinting", true);
+                if (isSpeeding)
+                {
+                    Instantiate(superSpeedEffect, transform.position, transform.rotation);
+                }
             }
             //disabling sprint
             if (Input.GetKeyUp("left shift"))
