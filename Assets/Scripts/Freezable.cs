@@ -13,6 +13,8 @@ public class Freezable : MonoBehaviour
     Vector3 prevVelocity;
     bool wasUsingGravity;
 
+    //for animators
+    float prevAniSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +44,8 @@ public class Freezable : MonoBehaviour
         }
         if(TryGetComponent(out Animator ani))
         {
-            ani.enabled = false;
+            prevAniSpeed = ani.speed;
+            ani.speed = 0.01f;
         }
         if(TryGetComponent(out NavMeshAgent nm))
         {
@@ -61,7 +64,7 @@ public class Freezable : MonoBehaviour
         }
         if (TryGetComponent(out Animator ani))
         {
-            ani.enabled = true;
+            ani.speed = prevAniSpeed;
         }
         if(TryGetComponent(out NavMeshAgent nm))
         {
