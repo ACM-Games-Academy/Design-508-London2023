@@ -16,8 +16,8 @@ public class PlayerController : MonoBehaviour
     bool grounded;
     int presses;
     bool doublePressed;
-    bool isPickingUp;
-
+    List<string> queuedActions = new List<string>();
+    List<string> oldActions = new List<string>();
 
     List<GameObject> spawnedEffects = new List<GameObject>();
     LineRenderer laser1;
@@ -169,21 +169,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!disableInputs)
-        {
-            //JUMPING
-            if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
-            {
-                //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
-                b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
-            }
-            //Activating Flight
-            else if (!grounded && Input.GetKeyDown("space") && flight && energy >= 0)
-            {
-                isFlying = true;
-                ani.SetBool("flying", true);
-            }
-        }
+        ButtonExecution();
+
         //Rotating the player to the camera direction
         if (ani.GetBool("punch"))
         {
@@ -192,7 +179,7 @@ public class PlayerController : MonoBehaviour
         //rolling movement
         if (isRolling)
         {
-            DirectionalMovement(rollForce,0f);
+            DirectionalMovement(rollForce, 0f);
         }
         //regular movement
         else if (!isFlying)
@@ -290,26 +277,15 @@ public class PlayerController : MonoBehaviour
     {
         //PLAYER MOVEMENT
 
-            //enabling sprinting
-            if (Input.GetKeyDown("left shift"))
+        //enabling sprinting
+        if (Input.GetButtonDown("Sprint") && !queuedActions.Contains("startSprint"))
             {
-                sprinting = true;
-                ani.SetBool("sprinting", true);
-                if (isSpeeding)
-                {
-                    Instantiate(superSpeedEffect, transform.position, transform.rotation);
-                }
+                queuedActions.Add("startSprint");
             }
             //disabling sprint
-            if (Input.GetKeyUp("left shift"))
+            if (Input.GetButtonUp("Sprint") && !queuedActions.Contains("stopSprint"))
             {
-                sprinting = false;
-                ani.SetBool("sprinting", false);
-            }
-            //initiating roll
-            if (Input.GetKeyDown("left ctrl") && grounded && !isFlying)
-            {
-                StartCoroutine(Roll());
+                queuedActions.Add("stopSprint");
             }
             //enabling super speed
             if(Input.GetKeyDown("c") && superSpeed)
@@ -332,7 +308,7 @@ public class PlayerController : MonoBehaviour
             {              
                 case pickupStates.pickingUp:
                     PickUp();
-                    currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;//this line is a problem
+                    currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;
                     break;
                 case pickupStates.holding:
                     RotatePlayerToCam();
@@ -344,6 +320,7 @@ public class PlayerController : MonoBehaviour
                     break;
 
                 case pickupStates.notholding:
+                    //laser vision
                     if (laserVision)
                     {
                         hitpoint1 = LaserVision(eyeball1, laser1);
@@ -353,12 +330,14 @@ public class PlayerController : MonoBehaviour
                         crosshair.gameObject.SetActive(true);
                         crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);
                     }
+                    //punching
                     if ((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch)
                     {
                         canPunch = false;
                         ani.SetBool("punch", true);
                         Invoke("Punch", punchWaitTime);
                     }
+                    //picking up
                     if (Input.GetKeyDown("e") && currentlyTouchedPickup != null)
                     {
                         crosshair.gameObject.SetActive(false);
@@ -367,9 +346,63 @@ public class PlayerController : MonoBehaviour
                             pickUpState = pickupStates.pickingUp;                            
                         }
                     }
+                    //initiating roll
+                    if (Input.GetKeyDown("left ctrl") && grounded && !isFlying)
+                    {
+                        StartCoroutine(Roll());
+                    }
                     break;
             }
 
+    }
+
+    void ButtonExecution()
+    {
+
+        bool ActionInQueue(string action)
+        {
+            if (queuedActions.Contains(action))
+            {
+                queuedActions.Remove(action);
+                oldActions.Add(action);
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        if (ActionInQueue("startSprint"))
+        {
+            sprinting = true;
+            ani.SetBool("sprinting", true);
+            if (isSpeeding)
+            {
+                Instantiate(superSpeedEffect, transform.position, transform.rotation);
+            }
+        }
+        if (ActionInQueue("stopSprint"))
+        {
+            sprinting = false;
+            ani.SetBool("sprinting", false);
+            queuedActions.Remove("startSprint");
+        }
+        if (!disableInputs)
+        {
+            //JUMPING
+            if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
+            {
+                //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
+                b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
+            }
+            //Activating Flight
+            else if (!grounded && Input.GetKeyDown("space") && flight && energy >= 0)
+            {
+                isFlying = true;
+                ani.SetBool("flying", true);
+            }
+        }
     }
     void DirectionalInputs()
     {
