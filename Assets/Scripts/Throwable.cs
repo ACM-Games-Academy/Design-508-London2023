@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
-public class Throwable : MonoBehaviour
+public class Throwable : Freezable
 {
     [Tooltip("Rotation offset while being held")]
     public Vector3 holdRotation;

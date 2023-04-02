@@ -14,10 +14,9 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody b;
     bool grounded;
-    int presses;
     bool doublePressed;
-    bool isPickingUp;
-
+    List<string> queuedActions = new List<string>();
+    List<string> previousActions = new List<string>();
 
     List<GameObject> spawnedEffects = new List<GameObject>();
     LineRenderer laser1;
@@ -25,7 +24,7 @@ public class PlayerController : MonoBehaviour
     Animator ani;
     public static HealthManager playerHealth;
 
-    [SerializeField] float doublePressWait;
+    [SerializeField][Tooltip("the maximum amount of times between button presses for a combo")] float comboDelay;
     public bool disableInputs;
     [Header("[POWER SETTINGS]")]
     [SerializeField] float maxEnergy;
@@ -54,11 +53,13 @@ public class PlayerController : MonoBehaviour
     Transform cam;
 
     [Header("[PUNCH]")]
-    [SerializeField] float punchTime;
-    [SerializeField] float punchCooldown;
-    [SerializeField] float punchAccelaration;
-    [SerializeField] BoxCollider punchCollider;
-    [SerializeField] float punchWaitTime;
+    [SerializeField] [Tooltip("The time between pressing punch and the hitbox appearing for it")] float punchWaitTime;
+    [SerializeField] [Tooltip("How long the punch hitbox appears for")] float punchTime;
+    [SerializeField] [Tooltip("The time after punching until you can punch again")]float punchCooldown;
+    [SerializeField] [Tooltip("The accelaration that regular punches apply")]float punchAccelaration;
+    [SerializeField] [Tooltip("The accelaration that kicks apply")] float kickAccelaration;
+    [SerializeField] BoxCollider punchCollider;    
+
     MeleeHitbox meleeScript;
     bool canPunch;
 
@@ -101,7 +102,9 @@ public class PlayerController : MonoBehaviour
     Vector3 laserMidpoint;
 
     [Header("[SUPER SPEED]")] 
-    [SerializeField] float speedMultiplier;
+    [SerializeField] float superSpeedMultiplier;
+    [SerializeField] GameObject superSpeedEffect;
+    bool isSpeeding;
 
     [Header("[Aim Constraint]")]
     [SerializeField] MultiAimConstraint headAimConstraint;
@@ -111,6 +114,8 @@ public class PlayerController : MonoBehaviour
     [Header("[DAMAGE VALUES]")]
     [SerializeField] float laserDamage;
     [SerializeField] float punchDamage;
+    [SerializeField] float standingKickDamage;
+    [SerializeField] float runningKickDamage;
 
     [Header("[Death]")]
     [SerializeField] GameObject bloodEffect;
@@ -167,21 +172,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!disableInputs)
-        {
-            //JUMPING
-            if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
-            {
-                //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
-                b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
-            }
-            //Activating Flight
-            else if (!grounded && Input.GetKeyDown("space") && flight && energy >= 0)
-            {
-                isFlying = true;
-                ani.SetBool("flying", true);
-            }
-        }
+        ButtonExecution();
+
         //Rotating the player to the camera direction
         if (ani.GetBool("punch"))
         {
@@ -190,7 +182,7 @@ public class PlayerController : MonoBehaviour
         //rolling movement
         if (isRolling)
         {
-            DirectionalMovement(rollForce,0f);
+            DirectionalMovement(rollForce, 0f);
         }
         //regular movement
         else if (!isFlying)
@@ -213,9 +205,16 @@ public class PlayerController : MonoBehaviour
     {
         if (sprinting && !isRolling)
         {
-            speed *= sprintMultiplier;
+            if(isSpeeding)
+            {
+                speed *= superSpeedMultiplier;
+            }
+            else
+            {
+                speed *= sprintMultiplier;
+            }            
         }
-        if (directionalInput.magnitude >= minMagnitude)
+        if (directionalInput.magnitude >= minMagnitude && !punchCollider.enabled)
         {
             ani.SetBool("moving", true);
             float targetAngle = Mathf.Atan2(directionalInput.x, directionalInput.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
@@ -239,8 +238,8 @@ public class PlayerController : MonoBehaviour
         DirectionalMovement(flightSpeed);
         if (Input.GetButtonDown("Jump"))
         {
-            presses += 1;
-            Invoke("AwaitSecondPress", doublePressWait);
+            queuedActions.Add("flightDeactivate");
+            print("queued flightDeactivate");
         }
         //rising of player height
         if (Input.GetButton("Jump"))
@@ -250,14 +249,6 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetButton("Crouch"))
         {
             b.AddForce(Vector3.down * lowerSpeed * 100 * Time.deltaTime, ForceMode.Force);
-        }
-        //Deactivating Flight
-        if (grounded || doublePressed || energy <= 0)
-        {
-            doublePressed = false;
-            isFlying = false;
-            b.useGravity = true;
-            ani.SetBool("flying", false);
         }
     }
 
@@ -277,53 +268,68 @@ public class PlayerController : MonoBehaviour
         disableInputs = false;
     }
 
+    //RECORDING DIRECTION INPUTS
+    void DirectionalInputs()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        directionalInput = new Vector3(horizontal, 0f, vertical).normalized;
+    }
+    //RECORDING BUTTON INPUTS
     void ButtonInputs()
     {
         //PLAYER MOVEMENT
 
-            //enabling sprinting
-            if (Input.GetKeyDown("left shift"))
-            {
-                if (superSpeed)
-                {
-                    freezeEvent();
-                }
-                sprinting = true;
-                ani.SetBool("sprinting", true);
-            }
-            //disabling sprint
-            if (Input.GetKeyUp("left shift"))
-            {
-                sprinting = false;
-                ani.SetBool("sprinting", false);
-                if (superSpeed)
-                {
+        //enabling sprinting
+        if (Input.GetButtonDown("Sprint") && !queuedActions.Contains("startSprint"))
+        {
+            queuedActions.Add("startSprint");
+        }
+        //disabling sprint
+        if (Input.GetButtonUp("Sprint") && !queuedActions.Contains("stopSprint"))
+        {
+            queuedActions.Add("stopSprint");
+        }
+        //enabling super speed
+        if(Input.GetKeyDown("c") && superSpeed)
+        {
 
-                }
-            }
-            //initiating roll
-            if (Input.GetKeyDown("left ctrl") && grounded && !isFlying)
+                
+        }
+        //JUMPING
+        if (Input.GetButtonDown("Jump") && !playerHealth.dead)
+        {
+            if (grounded && !isFlying)
             {
-                StartCoroutine(Roll());
+                queuedActions.Add("jump");
             }
-
+            else if (flight && energy >= 0)
+            {
+                queuedActions.Add("startFlight");
+            }          
+        }        
         //PLAYER ACTIONS
         switch (pickUpState)
-            {              
+            {   
+                //this runs when the player is picking an object up
                 case pickupStates.pickingUp:
                     PickUp();
-                    currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;//this line is a problem
+                    currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;
                     break;
+
+                //this runs when the player is holding an object
                 case pickupStates.holding:
-                    RotatePlayerToCam();
-                    
-                    if (Input.GetKeyDown("e"))
+                    RotatePlayerToCam();              
+                    if (Input.GetButtonDown("Pickup"))
                     {
-                        Throw();
+                        queuedActions.Add("throw");
                     }
                     break;
 
+
+                //this runs when the player isn't holding anything or picking anything up
                 case pickupStates.notholding:
+                    //laser vision
                     if (laserVision)
                     {
                         hitpoint1 = LaserVision(eyeball1, laser1);
@@ -333,31 +339,189 @@ public class PlayerController : MonoBehaviour
                         crosshair.gameObject.SetActive(true);
                         crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);
                     }
-                    if ((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch)
+                    //punching
+                    if ((Input.GetButtonDown("Punch")))
                     {
-                        canPunch = false;
-                        ani.SetBool("punch", true);
-                        Invoke("Punch", punchWaitTime);
+                        queuedActions.Add("punch");                        
                     }
-                    if (Input.GetKeyDown("e") && currentlyTouchedPickup != null)
+                    //picking up
+                    if (Input.GetButtonDown("Pickup") && currentlyTouchedPickup != null)
                     {
-                        crosshair.gameObject.SetActive(false);
-                        if (currentlyTouchedPickup.GetComponent<Throwable>().enabled)
-                        {
-                            pickUpState = pickupStates.pickingUp;
-                            print("picking up");
-                        }
+                        queuedActions.Add("pickup");
+                    }
+                    //initiating roll
+                    if (Input.GetKeyDown("left ctrl") && grounded && !isFlying)
+                    {
+                        StartCoroutine(Roll());
                     }
                     break;
             }
+    }
+    //executing inputs
+    void ButtonExecution()
+    {       
+        //checks how many of an action is in the queue
+        bool ActionInQueue(string action, bool remove = true)
+        {         
+            if (queuedActions.Contains(action))
+            {
+                if (remove)
+                {
+                    StoreAsPrevious(action);
+                }
+                return true;
+            }
+            return false;
+            
+        }
+        void RemoveActionsFromList(List<string> list, string action)
+        {         
+            if (list.Contains(action))
+            {
+                float n = 0;
+                foreach (string s in list)
+                {
+                    if (s == action)
+                    {
+                        n += 1;
+                    }
+                }
+                for(int x = 0; x < n; x++)
+                {
+                    list.Remove(action);                   
+                }               
+                
+            }
+        }
+        void StoreAsPrevious(string action)
+        {
+            RemoveActionsFromList(queuedActions, action);
+            previousActions.Add(action);
+            Invoke("ClearOldestPrevious", comboDelay);
+        }
+        //cycles through all actions and checks if their inputs have been recently pressed
+        if (ActionInQueue("stopSprint"))
+        {
+            sprinting = false;
+            ani.SetBool("sprinting", false);
+            if (isSpeeding)
+            {
+                isSpeeding = false;
+                unFreezeEvent();
+            }
+        }
+        if (ActionInQueue("startSprint",false))
+        {
+            sprinting = true;
+            ani.SetBool("sprinting",true);
+            if (previousActions.Contains("startSprint") && superSpeed)
+            {
+                isSpeeding = true;
+                freezeEvent();
+                Instantiate(superSpeedEffect, transform.position, transform.rotation);
+            }
+            StoreAsPrevious("startSprint");
+        }
+        if (ActionInQueue("throw"))
+        {
+            Throw();
+        }
 
+        //When punch is pressed once
+        if (ActionInQueue("punch",false) && canPunch)
+        {
+            meleeScript.meleeAccelaration = punchAccelaration;
+            meleeScript.meleeDamage = punchDamage;
+            meleeScript.induceRagdoll = false;
+            canPunch = false;
+            ani.SetBool("punch", true);
+            if (previousActions.Contains("punch"))
+            {
+                queuedActions.Add("punch2");
+            }
+            else if (sprinting && directionalInput.magnitude > 0.1f)
+            {
+                queuedActions.Add("kick");
+            }
+            else
+            {
+                ani.Play("Right Hook");
+                StoreAsPrevious("punch");
+            }
+            Invoke("Punch", punchWaitTime);          
+        }
+
+        //When punch is pressed twice
+        if (ActionInQueue("punch2", false))
+        {
+            if (previousActions.Contains("punch2"))
+            {
+                queuedActions.Add("kick");
+            }
+            else
+            {
+                ani.Play("Left Hook");
+                StoreAsPrevious("punch2");
+                RemoveActionsFromList(queuedActions, "punch");
+            }
+        }
+
+        //when punch is pressed three times
+        if (ActionInQueue("kick"))
+        {   
+            if(directionalInput.magnitude > 0.1f && sprinting)
+            {
+                ani.Play("Running Kick");
+                meleeScript.meleeDamage = runningKickDamage;
+            }
+            else
+            {
+                ani.Play("Standing Kick");
+                meleeScript.meleeDamage = standingKickDamage;
+            }          
+            meleeScript.induceRagdoll = true;
+            meleeScript.meleeAccelaration = kickAccelaration;//increasing knockback for testing
+            RemoveActionsFromList(queuedActions, "punch");
+            RemoveActionsFromList(previousActions, "punch");
+            RemoveActionsFromList(queuedActions, "punch2");
+            RemoveActionsFromList(previousActions, "punch2");
+        }
+        if (ActionInQueue("jump"))
+        {
+            b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
+        }
+        if (ActionInQueue("pickup"))
+        {
+            crosshair.gameObject.SetActive(false);
+            if (currentlyTouchedPickup.GetComponent<Throwable>().enabled)
+            {
+                pickUpState = pickupStates.pickingUp;
+            }
+        }
+        if (ActionInQueue("startFlight"))
+        {
+            isFlying = true;
+            ani.SetBool("flying", true);
+        }
+        if (ActionInQueue("flightDeactivate",false))
+        {
+            if (previousActions.Contains("flightDeactivate") || grounded || energy <= 0)
+            {                
+                isFlying = false;
+                b.useGravity = true;
+                ani.SetBool("flying", false);
+            }
+            StoreAsPrevious("flightDeactivate");
+        }
     }
-    void DirectionalInputs()
+    void ClearOldestPrevious()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        directionalInput = new Vector3(horizontal, 0f, vertical).normalized;
+        if(previousActions.Count > 0)
+        {
+            previousActions.Remove(previousActions[0]);
+        }       
     }
+
 
     void Punch()
     {
@@ -446,11 +610,6 @@ public class PlayerController : MonoBehaviour
 
 
 
-    void CameraMoveForce()
-    {
-
-    }
-
     Vector3 LaserVision(Transform eyeball,LineRenderer laser)
     {
         laser.SetPosition(0, eyeball.position);
@@ -506,17 +665,6 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    void AwaitSecondPress()
-    {
-        if(presses % 2 == 0)
-        {
-            doublePressed = true;
-        }
-        else
-        {
-            presses = 0;
-        }
-    }
 
     void GroundCheck()
     {

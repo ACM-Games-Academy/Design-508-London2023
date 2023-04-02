@@ -2916,28 +2916,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352a6720da25a8747af0276fbaa41a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doublePressWait: 0.5
+  comboDelay: 1
   disableInputs: 0
   maxEnergy: 100
   energyRegenRate: 12
-  laserVision: 1
-  superSpeed: 0
+  laserVision: 0
+  superSpeed: 1
   flight: 1
   GroundLayers:
     serializedVersion: 2
     m_Bits: 72
   GroundRaycastLength: 0.3
   jumpForce: 600
-  moveSpeed: 250
+  moveSpeed: 248
   sprintMultiplier: 1.6
   fallSpeed: 250
   rotationSpeed: 4
   guy: {fileID: 5856801781880337727}
-  punchTime: 0.3
-  punchCooldown: 0.75
-  punchAccelaration: 18
+  punchWaitTime: 0.2
+  punchTime: 0.2
+  punchCooldown: 0.05
+  punchAccelaration: 3
+  kickAccelaration: 15
   punchCollider: {fileID: 5856801781880337724}
-  punchWaitTime: 0.6
   throwAccelaration: 30
   holdPosition: {fileID: 827517633602024467}
   pickupTime: 0.5
@@ -2961,12 +2962,16 @@ MonoBehaviour:
     type: 3}
   crosshair: {fileID: 5856801783327879112}
   laserDrain: 20
-  speedMultiplier: 3
+  superSpeedMultiplier: 3
+  superSpeedEffect: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
+    type: 3}
   headAimConstraint: {fileID: 5790318650894105163}
   laserVisionTarget: {fileID: 5790318650413479506}
   WeightLerpSpeed: 10
   laserDamage: 3
-  punchDamage: 10
+  punchDamage: 4
+  standingKickDamage: 6
+  runningKickDamage: 5
   bloodEffect: {fileID: 1000010675638318, guid: 1afa466a5d347f144939ca63607ad67b,
     type: 3}
   bloodSpawn: {fileID: 2230856686319670588}
@@ -3015,8 +3020,9 @@ MonoBehaviour:
   maxHealth: 100
   deathScript: {fileID: 5856801781413637951}
   deathFunction: Die
+  dead: 0
   hasRegen: 1
-  regenSpeed: 5
+  regenSpeed: 2
   regenTimer: 10
   health: 0
   canTakeDamage: 0
@@ -3164,7 +3170,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5856801781755219118}
-  m_LocalRotation: {x: 0.22965084, y: 0.0056137634, z: -0.0013246313, w: 0.973256}
+  m_LocalRotation: {x: 0.22965086, y: 0.005613801, z: -0.0013246405, w: 0.973256}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3289,6 +3295,7 @@ MonoBehaviour:
   destructionMode: 2
   meleeDamage: 0
   meleeAccelaration: 0
+  induceRagdoll: 0
 --- !u!1 &5856801781970846719
 GameObject:
   m_ObjectHideFlags: 0

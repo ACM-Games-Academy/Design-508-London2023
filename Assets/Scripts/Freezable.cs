@@ -5,8 +5,17 @@ using UnityEngine.AI;
 
 public class Freezable : MonoBehaviour
 {
-    bool isFrozen;
+    [HideInInspector] public bool isFrozen;
+
+    //for rigidbodies
     float prevDrag;
+    float prevAngDrag;
+    Vector3 prevVelocity;
+    bool wasUsingGravity;
+
+    //for animators
+    float prevAniSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,16 +30,22 @@ public class Freezable : MonoBehaviour
 
     public void freezeMethod()
     {
+
         if(TryGetComponent(out Rigidbody rb))
         {
             prevDrag = rb.drag;
-            rb.drag = 5;
-            rb.angularDrag = 5;
+            prevAngDrag = rb.angularDrag;
+            wasUsingGravity = rb.useGravity;
+            prevVelocity = rb.velocity;
+
+            rb.drag = 7;
+            rb.angularDrag = 7;
             rb.useGravity = false;
         }
         if(TryGetComponent(out Animator ani))
         {
-            ani.enabled = false;
+            prevAniSpeed = ani.speed;
+            ani.speed = 0.01f;
         }
         if(TryGetComponent(out NavMeshAgent nm))
         {
@@ -43,12 +58,17 @@ public class Freezable : MonoBehaviour
         if (TryGetComponent(out Rigidbody rb))
         {
             rb.drag = prevDrag;
-            rb.angularDrag = 0.01f;
-            rb.useGravity = true;
+            rb.angularDrag = prevAngDrag;
+            rb.useGravity = wasUsingGravity;
+            rb.velocity = prevVelocity;
         }
         if (TryGetComponent(out Animator ani))
         {
-            ani.enabled = false;
+            ani.speed = prevAniSpeed;
+        }
+        if(TryGetComponent(out NavMeshAgent nm))
+        {
+            nm.enabled = true;
         }
     }
 
