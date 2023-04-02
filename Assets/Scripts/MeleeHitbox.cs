@@ -5,8 +5,9 @@ using UnityEngine;
 public class MeleeHitbox : Explodable
 {
     [Header("Melee Properties")]
-    public float meleeDamage;
-    public float meleeAccelaration;
+    [HideInInspector]public float meleeDamage;
+    [HideInInspector]public float meleeAccelaration;
+    [HideInInspector] public bool induceRagdoll;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,7 @@ public class MeleeHitbox : Explodable
         {
             health.HealthChange(-meleeDamage);
         }
-        if(collisionObject.TryGetComponent(out Ragdoll rd))
+        if(collisionObject.TryGetComponent(out Ragdoll rd) && induceRagdoll)
         {
             rd.StartRagdoll();
         }
