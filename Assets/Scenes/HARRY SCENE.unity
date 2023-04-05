@@ -3793,6 +3793,11 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 6814233467835535911, guid: 604291e28f6374c4b8cefa978b7b0fdf,
         type: 3}
+      propertyPath: triggerUpgrade
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814233467835535911, guid: 604291e28f6374c4b8cefa978b7b0fdf,
+        type: 3}
       propertyPath: enemies.Array.size
       value: 3
       objectReference: {fileID: 0}
