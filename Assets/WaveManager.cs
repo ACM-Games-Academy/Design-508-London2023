@@ -43,6 +43,7 @@ public class WaveManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         StartNextWave();
     }
 
@@ -59,6 +60,7 @@ public class WaveManager : MonoBehaviour
                 {
                     if (finished)
                     {
+                        transform.SetParent(null);
                         StartNextWave();
                     }
                     else if(spawnedEnemies.Count != enemiesToSpawn.Length && !fullySpawned)
