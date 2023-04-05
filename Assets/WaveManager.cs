@@ -24,17 +24,19 @@ public class WaveManager : MonoBehaviour
     List<GameObject> spawnedEnemies;
     bool fullySpawned;
     bool finished;
+    bool Continue;
+
     float waitEndTime;
-    
+
     void Awake()
     {
         //get all the wave scripts that were added
         waves = GetComponents<Wave>();
 
         //add all the spawn points to a list variable
-        foreach(Transform child in transform.GetComponentsInChildren<Transform>())
+        foreach (Transform child in transform.GetComponentsInChildren<Transform>())
         {
-            if(child.tag == "waveSpawn")
+            if (child.tag == "waveSpawn")
             {
                 spawnPoints.Add(child);
             }
@@ -55,11 +57,14 @@ public class WaveManager : MonoBehaviour
                 SpawnNextEnemy();
                 break;
             case waveStates.WAITING:
-                if(Time.time >= waitEndTime)
+                if (Time.time >= waitEndTime)
                 {
                     if (finished)
                     {
+                        while(!Continue)
+                        {
                         StartNextWave();
+                        }
                     }
                     else if(spawnedEnemies.Count != enemiesToSpawn.Length && !fullySpawned)
                     {

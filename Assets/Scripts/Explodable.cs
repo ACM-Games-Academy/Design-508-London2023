@@ -9,7 +9,7 @@ public class Explodable : MonoBehaviour
     [Header("Visuals:")]
     [SerializeField] GameObject explosion;
     [Header("Explosion Properties:")]
-    [SerializeField] float blastDamage;
+    [SerializeField] public float blastDamage;
     public float force;
     [SerializeField] float upwardModifier;
     [SerializeField] float affectedRadius;

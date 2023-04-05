@@ -25,10 +25,10 @@ public class PlayerController : MonoBehaviour
     public static HealthManager playerHealth;
 
     [SerializeField][Tooltip("the maximum amount of times between button presses for a combo")] float comboDelay;
-    public bool disableInputs;
+    public static bool disableInputs; //remove static if things break :) (sorry)
     [Header("[POWER SETTINGS]")]
-    [SerializeField] float maxEnergy;
-    [SerializeField] float energyRegenRate;
+    [SerializeField] public float maxEnergy;
+    [SerializeField] public float energyRegenRate;
     public static float energy;
     [SerializeField] bool laserVision;
     [SerializeField] bool superSpeed;
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     [Header("[Physics Properties]")]
     [SerializeField] LayerMask GroundLayers;
     [SerializeField] float GroundRaycastLength;
-    [SerializeField] float jumpForce;
+    [SerializeField] public float jumpForce;
     [SerializeField] float moveSpeed;
     [SerializeField] float sprintMultiplier;
     [SerializeField] float fallSpeed;
@@ -77,11 +77,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float flightSpeed;
     [SerializeField] float riseSpeed;
     [SerializeField] float lowerSpeed;
-    [SerializeField] float flightDrain;
+    [SerializeField] public float flightDrain;
     bool isFlying;
 
     [Header("[ROLL]")]
-    [SerializeField] float rollForce;
+    [SerializeField] public float rollForce;
     [SerializeField] float iTime = 0.5f;
     [SerializeField] float rollCooldown;
     bool isRolling;
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector3 directionOffset;
     [SerializeField] GameObject laserEffect;
     [SerializeField] Transform crosshair;
-    [SerializeField] float laserDrain;
+    [SerializeField] public float laserDrain;
     Vector3 hitpoint1;
     Vector3 hitpoint2;
     Vector3 laserMidpoint;
@@ -112,8 +112,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float WeightLerpSpeed;
 
     [Header("[DAMAGE VALUES]")]
-    [SerializeField] float laserDamage;
-    [SerializeField] float punchDamage;
+    [SerializeField] public float laserDamage;
+    [SerializeField] public float punchDamage;
     [SerializeField] float standingKickDamage;
     [SerializeField] float runningKickDamage;
 
