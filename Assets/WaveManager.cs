@@ -60,7 +60,10 @@ public class WaveManager : MonoBehaviour
                 {
                     if (finished)
                     {
-                        transform.SetParent(null);
+                        if (currentWave.triggerUpgrade)
+                        {
+                            //shakirs function for upgrading
+                        }
                         StartNextWave();
                     }
                     else if(spawnedEnemies.Count != enemiesToSpawn.Length && !fullySpawned)
