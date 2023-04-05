@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
   blastDamage: 50
-  force: 1000000
+  force: 1000
   upwardModifier: 10
   affectedRadius: 3.83
   radiusOffset: {x: 0, y: 0, z: 0}
@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8aa3a1f2554434d87e71ebdaa933ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFrozen: 0
   holdRotation: {x: -115.521, y: 95.088, z: 95.525}
   damageVelocity: 8
   printObjectVelocity: 0
@@ -157,6 +158,7 @@ MonoBehaviour:
   maxHealth: 12
   deathScript: {fileID: 1758478248352546599}
   deathFunction: Explode
+  dead: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0

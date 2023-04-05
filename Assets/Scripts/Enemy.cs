@@ -87,14 +87,13 @@ public class Enemy : MonoBehaviour
         {
             ragdollScript.StartRagdoll();
         }
-        foreach(MonoBehaviour script in GetComponents<MonoBehaviour>())
-        {
-            if(script != this)
-            {
-                Destroy(script, 5f);
-            }           
-        }
-        Destroy(this,1f);
+        //foreach(MonoBehaviour script in GetComponents<MonoBehaviour>())
+        //{
+        //    if(script != this)
+        //    {
+        //        Destroy(script, 5f);
+        //    }           
+        //}
     }
 
     public void Agro()
