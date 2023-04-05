@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[HelpURL("https://app.nuclino.com/ACM-Studios/Programming-Guide/Health-Manager-ec4db9ee-6695-4872-ae47-34d11bd74cb9")]
 public class HealthManager : MonoBehaviour
-{
+{    
     public float maxHealth;
     [Header("What Happens Upon Death?")]
     [SerializeField] MonoBehaviour deathScript;

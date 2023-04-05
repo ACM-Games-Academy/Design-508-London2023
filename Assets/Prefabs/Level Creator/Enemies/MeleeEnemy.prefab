@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ani: {fileID: 939755999715127483}
-  playerTargetRange: 37
+  playerTargetRange: 1000
   showRangeInSceneView: 0
   playerTag: Player
   bloodEffect: {fileID: 1000012909287652, guid: 78b0e7f97bd38df4cbae856c27751eea,
@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dab6a382f6a7a24f9ffa573bb4bf801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFrozen: 0
   state: 0
   targetTag: PlayerTargetPoint
   WhatBlocksMyView:
@@ -157,6 +158,7 @@ MonoBehaviour:
   maxHealth: 30
   deathScript: {fileID: 7167034802001215574}
   deathFunction: Die
+  dead: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
@@ -610,6 +612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8aa3a1f2554434d87e71ebdaa933ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFrozen: 0
   holdRotation: {x: 0, y: 0, z: 0}
   damageVelocity: 5
   printObjectVelocity: 0
