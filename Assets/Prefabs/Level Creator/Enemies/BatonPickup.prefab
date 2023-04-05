@@ -76,6 +76,7 @@ MonoBehaviour:
   impactHealthLoss: 0
   useDraggedInHealthManager: 0
   draggedInHM: {fileID: 0}
+  isLightObject: 1
   beingHeld: 0
   originalParent: {fileID: 0}
 --- !u!65 &264664954

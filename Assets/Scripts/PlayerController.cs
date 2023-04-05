@@ -324,7 +324,12 @@ public class PlayerController : MonoBehaviour
                     {
                         queuedActions.Add("throw");
                     }
-                    break;
+                    //punching
+                    if ((Input.GetButtonDown("Punch")) && currentlyTouchedPickup.GetComponent<Throwable>().isLightObject)
+                    {
+                        queuedActions.Add("punch");
+                    }
+                break;
 
 
                 //this runs when the player isn't holding anything or picking anything up
