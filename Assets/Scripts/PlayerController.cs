@@ -431,7 +431,7 @@ public class PlayerController : MonoBehaviour
         {
             Throw();
         }
-
+        
         //When punch is pressed once
         if (ActionInQueue("punch",false) && canPunch)
         {
@@ -455,6 +455,7 @@ public class PlayerController : MonoBehaviour
             }
             Invoke("Punch", punchWaitTime);          
         }
+
 
         //When punch is pressed twice
         if (ActionInQueue("punch2", false))
