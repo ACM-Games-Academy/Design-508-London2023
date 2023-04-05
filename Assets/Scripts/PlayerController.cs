@@ -568,7 +568,7 @@ public class PlayerController : MonoBehaviour
                 //disabling physics
                 TogglePhysics(currentlyTouchedPickup, false);
                 //setting animator boolean
-                ani.SetBool("carrying", true);
+                ani.SetBool("carrying", !t.isLightObject);
                 elapsedThrowTime += Time.deltaTime;
                 float elapsedPercentage = elapsedThrowTime / pickupTime;
                 currentlyTouchedPickup.transform.SetParent(holdPosition.transform, true);
