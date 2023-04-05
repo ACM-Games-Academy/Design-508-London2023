@@ -448,12 +448,17 @@ public class PlayerController : MonoBehaviour
             {
                 queuedActions.Add("kick");
             }
-            else
+            else if (pickUpState == pickupStates.notholding)
+
             {
                 ani.Play("Right Hook");
                 StoreAsPrevious("punch");
             }
-            Invoke("Punch", punchWaitTime);          
+            else
+            {
+                ani.Play("")
+            }
+            Invoke("Punch", punchWaitTime);
         }
 
 
