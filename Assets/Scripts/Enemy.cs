@@ -94,6 +94,10 @@ public class Enemy : MonoBehaviour
         //        Destroy(script, 5f);
         //    }           
         //}
+        if (TryGetComponent(out DropWeaponOnDeath Dr))
+        {
+            Dr.Drop();
+        }
     }
 
     public void Agro()

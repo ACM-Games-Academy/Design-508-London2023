@@ -24,6 +24,7 @@ public class Throwable : Freezable
     [SerializeField] bool useDraggedInHealthManager;
     [SerializeField] HealthManager draggedInHM;
     Rigidbody rb;
+    public bool isLightObject;
 
     [Header("AUTOFILLED DO NOT CHANGE")]
     public bool beingHeld;  
