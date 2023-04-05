@@ -2,23 +2,37 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
-public class Throwable : MonoBehaviour
+public class Throwable : Freezable
 {
+    [Tooltip("Rotation offset while being held")]
     public Vector3 holdRotation;
-    [Header("At what speed does the object deal damage")]
+
+    [Header("Dealing Damage")]
+    [Tooltip("At what speed does this object inflict damage?")]
     [SerializeField] float damageVelocity;
+    [Tooltip("Print the velocity as a reference for the above variable")]
     [SerializeField] bool printObjectVelocity;
-    [Header("How much damage does it deal")]
+    [Tooltip("How much damage does it deal")]
     [SerializeField] float thrownDamage;
-    [Header("What layers causes the object to destroy")]
-    [SerializeField] LayerMask disableMask;
+    [HideInInspector] public bool beenThrown;
+
+    [Header("Taking Damage")]
+    [Tooltip("What layers cause the object to take damage?")]
+    [SerializeField] LayerMask takesDamageMask;
+    [Tooltip("How much damage does the object take upon impact?")]
+    [SerializeField] float impactHealthLoss;
+    [SerializeField] bool useDraggedInHealthManager;
+    [SerializeField] HealthManager draggedInHM;
     Rigidbody rb;
-    [Header("don't fiddle")]
-    public bool beingHeld;
+
+    [Header("AUTOFILLED DO NOT CHANGE")]
+    public bool beingHeld;  
+    public Transform originalParent;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        rb = GetComponent<Rigidbody>();   
+        rb = GetComponent<Rigidbody>();
+        originalParent = transform.parent;
     }
 
     // Update is called once per frame
@@ -26,30 +40,44 @@ public class Throwable : MonoBehaviour
     {
         if (printObjectVelocity)
         {
-            print(gameObject.name + " velocity: " + rb.velocity.magnitude);
+            print(gameObject.name + " Velocity: " + rb.velocity.magnitude);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         GameObject colOb = collision.gameObject;
-        if (rb.velocity.magnitude > damageVelocity)
+        if (beenThrown && rb.velocity.magnitude > damageVelocity && colOb.transform.root != transform.root)//invalid if colliding objects are part of the same root object
         {
-            if (disableMask == (disableMask | 1 << colOb.layer))
+            if (takesDamageMask == (takesDamageMask | 1 << colOb.layer))
             {
-                if (TryGetComponent(out HealthManager health))
+                HealthManager hm = null;
+                if (useDraggedInHealthManager)
                 {
-                    health.Death();
+                    hm = draggedInHM;
+                }
+                else if (TryGetComponent(out HealthManager health))
+                {
+                    hm = health;
+                }
+                if(hm != null)
+                {
+                    print(gameObject.name+" collided with "+colOb.name + "at speed "+rb.velocity.magnitude);
+                    hm.HealthChange(-impactHealthLoss);
+                }               
+            }
+            if (colOb.layer != LayerMask.NameToLayer("Player"))
+            {
+                if (colOb.TryGetComponent(out HealthManager hlth))
+                {
+                    hlth.HealthChange(-thrownDamage);
+                }
+                if (colOb.TryGetComponent(out Ragdoll rd))
+                {
+                    rd.StartRagdoll();
                 }
             }
-            if (colOb.TryGetComponent(out HealthManager hlth))
-            {
-                hlth.HealthChange(-thrownDamage);
-            }
-            if (colOb.TryGetComponent(out Ragdoll rd))
-            {
-                rd.StartRagdoll();
-            }
+
         }
     }
 }

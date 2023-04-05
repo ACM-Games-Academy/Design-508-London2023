@@ -566,7 +566,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 25.000023}
+  m_AnchoredPosition: {x: 0, y: 25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1873607435
@@ -692,7 +692,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5, z: -7.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5856801781413637945}
   - {fileID: 5856801782222167189}
@@ -2916,35 +2916,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352a6720da25a8747af0276fbaa41a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doublePressWait: 0.5
+  comboDelay: 1
   disableInputs: 0
   maxEnergy: 100
   energyRegenRate: 12
-  laserVision: 1
-  superSpeed: 0
+  laserVision: 0
+  superSpeed: 1
   flight: 1
   GroundLayers:
     serializedVersion: 2
     m_Bits: 72
   GroundRaycastLength: 0.3
   jumpForce: 600
-  moveSpeed: 150
-  sprintMultiplier: 1.5
+  moveSpeed: 248
+  sprintMultiplier: 1.6
   fallSpeed: 250
   rotationSpeed: 4
   guy: {fileID: 5856801781880337727}
-  punchTime: 0.3
-  punchCooldown: 0.75
-  punchForce: 40
+  punchWaitTime: 0.2
+  punchTime: 0.2
+  punchCooldown: 0.05
+  punchAccelaration: 3
+  kickAccelaration: 15
   punchCollider: {fileID: 5856801781880337724}
-  punchWaitTime: 0.6
-  throwForce: 500
+  throwAccelaration: 30
   holdPosition: {fileID: 827517633602024467}
   pickupTime: 0.5
   flightSpeed: 300
   riseSpeed: 200
   lowerSpeed: 150
   flightDrain: 0
+  rollForce: 200
+  iTime: 0.5
+  rollCooldown: 1
   angleDiff: 10
   head: {fileID: 45495294131082424}
   eyeball1: {fileID: 5782222353903378165}
@@ -2958,12 +2962,16 @@ MonoBehaviour:
     type: 3}
   crosshair: {fileID: 5856801783327879112}
   laserDrain: 20
-  speedMultiplier: 3
+  superSpeedMultiplier: 3
+  superSpeedEffect: {fileID: 1000011128802252, guid: 96730f8640590934eacb6f860058e7f9,
+    type: 3}
   headAimConstraint: {fileID: 5790318650894105163}
   laserVisionTarget: {fileID: 5790318650413479506}
   WeightLerpSpeed: 10
   laserDamage: 3
-  punchDamage: 10
+  punchDamage: 4
+  standingKickDamage: 6
+  runningKickDamage: 5
   bloodEffect: {fileID: 1000010675638318, guid: 1afa466a5d347f144939ca63607ad67b,
     type: 3}
   bloodSpawn: {fileID: 2230856686319670588}
@@ -3012,10 +3020,12 @@ MonoBehaviour:
   maxHealth: 100
   deathScript: {fileID: 5856801781413637951}
   deathFunction: Die
-  health: 0
+  dead: 0
   hasRegen: 1
-  regenSpeed: 5
+  regenSpeed: 2
   regenTimer: 10
+  health: 0
+  canTakeDamage: 0
 --- !u!1 &5856801781487310901
 GameObject:
   m_ObjectHideFlags: 0
@@ -3074,7 +3084,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 3
+  near clip plane: 0.01
   far clip plane: 5000
   field of view: 35
   orthographic: 0
@@ -3160,7 +3170,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5856801781755219118}
-  m_LocalRotation: {x: 0.22965084, y: 0.0056137634, z: -0.0013246313, w: 0.973256}
+  m_LocalRotation: {x: 0.22965086, y: 0.005613801, z: -0.0013246405, w: 0.973256}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3199,7 +3209,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 35
     OrthographicSize: 10
-    NearClipPlane: 3
+    NearClipPlane: 0.01
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
@@ -3284,6 +3294,8 @@ MonoBehaviour:
     m_Bits: 193
   destructionMode: 2
   meleeDamage: 0
+  meleeAccelaration: 0
+  induceRagdoll: 0
 --- !u!1 &5856801781970846719
 GameObject:
   m_ObjectHideFlags: 0
@@ -3562,7 +3574,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 35
     OrthographicSize: 10
-    NearClipPlane: 3
+    NearClipPlane: 0.01
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
@@ -3665,9 +3677,9 @@ MonoBehaviour:
   m_AvoidObstacles: 1
   m_DistanceLimit: 0
   m_MinimumOcclusionTime: 0
-  m_CameraRadius: 0.1
+  m_CameraRadius: 0.5
   m_Strategy: 1
-  m_MaximumEffort: 10
+  m_MaximumEffort: 4
   m_SmoothingTime: 0
   m_Damping: 0
   m_DampingWhenOccluded: 0
@@ -3837,7 +3849,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 35
     OrthographicSize: 10
-    NearClipPlane: 3
+    NearClipPlane: 0.01
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
@@ -3889,7 +3901,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 107.89993, y: -32.900055}
+  m_AnchoredPosition: {x: 107.89993, y: -23.828857}
   m_SizeDelta: {x: 192.8354, y: 29.5155}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5856801782505301305
@@ -4338,7 +4350,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 35
     OrthographicSize: 10
-    NearClipPlane: 3
+    NearClipPlane: 0.01
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0

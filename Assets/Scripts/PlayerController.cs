@@ -5,17 +5,18 @@ using UnityEngine.Animations.Rigging;
 using TMPro;
 
 public delegate void freeze();
+public delegate void unfreeze();
 
 public class PlayerController : MonoBehaviour
 {
     public static event freeze freezeEvent;
+    public static event unfreeze unFreezeEvent;
 
     Rigidbody b;
     bool grounded;
-    int presses;
     bool doublePressed;
-    bool isPickingUp;
-
+    List<string> queuedActions = new List<string>();
+    List<string> previousActions = new List<string>();
 
     List<GameObject> spawnedEffects = new List<GameObject>();
     LineRenderer laser1;
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
     Animator ani;
     public static HealthManager playerHealth;
 
-    [SerializeField] float doublePressWait;
+    [SerializeField][Tooltip("the maximum amount of times between button presses for a combo")] float comboDelay;
     public bool disableInputs;
     [Header("[POWER SETTINGS]")]
     [SerializeField] float maxEnergy;
@@ -42,6 +43,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveSpeed;
     [SerializeField] float sprintMultiplier;
     [SerializeField] float fallSpeed;
+    bool sprinting;
+    bool moving;
+    Vector3 directionalInput;
 
     [Header("[Rotation Properties]")]
     [SerializeField] float rotationSpeed;
@@ -49,19 +53,22 @@ public class PlayerController : MonoBehaviour
     Transform cam;
 
     [Header("[PUNCH]")]
-    [SerializeField] float punchTime;
-    [SerializeField] float punchCooldown;
-    [SerializeField] float punchForce;
-    [SerializeField] BoxCollider punchCollider;
-    [SerializeField] float punchWaitTime;
+    [SerializeField] [Tooltip("The time between pressing punch and the hitbox appearing for it")] float punchWaitTime;
+    [SerializeField] [Tooltip("How long the punch hitbox appears for")] float punchTime;
+    [SerializeField] [Tooltip("The time after punching until you can punch again")]float punchCooldown;
+    [SerializeField] [Tooltip("The accelaration that regular punches apply")]float punchAccelaration;
+    [SerializeField] [Tooltip("The accelaration that kicks apply")] float kickAccelaration;
+    [SerializeField] BoxCollider punchCollider;    
+
     MeleeHitbox meleeScript;
     bool canPunch;
 
     [Header("[PICK UP AND THROW]")]
-    [SerializeField] float throwForce;
+    [SerializeField] float throwAccelaration;
     [SerializeField] Transform holdPosition;
     [SerializeField] float pickupTime;
     GameObject currentlyTouchedPickup;
+
     enum pickupStates {notholding,pickingUp,holding}
     pickupStates pickUpState;
     float elapsedThrowTime;
@@ -74,8 +81,10 @@ public class PlayerController : MonoBehaviour
     bool isFlying;
 
     [Header("[ROLL]")]
-    [SerializeField] float rollSpeed;
-    [SerializeField] float iFrames;
+    [SerializeField] float rollForce;
+    [SerializeField] float iTime = 0.5f;
+    [SerializeField] float rollCooldown;
+    bool isRolling;
 
     [Header("[LASER VISION]")]
     [SerializeField] float angleDiff;
@@ -93,7 +102,9 @@ public class PlayerController : MonoBehaviour
     Vector3 laserMidpoint;
 
     [Header("[SUPER SPEED]")] 
-    [SerializeField] float speedMultiplier;
+    [SerializeField] float superSpeedMultiplier;
+    [SerializeField] GameObject superSpeedEffect;
+    bool isSpeeding;
 
     [Header("[Aim Constraint]")]
     [SerializeField] MultiAimConstraint headAimConstraint;
@@ -103,6 +114,8 @@ public class PlayerController : MonoBehaviour
     [Header("[DAMAGE VALUES]")]
     [SerializeField] float laserDamage;
     [SerializeField] float punchDamage;
+    [SerializeField] float standingKickDamage;
+    [SerializeField] float runningKickDamage;
 
     [Header("[Death]")]
     [SerializeField] GameObject bloodEffect;
@@ -122,9 +135,10 @@ public class PlayerController : MonoBehaviour
 
         //OTHER STUFF
         meleeScript.meleeDamage = punchDamage;
-        meleeScript.force = punchForce;
+        meleeScript.meleeAccelaration = punchAccelaration;
         Application.targetFrameRate = 60;
         Cursor.lockState = CursorLockMode.Locked;
+        crosshair.gameObject.SetActive(laserVision);
         Cursor.visible = false;
         canPunch = true;
         energy = maxEnergy;
@@ -132,14 +146,19 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        regen = true;
+    {       
+        //getting and setting
         GroundCheck();
-        crosshair.gameObject.SetActive(laserVision);
+
+        //inputs
         if (!disableInputs)
         {
-            Inputs();
+            ButtonInputs();
+            DirectionalInputs();
         }
+
+        //regen
+        regen = true;
         if (regen)
         {
             currentRegenRate = energyRegenRate;
@@ -151,17 +170,54 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
-
-    void WASDmovement(float speed)
+    private void FixedUpdate()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-        if (direction.magnitude >= 0.1f)
+        ButtonExecution();
+
+        //Rotating the player to the camera direction
+        if (ani.GetBool("punch"))
+        {
+            RotatePlayerToCam();
+        }
+        //rolling movement
+        if (isRolling)
+        {
+            DirectionalMovement(rollForce, 0f);
+        }
+        //regular movement
+        else if (!isFlying)
+        {
+            DirectionalMovement(moveSpeed);
+            if (!grounded)
+            {
+                b.AddForce(Vector3.down * fallSpeed * 100 * Time.deltaTime, ForceMode.Force);
+            }
+        }
+        //flight movement
+        else
+        {
+            Flying();
+        }
+    }
+
+
+    void DirectionalMovement(float speed,float minMagnitude = 0.1f)
+    {
+        if (sprinting && !isRolling)
+        {
+            if(isSpeeding)
+            {
+                speed *= superSpeedMultiplier;
+            }
+            else
+            {
+                speed *= sprintMultiplier;
+            }            
+        }
+        if (directionalInput.magnitude >= minMagnitude && !punchCollider.enabled)
         {
             ani.SetBool("moving", true);
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(directionalInput.x, directionalInput.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
             guy.rotation = Quaternion.Slerp(guy.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             Vector3 moveDir = targetRotation * Vector3.forward;
@@ -171,114 +227,302 @@ public class PlayerController : MonoBehaviour
         {
             ani.SetBool("moving", false);
         }
+
     }
 
-    private void FixedUpdate()
+    void Flying()
     {
-        if (!disableInputs)
+        EnergyDrain(flightDrain);
+        b.useGravity = false;
+        //Movement
+        DirectionalMovement(flightSpeed);
+        if (Input.GetButtonDown("Jump"))
         {
-            //JUMPING
-            if (grounded && Input.GetKeyDown("space") && playerHealth.health != 0)
-            {
-                //b.AddForce(Vector3.up * jumpForce * 100 * Time.deltaTime, ForceMode.Impulse);
-                b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
-            }
-            //Activating Flight
-            else if (!grounded && Input.GetKeyDown("space") && flight && energy >= 0)
-            {
-                isFlying = true;
-                ani.SetBool("flying", true);
-            }
+            queuedActions.Add("flightDeactivate");
+            print("queued flightDeactivate");
+        }
+        //rising of player height
+        if (Input.GetButton("Jump"))
+        {
+            b.AddForce(Vector3.up * riseSpeed * 100 * Time.deltaTime, ForceMode.Force);
+        }
+        else if (Input.GetButton("Crouch"))
+        {
+            b.AddForce(Vector3.down * lowerSpeed * 100 * Time.deltaTime, ForceMode.Force);
         }
     }
-    void Inputs()
+
+    public IEnumerator Roll()
+    {
+        isRolling = true;
+        ani.Play("Roll");
+        playerHealth.canTakeDamage = false;
+        disableInputs = true;
+        yield return new WaitForSeconds(iTime);
+        playerHealth.canTakeDamage = true;
+        if (iTime < rollCooldown)
+        {
+            yield return new WaitForSeconds(rollCooldown - iTime);
+        }
+        isRolling = false;
+        disableInputs = false;
+    }
+
+    //RECORDING DIRECTION INPUTS
+    void DirectionalInputs()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        directionalInput = new Vector3(horizontal, 0f, vertical).normalized;
+    }
+    //RECORDING BUTTON INPUTS
+    void ButtonInputs()
     {
         //PLAYER MOVEMENT
 
-            //sprinting
-            if (Input.GetKeyDown("left shift"))
-            {
-                if (superSpeed)
-                {
-                    freezeEvent();
-                }
-                moveSpeed *= sprintMultiplier;
-                flightSpeed *= sprintMultiplier;
-                ani.SetBool("sprinting", true);
-            }
-            if (Input.GetKeyUp("left shift"))
-            {
-                moveSpeed /= sprintMultiplier;
-                flightSpeed /= sprintMultiplier;
-                ani.SetBool("sprinting", false);
-                if (superSpeed)
-                {
+        //enabling sprinting
+        if (Input.GetButtonDown("Sprint") && !queuedActions.Contains("startSprint"))
+        {
+            queuedActions.Add("startSprint");
+        }
+        //disabling sprint
+        if (Input.GetButtonUp("Sprint") && !queuedActions.Contains("stopSprint"))
+        {
+            queuedActions.Add("stopSprint");
+        }
+        //enabling super speed
+        if(Input.GetKeyDown("c") && superSpeed)
+        {
 
-                }
-            }
-            //regular movement
-            if (!isFlying)
+                
+        }
+        //JUMPING
+        if (Input.GetButtonDown("Jump") && !playerHealth.dead)
+        {
+            if (grounded && !isFlying)
             {
-                GroundMovement();
-                if (!grounded)
-                {
-                    b.AddForce(Vector3.down * fallSpeed * 100 * Time.deltaTime, ForceMode.Force);
-                }
+                queuedActions.Add("jump");
             }
-            //flight movement
-            else
+            else if (flight && energy >= 0)
             {
-                Flying();
-            }
-
+                queuedActions.Add("startFlight");
+            }          
+        }        
         //PLAYER ACTIONS
-            switch (pickUpState)
-            {              
+        switch (pickUpState)
+            {   
+                //this runs when the player is picking an object up
                 case pickupStates.pickingUp:
                     PickUp();
                     currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;
                     break;
+
+                //this runs when the player is holding an object
                 case pickupStates.holding:
-                    RotatePlayerToCam();
-                    if (Input.GetKeyDown("r"))
+                    RotatePlayerToCam();              
+                    if (Input.GetButtonDown("Pickup"))
                     {
-                        Throw();
+                        queuedActions.Add("throw");
                     }
                     break;
 
+
+                //this runs when the player isn't holding anything or picking anything up
                 case pickupStates.notholding:
+                    //laser vision
                     if (laserVision)
                     {
                         hitpoint1 = LaserVision(eyeball1, laser1);
                         hitpoint2 = LaserVision(eyeball2, laser2);
 
                         laserMidpoint = hitpoint1 + (hitpoint2 - hitpoint1) / 2;
+                        crosshair.gameObject.SetActive(true);
                         crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);
                     }
-                    if ((Input.GetKeyDown("r") || Input.GetMouseButtonDown(1)) && canPunch)
+                    //punching
+                    if ((Input.GetButtonDown("Punch")))
                     {
-                        canPunch = false;
-                        ani.SetBool("punch", true);
-                        Invoke("Punch", punchWaitTime);
+                        queuedActions.Add("punch");                        
                     }
-                    if (Input.GetKeyDown("e") && currentlyTouchedPickup != null)
+                    //picking up
+                    if (Input.GetButtonDown("Pickup") && currentlyTouchedPickup != null)
                     {
-                        pickUpState = pickupStates.pickingUp;
+                        queuedActions.Add("pickup");
+                    }
+                    //initiating roll
+                    if (Input.GetKeyDown("left ctrl") && grounded && !isFlying)
+                    {
+                        StartCoroutine(Roll());
                     }
                     break;
             }
-            //Rotating the player to the camera direction
-            if (ani.GetBool("punch"))
+    }
+    //executing inputs
+    void ButtonExecution()
+    {       
+        //checks how many of an action is in the queue
+        bool ActionInQueue(string action, bool remove = true)
+        {         
+            if (queuedActions.Contains(action))
             {
-                RotatePlayerToCam();
+                if (remove)
+                {
+                    StoreAsPrevious(action);
+                }
+                return true;
             }
+            return false;
+            
+        }
+        void RemoveActionsFromList(List<string> list, string action)
+        {         
+            if (list.Contains(action))
+            {
+                float n = 0;
+                foreach (string s in list)
+                {
+                    if (s == action)
+                    {
+                        n += 1;
+                    }
+                }
+                for(int x = 0; x < n; x++)
+                {
+                    list.Remove(action);                   
+                }               
+                
+            }
+        }
+        void StoreAsPrevious(string action)
+        {
+            RemoveActionsFromList(queuedActions, action);
+            previousActions.Add(action);
+            Invoke("ClearOldestPrevious", comboDelay);
+        }
+        //cycles through all actions and checks if their inputs have been recently pressed
+        if (ActionInQueue("stopSprint"))
+        {
+            sprinting = false;
+            ani.SetBool("sprinting", false);
+            if (isSpeeding)
+            {
+                isSpeeding = false;
+                unFreezeEvent();
+            }
+        }
+        if (ActionInQueue("startSprint",false))
+        {
+            sprinting = true;
+            ani.SetBool("sprinting",true);
+            if (previousActions.Contains("startSprint") && superSpeed)
+            {
+                isSpeeding = true;
+                freezeEvent();
+                Instantiate(superSpeedEffect, transform.position, transform.rotation);
+            }
+            StoreAsPrevious("startSprint");
+        }
+        if (ActionInQueue("throw"))
+        {
+            Throw();
+        }
 
+        //When punch is pressed once
+        if (ActionInQueue("punch",false) && canPunch)
+        {
+            meleeScript.meleeAccelaration = punchAccelaration;
+            meleeScript.meleeDamage = punchDamage;
+            meleeScript.induceRagdoll = false;
+            canPunch = false;
+            ani.SetBool("punch", true);
+            if (previousActions.Contains("punch"))
+            {
+                queuedActions.Add("punch2");
+            }
+            else if (sprinting && directionalInput.magnitude > 0.1f)
+            {
+                queuedActions.Add("kick");
+            }
+            else
+            {
+                ani.Play("Right Hook");
+                StoreAsPrevious("punch");
+            }
+            Invoke("Punch", punchWaitTime);          
+        }
+
+        //When punch is pressed twice
+        if (ActionInQueue("punch2", false))
+        {
+            if (previousActions.Contains("punch2"))
+            {
+                queuedActions.Add("kick");
+            }
+            else
+            {
+                ani.Play("Left Hook");
+                StoreAsPrevious("punch2");
+                RemoveActionsFromList(queuedActions, "punch");
+            }
+        }
+
+        //when punch is pressed three times
+        if (ActionInQueue("kick"))
+        {   
+            if(directionalInput.magnitude > 0.1f && sprinting)
+            {
+                ani.Play("Running Kick");
+                meleeScript.meleeDamage = runningKickDamage;
+            }
+            else
+            {
+                ani.Play("Standing Kick");
+                meleeScript.meleeDamage = standingKickDamage;
+            }          
+            meleeScript.induceRagdoll = true;
+            meleeScript.meleeAccelaration = kickAccelaration;//increasing knockback for testing
+            RemoveActionsFromList(queuedActions, "punch");
+            RemoveActionsFromList(previousActions, "punch");
+            RemoveActionsFromList(queuedActions, "punch2");
+            RemoveActionsFromList(previousActions, "punch2");
+        }
+        if (ActionInQueue("jump"))
+        {
+            b.velocity = new Vector2(0, jumpForce * Time.deltaTime);
+        }
+        if (ActionInQueue("pickup"))
+        {
+            crosshair.gameObject.SetActive(false);
+            if (currentlyTouchedPickup.GetComponent<Throwable>().enabled)
+            {
+                pickUpState = pickupStates.pickingUp;
+            }
+        }
+        if (ActionInQueue("startFlight"))
+        {
+            isFlying = true;
+            ani.SetBool("flying", true);
+        }
+        if (ActionInQueue("flightDeactivate",false))
+        {
+            if (previousActions.Contains("flightDeactivate") || grounded || energy <= 0)
+            {                
+                isFlying = false;
+                b.useGravity = true;
+                ani.SetBool("flying", false);
+            }
+            StoreAsPrevious("flightDeactivate");
+        }
     }
-
-    void GroundMovement()
+    void ClearOldestPrevious()
     {
-        WASDmovement(moveSpeed);
+        if(previousActions.Count > 0)
+        {
+            previousActions.Remove(previousActions[0]);
+        }       
     }
+
+
     void Punch()
     {
         punchCollider.enabled = true;
@@ -297,10 +541,6 @@ public class PlayerController : MonoBehaviour
         canPunch = true;
     }
 
-    void Roll()
-    {
-
-    }
 
     void TogglePhysics(GameObject go,bool toggleState)
     { 
@@ -320,7 +560,7 @@ public class PlayerController : MonoBehaviour
 
     void PickUp()
     {
-        if (currentlyTouchedPickup != null )
+        if (currentlyTouchedPickup != null)
         {
             Throwable t = currentlyTouchedPickup.GetComponent<Throwable>();
             if (t.enabled)
@@ -340,58 +580,35 @@ public class PlayerController : MonoBehaviour
                     currentlyTouchedPickup.transform.SetParent(holdPosition.transform, true);
                 }
             }           
-        }       
+        }
+        else
+        {
+            pickUpState = pickupStates.notholding;
+        }
     }
 
     void Throw()
     {
         GameObject ob = currentlyTouchedPickup;
+        Throwable ts = ob.GetComponent<Throwable>();
         TogglePhysics(ob, true);
-        ob.GetComponent<Rigidbody>().AddForce(cam.forward * throwForce, ForceMode.Impulse);       
+        ts.beenThrown = true;
+        foreach ( Rigidbody rb in ob.GetComponentsInChildren<Rigidbody>())
+        {
+            float throwForce = rb.mass * throwAccelaration;
+            rb.AddForce(cam.forward * throwForce, ForceMode.Impulse);
+        }           
         pickUpState = pickupStates.notholding;
-        ob.transform.SetParent(null);
+        ob.transform.SetParent(ts.originalParent);
         ani.SetBool("carrying", false);
-        ob.GetComponent<Throwable>().beingHeld = false;
+        ts.beingHeld = false;
         if(ob.TryGetComponent(out Ragdoll rs))
         {
             rs.StartRagdoll();
         }
     }
 
-    void Flying()
-    {
-        EnergyDrain(flightDrain);
-        b.useGravity = false;
-        //WASD controls
-        WASDmovement(flightSpeed);
-        if (Input.GetButtonDown("Jump"))
-        {
-            presses += 1;
-            Invoke("AwaitSecondPress", doublePressWait);
-        }
-        //rising of player height
-        if (Input.GetButton("Jump"))
-        {
-            b.AddForce(Vector3.up * riseSpeed * 100 * Time.deltaTime, ForceMode.Force);
-        }
-        else if (Input.GetButton("Crouch"))
-        {
-            b.AddForce(Vector3.down * lowerSpeed * 100 * Time.deltaTime, ForceMode.Force);
-        }
-        //Deactivating Flight
-        if (grounded || doublePressed || energy <= 0)
-        {
-            doublePressed = false;
-            isFlying = false;
-            b.useGravity = true;
-            ani.SetBool("flying", false);
-        }
-    }
 
-    void CameraMoveForce()
-    {
-
-    }
 
     Vector3 LaserVision(Transform eyeball,LineRenderer laser)
     {
@@ -448,17 +665,6 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    void AwaitSecondPress()
-    {
-        if(presses % 2 == 0)
-        {
-            doublePressed = true;
-        }
-        else
-        {
-            presses = 0;
-        }
-    }
 
     void GroundCheck()
     {
@@ -530,16 +736,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    bool NotHolding()
+    {
+        return pickUpState == pickupStates.notholding;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent( out Throwable t))
+        if(other.TryGetComponent( out Throwable t) && NotHolding())
         {
-            currentlyTouchedPickup = t.gameObject;
+            if (t.enabled)
+            {
+                currentlyTouchedPickup = t.gameObject;
+            }       
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out Throwable t))
+        if (other.TryGetComponent(out Throwable t) && NotHolding())
         {
             currentlyTouchedPickup = null;
         }

@@ -87,14 +87,13 @@ public class Enemy : MonoBehaviour
         {
             ragdollScript.StartRagdoll();
         }
-        foreach(MonoBehaviour script in GetComponents<MonoBehaviour>())
-        {
-            if(script != this)
-            {
-                Destroy(script, 5f);
-            }           
-        }
-        Destroy(this,1f);
+        //foreach(MonoBehaviour script in GetComponents<MonoBehaviour>())
+        //{
+        //    if(script != this)
+        //    {
+        //        Destroy(script, 5f);
+        //    }           
+        //}
     }
 
     public void Agro()
@@ -115,20 +114,5 @@ public class Enemy : MonoBehaviour
                 ani.SetBool("Aiming", false);
             }
         }
-    }
-
-    public void freezeMethod()
-    {
-        Debug.Log("whatever");
-    }
-
-    private void OnEnable()
-    {
-        PlayerController.freezeEvent += freezeMethod;
-    }
-
-    private void OnDisable()
-    {
-        PlayerController.freezeEvent -= freezeMethod;
     }
 }
