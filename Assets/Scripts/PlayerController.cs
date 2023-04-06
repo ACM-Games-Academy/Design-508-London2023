@@ -236,10 +236,9 @@ public class PlayerController : MonoBehaviour
         b.useGravity = false;
         //Movement
         DirectionalMovement(flightSpeed);
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") || grounded || energy <= 0)
         {
             queuedActions.Add("flightDeactivate");
-            print("queued flightDeactivate");
         }
         //rising of player height
         if (Input.GetButton("Jump"))
@@ -258,11 +257,19 @@ public class PlayerController : MonoBehaviour
         ani.Play("Roll");
         playerHealth.canTakeDamage = false;
         disableInputs = true;
+        if (TryGetComponent(out CapsuleCollider cpsle))
+        {
+            cpsle.height /= 2;
+        }
         yield return new WaitForSeconds(iTime);
         playerHealth.canTakeDamage = true;
         if (iTime < rollCooldown)
         {
             yield return new WaitForSeconds(rollCooldown - iTime);
+        }
+        if (TryGetComponent(out CapsuleCollider cpsle1))
+        {
+            cpsle1.height *= 2;
         }
         isRolling = false;
         disableInputs = false;
@@ -402,7 +409,7 @@ public class PlayerController : MonoBehaviour
         {
             RemoveActionsFromList(queuedActions, action);
             previousActions.Add(action);
-            Invoke("ClearOldestPrevious", comboDelay);
+            StartCoroutine(ClearActionAfterSeconds(action, comboDelay));
         }
         //cycles through all actions and checks if their inputs have been recently pressed
         if (ActionInQueue("stopSprint"))
@@ -519,7 +526,7 @@ public class PlayerController : MonoBehaviour
         }
         if (ActionInQueue("flightDeactivate",false))
         {
-            if (previousActions.Contains("flightDeactivate") || grounded || energy <= 0)
+            if (previousActions.Contains("flightDeactivate"))
             {                
                 isFlying = false;
                 b.useGravity = true;
@@ -528,12 +535,13 @@ public class PlayerController : MonoBehaviour
             StoreAsPrevious("flightDeactivate");
         }
     }
-    void ClearOldestPrevious()
+    IEnumerator ClearActionAfterSeconds(string action,float time)
     {
-        if(previousActions.Count > 0)
+        if (previousActions.Contains(action))
         {
-            previousActions.Remove(previousActions[0]);
-        }       
+            yield return new WaitForSeconds(time);
+            previousActions.Remove(action);
+        }    
     }
 
 
