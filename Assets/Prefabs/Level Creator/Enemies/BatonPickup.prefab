@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
-  holdRotation: {x: 0, y: 0, z: 0}
+  holdRotation: {x: 60, y: 0, z: -90}
   damageVelocity: 8
   printObjectVelocity: 0
   thrownDamage: 15
@@ -90,8 +90,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.055519104, y: 0.6104617, z: 0.21185303}
-  m_Center: {x: 0.0057868958, y: 0.12762988, z: -0.081970215}
+  m_Size: {x: 0.055519104, y: 0.6522931, z: 0.21185303}
+  m_Center: {x: 0.0057868958, y: 0.19983834, z: -0.081970215}
 --- !u!65 &264664955
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -103,8 +103,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.10507202, y: 0.70066226, z: 0.3248291}
-  m_Center: {x: 0.021560669, y: 0.13104707, z: -0.057769775}
+  m_Size: {x: 0.13182068, y: 0.70066226, z: 0.3248291}
+  m_Center: {x: 0.00818634, y: 0.20999998, z: -0.057769775}
 --- !u!1 &9062981099110541770
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,7 +131,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9062981099110541770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.082, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
