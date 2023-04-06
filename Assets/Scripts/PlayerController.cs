@@ -463,7 +463,7 @@ public class PlayerController : MonoBehaviour
                         ani.Play("Right Hook");
                         break;
                     case pickupStates.holding:
-                        ani.Play("Right Hook");//replace with your special swing animations
+                        ani.Play("MeleeWeapon1");
                         break;
                 }                
                 StoreAsPrevious("punch");
@@ -481,7 +481,16 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                ani.Play("Left Hook");
+                switch (pickUpState)
+                {
+                    case pickupStates.notholding:
+                        ani.Play("Left Hook");
+                        break;
+                    case pickupStates.holding:
+                        ani.Play("MeleeWeapon3");
+                        break;
+
+                }
                 StoreAsPrevious("punch2");
                 RemoveActionsFromList(queuedActions, "punch");
             }
@@ -497,7 +506,15 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                ani.Play("Standing Kick");
+                switch (pickUpState)
+                {
+                    case pickupStates.notholding:
+                        ani.Play("Standing Kick");
+                        break;
+                    case pickupStates.holding:
+                        ani.Play("MeleeWeapon2");//replace with your special swing animations
+                        break;
+                }
                 meleeScript.meleeDamage = standingKickDamage;
             }          
             meleeScript.induceRagdoll = true;
