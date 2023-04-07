@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public GameObject PauseUI;
     public GameObject HUD;
-    public GameObject MenuUI;
-    public GameObject MainMenu;
     public GameObject SettingsMenu;
     public GameObject FreeCam;
     
@@ -53,10 +52,7 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMenu()
     {
-        PauseUI.SetActive(false);
-        MenuUI.SetActive(true);
-        MainMenu.SetActive(true);
-        SettingsMenu.SetActive(false);
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void QuitGame()
