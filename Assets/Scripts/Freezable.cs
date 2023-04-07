@@ -38,8 +38,8 @@ public class Freezable : MonoBehaviour
             wasUsingGravity = rb.useGravity;
             prevVelocity = rb.velocity;
 
-            rb.drag = 7;
-            rb.angularDrag = 7;
+            rb.drag = 3;
+            rb.angularDrag = 3;
             rb.useGravity = false;
         }
         if(TryGetComponent(out Animator ani))

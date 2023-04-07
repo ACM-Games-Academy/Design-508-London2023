@@ -13,8 +13,14 @@ public class Ragdoll : MonoBehaviour
     
     NavMeshAgent agent;
     Collider coll;
+    float originalMass;
 
     [SerializeField] Animator ani;
+    [HideInInspector]public bool ragdoll;
+    [SerializeField] bool testRagdoll;
+    [Header("Getting Up")]
+    [HideInInspector] public bool getBackUp;
+    [SerializeField] bool neverGetBackUp;
     [SerializeField] string getUpState;
     [SerializeField] string getUpClipName;
     [SerializeField] float getUpDelay;
@@ -26,9 +32,6 @@ public class Ragdoll : MonoBehaviour
 
     [SerializeField] float boneResetTime;
     float elapsedResetTime;
-
-    public bool ragdoll;
-    public bool getBackUp;
     bool resettingBones;
     bool throwable;
     Throwable throwScript;
@@ -37,20 +40,26 @@ public class Ragdoll : MonoBehaviour
     void Start()
     {
         getBackUp = true;
+
+        //GET COMPONENTING
         if(TryGetComponent(out NavMeshAgent a))
         {
             agent = a;
         }
         coll = GetComponent<Collider>();
         hips = ani.GetBoneTransform(HumanBodyBones.Hips);
-        //
-        //bones = new Transform[ragdollBones.Length];
-        //for(int x = 0; x < ragdollBones.Length; x++)
-        //{
-        //    bones[x] = ragdollBones[x].transform;
-        //}
         bones = hips.GetComponentsInChildren<Transform>();
         ragdollBones = hips.GetComponentsInChildren<Rigidbody>();
+        if (hips.TryGetComponent(out Throwable t))
+        {
+            throwable = true;
+            throwScript = t;
+            t.enabled = false;
+        }
+        if (TryGetComponent(out Rigidbody rb))
+        {
+            originalMass = rb.mass;
+        }
         //I don't think I need this here
         animationTransforms = new BoneTransform[bones.Length];
         ragdollTransforms = new BoneTransform[bones.Length];
@@ -59,14 +68,9 @@ public class Ragdoll : MonoBehaviour
             animationTransforms[x] = new BoneTransform();
             ragdollTransforms[x] = new BoneTransform();
         }
-        if(hips.TryGetComponent(out Throwable t))
-        {
-            throwable = true;
-            throwScript = t;
-            t.enabled = false;
-        }
-        //
+
         StartAnimationTransforms();
+        TogglePhysics(false);
     }
 
     // Update is called once per frame
@@ -75,6 +79,11 @@ public class Ragdoll : MonoBehaviour
         if (resettingBones)
         {
             TransitionToAnimation();
+        }
+        if (testRagdoll)
+        {
+            StartRagdoll();
+            testRagdoll = false;
         }
     }
 
@@ -86,7 +95,7 @@ public class Ragdoll : MonoBehaviour
         {
             throwScript.enabled = true;
         }
-        if (getBackUp)
+        if (getBackUp && !neverGetBackUp)
         {
             Invoke("GetUp", getUpDelay);
         }      
@@ -95,12 +104,11 @@ public class Ragdoll : MonoBehaviour
     public void RagdollCheck()
     {
         ani.enabled = !ragdoll;
-        agent.enabled = !ragdoll;
-        coll.enabled = !ragdoll;   
-        foreach(Rigidbody rb in ragdollBones)
+        if(agent != null)
         {
-            rb.isKinematic = !ragdoll;
+            agent.enabled = !ragdoll;
         }
+        TogglePhysics(ragdoll);
     }
 
     BoneTransform[] PopulateTransforms(Transform[] bns)
@@ -215,5 +223,31 @@ public class Ragdoll : MonoBehaviour
     public bool isGettingUp()
     {
         return ani.GetCurrentAnimatorStateInfo(0).IsName(getUpState);
+    }
+
+    public void TogglePhysics(bool toggle)
+    {
+        foreach(Rigidbody rb in ragdollBones)
+        {
+            rb.isKinematic = !toggle;
+            if(rb.TryGetComponent(out Collider c))
+            {
+                c.enabled = toggle;
+            }
+        }
+        if (TryGetComponent(out Rigidbody thisrb))
+        {
+            if (toggle)
+            {
+                thisrb.mass = 1;
+            }
+            else
+            {
+                thisrb.mass = originalMass;                
+            }
+            thisrb.useGravity = !toggle;
+            thisrb.isKinematic = toggle;
+        }
+        coll.enabled = !toggle;
     }
 }

@@ -713,7 +713,14 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         crosshair.gameObject.SetActive(false);
-        ani.SetBool("dead", true);
+        if(TryGetComponent(out Ragdoll rd))
+        {
+            rd.StartRagdoll();
+        }
+        else
+        {
+            ani.SetBool("dead", true);
+        }
         disableInputs = true;
         laser1.enabled = false;
         laser2.enabled = false;
