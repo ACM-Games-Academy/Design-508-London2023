@@ -53,7 +53,7 @@ public class Explodable : MonoBehaviour
             {
                 health.HealthChange(-blastDamage);
             }
-            if (col.TryGetComponent(out Ragdoll rd))
+            if (col.TryGetComponent(out Ragdoll rd) && !col.TryGetComponent(out PlayerController pc))
             {
                 rd.StartRagdoll();
             }
