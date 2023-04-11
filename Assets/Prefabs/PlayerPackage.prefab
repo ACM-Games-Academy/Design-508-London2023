@@ -5947,7 +5947,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886174756187192375}
   m_LocalRotation: {x: -0, y: 0.72029287, z: -0, w: 0.6936701}
-  m_LocalPosition: {x: 3.1294403, y: -4.81, z: -6.71286}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5997,9 +5997,10 @@ MonoBehaviour:
   riseSpeed: 200
   lowerSpeed: 150
   flightDrain: 0
-  rollForce: 200
+  rollForce: 250
   iTime: 0.5
   rollCooldown: 1
+  rollColliderOffset: {x: 0, y: -0.6, z: 0}
   angleDiff: 10
   head: {fileID: 886174755620495276}
   eyeball1: {fileID: 886174755367111997}

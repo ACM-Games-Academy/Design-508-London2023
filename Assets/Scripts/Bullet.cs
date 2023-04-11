@@ -6,6 +6,9 @@ public class Bullet : Freezable
 {
     [SerializeField] float speed;
 
+    [Header("Homing?")]
+    [SerializeField] string homingTag = "PlayerTarget";
+
     [Header("What Happens On Collision?")]
     [SerializeField] MonoBehaviour collisionScript;
     [SerializeField] string collisionFunction;

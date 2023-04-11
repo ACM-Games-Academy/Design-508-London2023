@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
-using TMPro;
 
 public delegate void freeze();
 public delegate void unfreeze();
@@ -84,6 +83,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float rollForce;
     [SerializeField] float iTime = 0.5f;
     [SerializeField] float rollCooldown;
+    [SerializeField] Vector3 rollColliderOffset;
     bool isRolling;
 
     [Header("[LASER VISION]")]
@@ -260,6 +260,7 @@ public class PlayerController : MonoBehaviour
         if (TryGetComponent(out CapsuleCollider cpsle))
         {
             cpsle.height /= 2;
+            cpsle.center += rollColliderOffset;
         }
         yield return new WaitForSeconds(iTime);
         playerHealth.canTakeDamage = true;
@@ -270,6 +271,7 @@ public class PlayerController : MonoBehaviour
         if (TryGetComponent(out CapsuleCollider cpsle1))
         {
             cpsle1.height *= 2;
+            cpsle.center -= rollColliderOffset;
         }
         isRolling = false;
         disableInputs = false;
