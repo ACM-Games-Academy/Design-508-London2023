@@ -7,12 +7,14 @@ public class WaveManager : MonoBehaviour
 {
     [SerializeField] float spawnDelay;
     [SerializeField] float timeBetweenWaves;
-
+    [SerializeField] GameObject doorBlockers;
+ 
     enum waveStates
     {
         SPAWNING,
         SPAWNED,
         WAITING,
+        STOPPED,
     }
 
     waveStates state;
@@ -40,11 +42,6 @@ public class WaveManager : MonoBehaviour
             }
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -63,10 +60,14 @@ public class WaveManager : MonoBehaviour
                         {
                             //shakirs function for upgrading
                         }
-                        else
+                        else if(waveNumber < waves.Length)
                         {
                             StartNextWave();
-                        }                      
+                        }
+                        else
+                        {
+                            EndOfWaves();
+                        }
                     }
                     else if(spawnedEnemies.Count != enemiesToSpawn.Length && !fullySpawned)
                     {
@@ -88,6 +89,18 @@ public class WaveManager : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    void BeginWaves()
+    {
+        doorBlockers.SetActive(true);
+        StartNextWave();
+    }
+
+    void EndOfWaves()
+    {
+        state = waveStates.STOPPED;
+        doorBlockers.SetActive(false);
     }
 
     void StartNextWave()
@@ -153,7 +166,7 @@ public class WaveManager : MonoBehaviour
     {
         if (other.tag == "Player" && waveNumber < 1)
         {
-            StartNextWave();
+            BeginWaves();
             foreach(Collider c in GetComponentsInChildren<Collider>())
             {
                 Destroy(c);
