@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class FlyingEnemyNavigation : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] private Transform movepositionTransform;
+    Transform movePositionTransform;
     [SerializeField] Transform helicopter;
     float chopperHeight;
 
@@ -15,13 +15,13 @@ public class FlyingEnemyNavigation : MonoBehaviour
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        print(navMeshAgent.gameObject.name);
         chopperHeight = helicopter.transform.position.y;
+        movePositionTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Update()
     {
-        navMeshAgent.destination = movepositionTransform.position;
+        navMeshAgent.destination = movePositionTransform.position;
         helicopter.position = new Vector3(helicopter.position.x, chopperHeight, helicopter.position.z);
     }
 

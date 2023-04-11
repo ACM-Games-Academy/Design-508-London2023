@@ -1408,7 +1408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
-  holdRotation: {x: 0, y: 90, z: 0}
+  holdRotation: {x: -10, y: 90, z: 0}
   damageVelocity: 7
   printObjectVelocity: 0
   thrownDamage: 20
