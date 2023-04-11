@@ -111,7 +111,7 @@ MonoBehaviour:
   ani: {fileID: 939755999715127483}
   playerTargetRange: 1000
   showRangeInSceneView: 0
-  playerTag: Player
+  playerTag: PlayerTargetPoint
   bloodEffect: {fileID: 1000012909287652, guid: 78b0e7f97bd38df4cbae856c27751eea,
     type: 3}
 --- !u!114 &7167034802001215564

@@ -8,51 +8,52 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Collider))]
 public class Enemy : MonoBehaviour
 {
+    [Header("Optional")]
     [SerializeField] Animator ani;
     NavMeshAgent agent;
-    Collider coll;
-    float normalMoveSpeed;
 
     [Header("Range")]
     [SerializeField] float playerTargetRange;
-    [SerializeField] bool showRangeInSceneView;
+    [SerializeField] bool showTargetRangeInSceneView;
+    [SerializeField] float stoppingRange;
+    [SerializeField] bool showStoppingRangeInSceneView;
 
     [Header("Player Detection")]
-    [SerializeField] string playerTag;
+    [SerializeField] string playerTag = "PlayerTargetPoint";
     Transform player;
     Ragdoll ragdollScript;
 
     [Header("Death")]
     [SerializeField] GameObject bloodEffect;
 
-    bool isRanged;
-    Shooter shootScript;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag(playerTag).transform;
-        coll = GetComponent<Collider>();
         if(TryGetComponent(out Ragdoll rs))
         {
             ragdollScript = rs;
-        }
-        normalMoveSpeed = agent.speed;
-        if (TryGetComponent(out Shooter s))
-        {
-            shootScript = s;
-            isRanged = true;
         }
     }
 
     private void OnDrawGizmos()
     {
-        if (showRangeInSceneView)
+        if (showTargetRangeInSceneView)
         {
-            Gizmos.color = new Color(1, 0, 0, 0.2f);
-            Gizmos.DrawSphere(transform.position, playerTargetRange);
+            ShowRange(playerTargetRange, new Color(1, 0, 0, 0.2f));
         }
+        if (showStoppingRangeInSceneView)
+        {
+
+        }
+    }
+
+    void ShowRange(float range,Color gizmoColor)
+    {
+        Gizmos.color = gizmoColor;
+        Gizmos.DrawSphere(transform.position, range);
     }
 
     // Update is called once per frame
@@ -61,15 +62,14 @@ public class Enemy : MonoBehaviour
         if (Application.isPlaying)
         {
             if (!IsRagdolled())
-            {
-                bool withinRange = PlayerInRange();
-                if (withinRange)
+            {  
+                if (PlayerInRange())
                 {
-                    Agro();
+                    MoveToTarget(true);
                 }
                 else
                 {
-                    //idle animation
+                    MoveToTarget(false);
                 }
             }
             
@@ -77,10 +77,13 @@ public class Enemy : MonoBehaviour
     }
     public bool PlayerInRange()
     {
-        //checking if the player is close enough to be targeted
-        bool targetPlayer = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
-        agent.isStopped = (!targetPlayer);//stopping movement if within shoot range                                        
-        return targetPlayer;
+        //checking if the player is close enough to be seen
+        bool closeEnough = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
+
+        //checking if the player is too close
+        bool tooClose = (Vector3.Distance(transform.position, player.position) <= stoppingRange);
+
+        return closeEnough && !tooClose;//if close enough, but not too close, return true.
     }
 
     public virtual void Die()
@@ -101,23 +104,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Agro()
+    public void MoveToTarget(bool toggle)
     {
         agent.destination = player.position;
-        if (isRanged && ani != null)
+        agent.isStopped = !toggle;
+        if (ani != null)
         {
-            if (shootScript.state == Shooter.behaviours.aim)
-            {
-                agent.speed = 0;
-                ani.SetBool("Aiming", true);
-                ani.SetBool("Walking", false);
-            }
-            else
-            {
-                agent.speed = normalMoveSpeed;
-                ani.SetBool("Walking", true);
-                ani.SetBool("Aiming", false);
-            }
+            ani.SetBool("Walking", toggle);
+            ani.SetBool("Aiming", !toggle);
         }
     }
 
