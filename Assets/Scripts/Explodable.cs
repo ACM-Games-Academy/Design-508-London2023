@@ -38,6 +38,10 @@ public class Explodable : MonoBehaviour
     {
         GameObject blast = Instantiate(explosion);
         blast.transform.position = transform.position;
+        if(TryGetComponent(out Breakable brk))
+        {
+            brk.BreakIt();
+        }
         if(destructionMode == modes.destroy)
         {
             Destroy(gameObject);

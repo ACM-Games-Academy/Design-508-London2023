@@ -1063,6 +1063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8aa3a1f2554434d87e71ebdaa933ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFrozen: 0
   holdRotation: {x: 0, y: 0, z: 0}
   damageVelocity: 8
   printObjectVelocity: 0
@@ -1074,6 +1075,7 @@ MonoBehaviour:
   impactHealthLoss: 20
   useDraggedInHealthManager: 0
   draggedInHM: {fileID: 0}
+  isLightObject: 0
   beingHeld: 0
   originalParent: {fileID: 0}
 --- !u!114 &5719891138197208785
@@ -1113,6 +1115,7 @@ MonoBehaviour:
   maxHealth: 100
   deathScript: {fileID: 5719891138197208785}
   deathFunction: Explode
+  dead: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0

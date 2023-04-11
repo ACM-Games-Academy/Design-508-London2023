@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(HealthManager))]
 public class Breakable : MonoBehaviour
 {
     public GameObject inactivePieces;
@@ -20,8 +19,9 @@ public class Breakable : MonoBehaviour
         inactivePieces.transform.SetParent(null);
         foreach(Rigidbody rb in inactivePieces.GetComponentsInChildren<Rigidbody>())
         {
-            Vector3 force = (rb.transform.position - transform.position) * breakForce;
+            //Vector3 force = (rb.transform.position - transform.position) * breakForce;
+            rb.AddExplosionForce(breakForce, transform.position, 10);
         }
-        Destroy (gameObject);
+        Destroy (gameObject,0.3f);
     }
 }

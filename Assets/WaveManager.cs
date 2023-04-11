@@ -43,8 +43,7 @@ public class WaveManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        StartNextWave();
+        
     }
 
     // Update is called once per frame
@@ -150,4 +149,15 @@ public class WaveManager : MonoBehaviour
         StartWait(spawnDelay);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player" && waveNumber < 1)
+        {
+            StartNextWave();
+            foreach(Collider c in GetComponentsInChildren<Collider>())
+            {
+                Destroy(c);
+            }
+        }
+    }
 }
