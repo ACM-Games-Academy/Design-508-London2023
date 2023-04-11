@@ -88,7 +88,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406829141907781621}
   m_LocalRotation: {x: 0, y: 0.000000014901163, z: -0, w: 1}
-  m_LocalPosition: {x: -0.75455403, y: 1.8839948, z: -1.8871948}
+  m_LocalPosition: {x: -0.75455403, y: 1.8839948, z: -2.7315855}
   m_LocalScale: {x: 1, y: 1, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -179,7 +179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732746342035923681}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.00028961172, y: -0.09944762, z: -0.6563543}
+  m_LocalPosition: {x: 0.00028961172, y: -0.09944762, z: -1.5007452}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -260,7 +260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878518991422037068}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0.75455403, y: 1.8839948, z: -1.8871951}
+  m_LocalPosition: {x: -0.75455403, y: 1.8839948, z: -2.731586}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -294,7 +294,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2434762439423961122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.84439087}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -340,7 +340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4588873267574433139}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.017555475, y: 1.9755403, z: 2.6044066}
+  m_LocalPosition: {x: 0.017555475, y: 1.9755403, z: 1.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -478,6 +478,8 @@ GameObject:
   - component: {fileID: 8675469014613307424}
   - component: {fileID: 8675469014613307423}
   - component: {fileID: 7561423554832598364}
+  - component: {fileID: 8675469014613307430}
+  - component: {fileID: 8675469014613307431}
   m_Layer: 0
   m_Name: SwatVan
   m_TagString: Untagged
@@ -533,6 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8aa3a1f2554434d87e71ebdaa933ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFrozen: 0
   holdRotation: {x: 0, y: 0, z: 0}
   damageVelocity: 8
   printObjectVelocity: 0
@@ -544,6 +547,7 @@ MonoBehaviour:
   impactHealthLoss: 20
   useDraggedInHealthManager: 0
   draggedInHM: {fileID: 0}
+  isLightObject: 0
   beingHeld: 0
   originalParent: {fileID: 0}
 --- !u!114 &8675469014613307425
@@ -561,6 +565,7 @@ MonoBehaviour:
   maxHealth: 0
   deathScript: {fileID: 8675469014613307424}
   deathFunction: Explode
+  dead: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
@@ -614,3 +619,44 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.2065125, y: 2.6869886, z: 4.800171}
   m_Center: {x: 0.023132324, y: 0.79121006, z: 0.41680908}
+--- !u!114 &8675469014613307430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8607813463737490466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6528a16f789645b633de1df9e1743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ani: {fileID: 0}
+  playerTargetRange: 1000
+  showTargetRangeInSceneView: 0
+  stoppingRange: 20
+  showStoppingRangeInSceneView: 0
+  playerTag: PlayerTargetPoint
+  bloodEffect: {fileID: 0}
+--- !u!195 &8675469014613307431
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8607813463737490466}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 5
+  m_Speed: 20
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 4.85
+  m_BaseOffset: 0
+  m_WalkableMask: 8
+  m_ObstacleAvoidanceType: 4
