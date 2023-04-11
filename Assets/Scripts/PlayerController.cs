@@ -120,6 +120,7 @@ public class PlayerController : MonoBehaviour
     [Header("[Death]")]
     [SerializeField] GameObject bloodEffect;
     [SerializeField] Transform bloodSpawn;
+    [SerializeField] GameObject deathScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -744,6 +745,7 @@ public class PlayerController : MonoBehaviour
         laser1.enabled = false;
         laser2.enabled = false;
         GameObject blood = Instantiate(bloodEffect,bloodSpawn.position,bloodSpawn.rotation,bloodSpawn);
+        deathScreen.SetActive(true);
         if (isFlying)
         {
             isFlying = false;

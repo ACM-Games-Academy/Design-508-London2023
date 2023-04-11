@@ -8,7 +8,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] float spawnDelay;
     [SerializeField] float timeBetweenWaves;
     [SerializeField] GameObject doorBlockers;
- 
+    
+
     enum waveStates
     {
         SPAWNING,
@@ -32,7 +33,7 @@ public class WaveManager : MonoBehaviour
     {
         //get all the wave scripts that were added
         waves = GetComponents<Wave>();
-
+        state = waveStates.STOPPED;
         //add all the spawn points to a list variable
         foreach(Transform child in transform.GetComponentsInChildren<Transform>())
         {
