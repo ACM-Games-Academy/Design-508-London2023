@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [ExecuteInEditMode]
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Collider))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] Animator ani;
@@ -32,7 +34,10 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag(playerTag).transform;
         coll = GetComponent<Collider>();
-        ragdollScript = GetComponent<Ragdoll>();
+        if(TryGetComponent(out Ragdoll rs))
+        {
+            ragdollScript = rs;
+        }
         normalMoveSpeed = agent.speed;
         if (TryGetComponent(out Shooter s))
         {
@@ -55,7 +60,7 @@ public class Enemy : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            if (!ragdollScript.ragdoll)
+            if (!IsRagdolled())
             {
                 bool withinRange = PlayerInRange();
                 if (withinRange)
@@ -78,22 +83,18 @@ public class Enemy : MonoBehaviour
         return targetPlayer;
     }
 
-    public void Die()
+    public virtual void Die()
     {
-        Transform hips = ani.GetBoneTransform(HumanBodyBones.Hips);
-        Instantiate(bloodEffect, hips.position, hips.rotation);
-        ragdollScript.getBackUp = false;
-        if (!ragdollScript.ragdoll)
+        if(ragdollScript != null)
         {
-            ragdollScript.StartRagdoll();
+            Transform hips = ani.GetBoneTransform(HumanBodyBones.Hips);
+            Instantiate(bloodEffect, hips.position, hips.rotation);
+            ragdollScript.getBackUp = false;
+            if (!IsRagdolled())
+            {
+                ragdollScript.StartRagdoll();
+            }
         }
-        //foreach(MonoBehaviour script in GetComponents<MonoBehaviour>())
-        //{
-        //    if(script != this)
-        //    {
-        //        Destroy(script, 5f);
-        //    }           
-        //}
         if (TryGetComponent(out DropWeaponOnDeath Dr))
         {
             Dr.Drop();
@@ -103,7 +104,7 @@ public class Enemy : MonoBehaviour
     public void Agro()
     {
         agent.destination = player.position;
-        if (isRanged)
+        if (isRanged && ani != null)
         {
             if (shootScript.state == Shooter.behaviours.aim)
             {
@@ -117,6 +118,18 @@ public class Enemy : MonoBehaviour
                 ani.SetBool("Walking", true);
                 ani.SetBool("Aiming", false);
             }
+        }
+    }
+
+    bool IsRagdolled()
+    {
+        if(ragdollScript != null)
+        {
+            return ragdollScript.ragdoll;
+        }
+        else
+        {
+            return (false);
         }
     }
 }

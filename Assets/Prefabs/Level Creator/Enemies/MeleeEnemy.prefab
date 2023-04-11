@@ -73,7 +73,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 1.68
   m_BaseOffset: -0.12
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 77
   m_ObstacleAvoidanceType: 4
 --- !u!114 &3432876089706774785
 MonoBehaviour:
@@ -88,12 +88,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ani: {fileID: 939755999715127483}
+  ragdoll: 0
+  testRagdoll: 0
+  getBackUp: 0
+  neverGetBackUp: 0
   getUpState: Getting Up
   getUpClipName: Getting Up
   getUpDelay: 5
   boneResetTime: 0.5
-  ragdoll: 0
-  getBackUp: 0
 --- !u!114 &7167034802001215574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,6 +641,7 @@ MonoBehaviour:
   impactHealthLoss: 30
   useDraggedInHealthManager: 1
   draggedInHM: {fileID: 7167034802001215565}
+  isLightObject: 0
   beingHeld: 0
   originalParent: {fileID: 0}
 --- !u!1 &4072480382539049652 stripped
