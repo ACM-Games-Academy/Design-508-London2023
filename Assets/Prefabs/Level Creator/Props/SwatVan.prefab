@@ -639,6 +639,7 @@ MonoBehaviour:
   showStoppingRangeInSceneView: 0
   playerTag: PlayerTargetPoint
   bloodEffect: {fileID: 0}
+  troops: []
 --- !u!195 &8675469014613307431
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -649,7 +650,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 5
-  m_Speed: 10
+  m_Speed: 15
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

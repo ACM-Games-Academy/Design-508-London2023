@@ -26,9 +26,7 @@ public class Enemy : MonoBehaviour
     [Header("Death")]
     [SerializeField] GameObject bloodEffect;
 
-
-    // Start is called before the first frame update
-    void Awake()
+    public virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag(playerTag).transform;
@@ -57,7 +55,7 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if (Application.isPlaying)
         {
