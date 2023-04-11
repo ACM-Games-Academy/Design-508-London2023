@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Level Creator/Environment/Intersection.prefab.meta
+guid: 73dbc156551848f4789d03c50f6c46ea
+========
 guid: d797ced9752808d4d958bccd3bbde88e
+>>>>>>>> main:Assets/Prefabs/Box (Place me not breakable version).prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

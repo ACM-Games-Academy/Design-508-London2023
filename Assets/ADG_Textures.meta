@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Art/Buildings, Roads & Environment/Downloads/Environment/Roads.meta
+guid: cd77448e0401f1e4b869e3cfab16e0a1
+========
 guid: 04b6dcea6aa568b4d82bcac667d3f9c2
+>>>>>>>> main:Assets/ADG_Textures.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
