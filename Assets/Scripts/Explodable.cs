@@ -13,6 +13,7 @@ public class Explodable : MonoBehaviour
     public float force;
     [SerializeField] float upwardModifier;
     [SerializeField] float affectedRadius;
+    [SerializeField] bool showRadiusInEditor;
     [SerializeField] Vector3 radiusOffset;
     [SerializeField] LayerMask affectedLayers;
     enum modes { destroy, disable, stayActive}
@@ -26,8 +27,11 @@ public class Explodable : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = new Color(1, 1, 0, 0.2f);
-        Gizmos.DrawSphere(transform.position + radiusOffset, affectedRadius);
+        if (showRadiusInEditor)
+        {
+            Gizmos.color = new Color(1, 1, 0, 0.2f);
+            Gizmos.DrawSphere(transform.position + radiusOffset, affectedRadius);
+        }
     }
 
     private void Update()

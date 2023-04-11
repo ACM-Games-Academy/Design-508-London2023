@@ -733,7 +733,9 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         crosshair.gameObject.SetActive(false);
-        if(TryGetComponent(out Ragdoll rd))
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        if (TryGetComponent(out Ragdoll rd))
         {
             rd.StartRagdoll();
         }

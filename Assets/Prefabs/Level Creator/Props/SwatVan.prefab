@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 8675469014613307424}
   - component: {fileID: 8675469014613307423}
   - component: {fileID: 7561423554832598364}
-  - component: {fileID: 8675469014613307430}
+  - component: {fileID: 6630050773689820298}
   - component: {fileID: 8675469014613307431}
   m_Layer: 0
   m_Name: SwatVan
@@ -588,6 +588,7 @@ MonoBehaviour:
   force: 10000
   upwardModifier: 20
   affectedRadius: 4.77
+  showRadiusInEditor: 0
   radiusOffset: {x: 0, y: 0, z: 1.08}
   affectedLayers:
     serializedVersion: 2
@@ -619,7 +620,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.2065125, y: 2.6869886, z: 4.800171}
   m_Center: {x: 0.023132324, y: 0.79121006, z: 0.41680908}
---- !u!114 &8675469014613307430
+--- !u!114 &6630050773689820298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -628,13 +629,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8607813463737490466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adb6528a16f789645b633de1df9e1743, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b1630f410e6e72419b0c69e4c539e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ani: {fileID: 0}
   playerTargetRange: 1000
   showTargetRangeInSceneView: 0
-  stoppingRange: 20
+  stoppingRange: 10
   showStoppingRangeInSceneView: 0
   playerTag: PlayerTargetPoint
   bloodEffect: {fileID: 0}
@@ -648,7 +649,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 5
-  m_Speed: 20
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

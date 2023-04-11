@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
         }
         if (showStoppingRangeInSceneView)
         {
-
+            ShowRange(stoppingRange, new Color(0.2f, 0.2f, 0.2f, 0.2f));
         }
     }
 
@@ -75,15 +75,17 @@ public class Enemy : MonoBehaviour
             
         }
     }
-    public bool PlayerInRange()
+    public virtual bool PlayerInRange()
     {
         //checking if the player is close enough to be seen
         bool closeEnough = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
 
-        //checking if the player is too close
-        bool tooClose = (Vector3.Distance(transform.position, player.position) <= stoppingRange);
+        return closeEnough && !tooClose();//if close enough, but not too close, return true.
+    }
 
-        return closeEnough && !tooClose;//if close enough, but not too close, return true.
+    bool tooClose()
+    {
+        return (Vector3.Distance(transform.position, player.position) <= stoppingRange);
     }
 
     public virtual void Die()
