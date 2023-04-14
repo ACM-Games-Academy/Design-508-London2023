@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class SwatVan : Enemy
 {
-
     [Header("Van")]
     public List<GameObject> troops;
     [SerializeField] Transform troopSpawnPoint;
@@ -22,7 +21,7 @@ public class SwatVan : Enemy
     {
         if (tooClose() && !deployed)
         {
-            DeployTroops();
+            StartCoroutine(DeployTroops());
         }
         return base.PlayerInRange(); 
     }
@@ -30,15 +29,15 @@ public class SwatVan : Enemy
     IEnumerator DeployTroops()
     {
         agent.enabled = false;
-        foreach(GameObject troop in troops)
+        deployed = true;
+        foreach (GameObject troop in troops)
         {
             yield return new WaitForSeconds(troopSpawnDelay);
             if(troop.TryGetComponent(out Enemy enemyScript))
             {
                 Instantiate(troop, troopSpawnPoint.position, troopSpawnPoint.rotation);
             }
-        }
-        deployed = true;
+        }        
         ToggleThrowable(true);
     }
 
