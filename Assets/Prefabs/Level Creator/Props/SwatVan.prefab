@@ -562,7 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 30
   deathScript: {fileID: 8675469014613307424}
   deathFunction: Explode
   dead: 0
@@ -634,6 +634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFrozen: 0
   ani: {fileID: 0}
+  agent: {fileID: 0}
   playerTargetRange: 1000
   showTargetRangeInSceneView: 0
   stoppingRange: 10
@@ -641,6 +642,8 @@ MonoBehaviour:
   playerTag: PlayerTargetPoint
   bloodEffect: {fileID: 0}
   troops: []
+  troopSpawnPoint: {fileID: 0}
+  troopSpawnDelay: 0
 --- !u!195 &8675469014613307431
 NavMeshAgent:
   m_ObjectHideFlags: 0
