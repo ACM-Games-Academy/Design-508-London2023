@@ -6,12 +6,10 @@ public class teleport : MonoBehaviour
 {
     [SerializeField] Transform destination;
     [SerializeField] string teleportTag = "Player";
-    [SerializeField] float teleportDelay;
-    Transform transformToMove;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        transformToMove = GameObject.FindGameObjectWithTag(teleportTag).transform;
+        
     }
 
     // Update is called once per frame
@@ -20,16 +18,8 @@ public class teleport : MonoBehaviour
         
     }
 
-    void Teleport()
+    void Teleport(Transform teleportThis)
     {
-        transformToMove.position = destination.position;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == teleportTag)
-        {
-            Invoke("Teleport", 1);
-        }
+       
     }
 }

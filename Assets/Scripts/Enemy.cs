@@ -4,118 +4,125 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [ExecuteInEditMode]
-public class Enemy : MonoBehaviour
+[RequireComponent(typeof(NavMeshAgent))]
+public class Enemy : Freezable
 {
+    [Header("Optional")]
     [SerializeField] Animator ani;
     NavMeshAgent agent;
-    Collider coll;
-    float normalMoveSpeed;
 
+    [Header("Range")]
+    [SerializeField] float playerTargetRange;
+    [SerializeField] bool showTargetRangeInSceneView;
+    [SerializeField] float stoppingRange;
+    [SerializeField] bool showStoppingRangeInSceneView;
 
     [Header("Player Detection")]
-    [SerializeField] string playerTag;
+    [SerializeField] string playerTag = "PlayerTargetPoint";
     Transform player;
     Ragdoll ragdollScript;
-    [SerializeField] float playerTargetRange;
-    [SerializeField] bool showRangeInSceneView;
 
     [Header("Death")]
     [SerializeField] GameObject bloodEffect;
 
-    bool isRanged;
-    Shooter shootScript;
-
-    // Start is called before the first frame update
-    void Start()
+    public virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag(playerTag).transform;
-        coll = GetComponent<Collider>();
-        ragdollScript = GetComponent<Ragdoll>();
-        normalMoveSpeed = agent.speed;
-        if (TryGetComponent(out Shooter s))
+        if(TryGetComponent(out Ragdoll rs))
         {
-            shootScript = s;
-            isRanged = true;
+            ragdollScript = rs;
         }
     }
 
     private void OnDrawGizmos()
     {
-        if (showRangeInSceneView)
+        if (showTargetRangeInSceneView)
         {
-            Gizmos.color = new Color(1, 0, 0, 0.2f);
-            Gizmos.DrawSphere(transform.position, playerTargetRange);
+            ShowRange(playerTargetRange, new Color(1, 0, 0, 0.2f));
+        }
+        if (showStoppingRangeInSceneView)
+        {
+            ShowRange(stoppingRange, new Color(0.2f, 0.2f, 0.2f, 0.2f));
         }
     }
 
+    void ShowRange(float range,Color gizmoColor)
+    {
+        Gizmos.color = gizmoColor;
+        Gizmos.DrawSphere(transform.position, range);
+    }
+
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if (Application.isPlaying)
         {
-            if (!ragdollScript.ragdoll)
-            {
-                bool withinRange = PlayerInRange();
-                if (withinRange)
+            if (!IsRagdolled())
+            {  
+                if (PlayerInRange())
                 {
-                    Agro();
+                    MoveToTarget(true);
                 }
                 else
                 {
-                    //idle animation
+                    MoveToTarget(false);
                 }
             }
             
         }
     }
-    public bool PlayerInRange()
+    public virtual bool PlayerInRange()
     {
-        //checking if the player is close enough to be targeted
-        bool targetPlayer = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
-        agent.isStopped = (!targetPlayer);//stopping movement if within shoot range                                        
-        return targetPlayer;
+        //checking if the player is close enough to be seen
+        bool closeEnough = (Vector3.Distance(transform.position, player.position) < playerTargetRange);
+
+        return closeEnough && !tooClose();//if close enough, but not too close, return true.
     }
 
-    public void Die()
+    public bool tooClose()
     {
-        Transform hips = ani.GetBoneTransform(HumanBodyBones.Hips);
-        Instantiate(bloodEffect, hips.position, hips.rotation);
-        ragdollScript.getBackUp = false;
-        if (!ragdollScript.ragdoll)
+        return (Vector3.Distance(transform.position, player.position) <= stoppingRange);
+    }
+
+    public virtual void Die()
+    {
+        if(ragdollScript != null)
         {
-            ragdollScript.StartRagdoll();
+            Transform hips = ani.GetBoneTransform(HumanBodyBones.Hips);
+            Instantiate(bloodEffect, hips.position, hips.rotation);
+            ragdollScript.getBackUp = false;
+            if (!IsRagdolled())
+            {
+                ragdollScript.StartRagdoll();
+            }
         }
-        //foreach(MonoBehaviour script in GetComponents<MonoBehaviour>())
-        //{
-        //    if(script != this)
-        //    {
-        //        Destroy(script, 5f);
-        //    }           
-        //}
         if (TryGetComponent(out DropWeaponOnDeath Dr))
         {
             Dr.Drop();
         }
     }
 
-    public void Agro()
+    public void MoveToTarget(bool toggle)
     {
         agent.destination = player.position;
-        if (isRanged)
+        agent.isStopped = !toggle;
+        if (ani != null)
         {
-            if (shootScript.state == Shooter.behaviours.aim)
-            {
-                agent.speed = 0;
-                ani.SetBool("Aiming", true);
-                ani.SetBool("Walking", false);
-            }
-            else
-            {
-                agent.speed = normalMoveSpeed;
-                ani.SetBool("Walking", true);
-                ani.SetBool("Aiming", false);
-            }
+            ani.SetBool("Walking", toggle);
+            ani.SetBool("Aiming", !toggle);
+        }
+    }
+
+    bool IsRagdolled()
+    {
+        if(ragdollScript != null)
+        {
+            return ragdollScript.ragdoll;
+        }
+        else
+        {
+            return (false);
         }
     }
 }
