@@ -103,7 +103,7 @@ public class Shooter : Freezable
         }
     }
 
-    void Shoot()
+    public virtual void Shoot()
     {
         if(mode == bulletType.projectile)
         {
