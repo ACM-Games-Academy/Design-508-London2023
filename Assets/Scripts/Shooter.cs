@@ -27,6 +27,7 @@ public class Shooter : Freezable
     [SerializeField] bulletType mode;
     [SerializeField] GameObject bullet;
     [SerializeField] Vector3 aimVariation;
+    [SerializeField][Tooltip("how long after the animation starts should the attack happen")] float shootAnimationDelay;
     [SerializeField] float shootCooldown;
     [SerializeField] float despawnTime;
     GameObject previousBullet;
@@ -171,6 +172,7 @@ public class Shooter : Freezable
         }
         if (state == behaviours.aim && !isRagdolling())
         {
+            yield return new WaitForSeconds(shootAnimationDelay);
             Shoot();
         }
         yield return new WaitForEndOfFrame();

@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7167034802001215563
 Transform:
   m_ObjectHideFlags: 0
@@ -108,9 +108,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb6528a16f789645b633de1df9e1743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFrozen: 0
   ani: {fileID: 939755999715127483}
   playerTargetRange: 1000
-  showRangeInSceneView: 0
+  showTargetRangeInSceneView: 0
+  stoppingRange: 0
+  showStoppingRangeInSceneView: 0
   playerTag: PlayerTargetPoint
   bloodEffect: {fileID: 1000012909287652, guid: 78b0e7f97bd38df4cbae856c27751eea,
     type: 3}
@@ -140,10 +143,11 @@ MonoBehaviour:
   Xoffset: 0
   Yoffset: 0
   Shootpoint: {fileID: 1635573820143170371}
-  hitscanDamage: 7
+  hitscanDamage: 15
   mode: 2
   bullet: {fileID: 5311365928930379941, guid: 9ada07786c596ab44a87952a093a7458, type: 3}
   aimVariation: {x: 0.01, y: 0.01, z: 0.01}
+  shootAnimationDelay: 0
   shootCooldown: 1
   despawnTime: 2
 --- !u!114 &7167034802001215565

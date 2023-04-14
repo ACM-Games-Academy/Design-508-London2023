@@ -632,6 +632,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1630f410e6e72419b0c69e4c539e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFrozen: 0
   ani: {fileID: 0}
   playerTargetRange: 1000
   showTargetRangeInSceneView: 0
@@ -659,6 +660,6 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 4.85
-  m_BaseOffset: 0
+  m_BaseOffset: 0.4
   m_WalkableMask: 8
   m_ObstacleAvoidanceType: 4
