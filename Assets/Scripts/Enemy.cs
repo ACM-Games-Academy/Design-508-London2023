@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(Collider))]
 public class Enemy : Freezable
 {
     [Header("Optional")]
@@ -81,7 +80,7 @@ public class Enemy : Freezable
         return closeEnough && !tooClose();//if close enough, but not too close, return true.
     }
 
-    bool tooClose()
+    public bool tooClose()
     {
         return (Vector3.Distance(transform.position, player.position) <= stoppingRange);
     }

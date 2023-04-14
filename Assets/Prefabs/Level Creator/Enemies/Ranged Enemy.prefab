@@ -87,12 +87,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ani: {fileID: 6936101607125878738}
+  ragdoll: 0
+  testRagdoll: 0
+  getBackUp: 0
+  neverGetBackUp: 0
   getUpState: Getting Up
   getUpClipName: Getting Up
   getUpDelay: 5
   boneResetTime: 0.5
-  ragdoll: 0
-  getBackUp: 0
 --- !u!114 &5701579798403427418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,9 +107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb6528a16f789645b633de1df9e1743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFrozen: 0
   ani: {fileID: 6936101607125878738}
   playerTargetRange: 1000
-  showRangeInSceneView: 0
+  showTargetRangeInSceneView: 0
+  stoppingRange: 0
+  showStoppingRangeInSceneView: 0
   playerTag: Player
   bloodEffect: {fileID: 1000012909287652, guid: 78b0e7f97bd38df4cbae856c27751eea,
     type: 3}
@@ -141,6 +146,7 @@ MonoBehaviour:
   mode: 1
   bullet: {fileID: 5311365928930379941, guid: 9ada07786c596ab44a87952a093a7458, type: 3}
   aimVariation: {x: 0.01, y: 0.01, z: 0.01}
+  shootAnimationDelay: 0
   shootCooldown: 0.01
   despawnTime: 2
 --- !u!114 &5701579798403427393
@@ -1100,7 +1106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFrozen: 0
   holdRotation: {x: -35.473, y: 105.931, z: -94.134}
-  damageVelocity: 10
+  damageVelocity: 5
   printObjectVelocity: 0
   thrownDamage: 20
   beenThrown: 0
@@ -1110,6 +1116,7 @@ MonoBehaviour:
   impactHealthLoss: 30
   useDraggedInHealthManager: 1
   draggedInHM: {fileID: 5701579798403427393}
+  isLightObject: 0
   beingHeld: 0
   originalParent: {fileID: 0}
 --- !u!1 &8246703595847453829 stripped

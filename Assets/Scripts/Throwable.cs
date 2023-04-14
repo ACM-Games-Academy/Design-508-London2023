@@ -45,37 +45,53 @@ public class Throwable : Freezable
         }
     }
 
+    HealthManager GetHealthManager()
+    {
+        if (useDraggedInHealthManager)
+        {
+            return draggedInHM;
+        }
+        else if (TryGetComponent(out HealthManager health))
+        {
+            return health;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         GameObject colOb = collision.gameObject;
-        if (beenThrown && rb.velocity.magnitude > damageVelocity && colOb.transform.root != transform.root)//invalid if colliding objects are part of the same root object
+        if (beenThrown && rb.velocity.magnitude > damageVelocity)
         {
             if (takesDamageMask == (takesDamageMask | 1 << colOb.layer))
             {
-                HealthManager hm = null;
-                if (useDraggedInHealthManager)
-                {
-                    hm = draggedInHM;
-                }
-                else if (TryGetComponent(out HealthManager health))
-                {
-                    hm = health;
-                }
+                HealthManager hm = GetHealthManager();
+
                 if(hm != null)
                 {
                     print(gameObject.name+" collided with "+colOb.name + "at speed "+rb.velocity.magnitude);
                     hm.HealthChange(-impactHealthLoss);
                 }               
             }
-            if (colOb.layer != LayerMask.NameToLayer("Player"))
+            if (colOb.layer != LayerMask.NameToLayer("Player") )
             {
                 if (colOb.TryGetComponent(out HealthManager hlth))
                 {
-                    hlth.HealthChange(-thrownDamage);
+                    if(GetHealthManager() != hlth)
+                    {
+                        hlth.HealthChange(-thrownDamage);
+                    }                   
                 }
                 if (colOb.TryGetComponent(out Ragdoll rd))
                 {
-                    rd.StartRagdoll();
+                    if (GetHealthManager().gameObject != rd.gameObject)
+                    {
+                        rd.StartRagdoll();
+                    }
+                    
                 }
             }
 
