@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &538088757
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 538088758}
+  m_Layer: 0
+  m_Name: Shootpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &538088758
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538088757}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.114, y: 0.173, z: 0.073}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3238741220712763294}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8030992143967239166
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +43,9 @@ GameObject:
   - component: {fileID: 5546919604078583511}
   - component: {fileID: 7521857688728188072}
   - component: {fileID: 4261056523543500352}
-  m_Layer: 0
+  - component: {fileID: 511485467}
+  - component: {fileID: 511485466}
+  m_Layer: 6
   m_Name: Jammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,27 +81,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
-  state: 0
-  targetTag: 
+  targetTag: PlayerTargetPoint
+  targetCollider: {fileID: 0}
+  pointer: {fileID: 0}
   WhatBlocksMyView:
     serializedVersion: 2
-    m_Bits: 0
-  shootDistance: 0
+    m_Bits: 265
+  shootDistance: 40
   isStatic: 0
-  rotateAtTarget: 0
+  rotateAtTarget: 1
   Xrotater: {fileID: 0}
-  Yrotater: {fileID: 0}
+  Yrotater: {fileID: 7644470372577759036}
   Xoffset: 0
   Yoffset: 0
-  Shootpoint: {fileID: 0}
-  hitscanDamage: 0
-  mode: 0
+  Shootpoint: {fileID: 538088758}
   bullet: {fileID: 0}
-  aimVariation: {x: 0, y: 0, z: 0}
+  aimVariation: {x: 0.01, y: 0.01, z: 0.01}
   shootAnimationDelay: 0
   shootCooldown: 0.2
-  despawnTime: 0
-  energyLoss: 1
+  despawnTime: 1
+  currentTrail: {fileID: 0}
+  hitscanDamage: 0
+  trail: {fileID: 0}
+  energyLoss: 5
 --- !u!195 &7521857688728188072
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -104,14 +139,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
-  ani: {fileID: 0}
+  ani: {fileID: 8445658856694309249}
   agent: {fileID: 7521857688728188072}
-  playerTargetRange: 0
+  playerTargetRange: 1000
   showTargetRangeInSceneView: 0
-  stoppingRange: 0
-  showStoppingRangeInSceneView: 0
+  stoppingRange: 40
+  showStoppingRangeInSceneView: 1
   playerTag: PlayerTargetPoint
   bloodEffect: {fileID: 0}
+--- !u!136 &511485467
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8030992143967239166}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.24914551
+  m_Height: 1.9492303
+  m_Direction: 1
+  m_Center: {x: -0.002960205, y: 0.8378715, z: 0}
+--- !u!114 &511485466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8030992143967239166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a068ecc811476b34eb156e749663ce40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ani: {fileID: 8445658856694309249}
+  ragdoll: 0
+  testRagdoll: 0
+  getBackUp: 0
+  neverGetBackUp: 0
+  getUpState: Getting Up
+  getUpClipName: Getting Up
+  getUpDelay: 5
+  boneResetTime: 0.5
 --- !u!1001 &3132509204872267826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -484,6 +554,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &654080061
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2629512959384180280}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.97, y: 0.7, z: 0.61}
+  m_Center: {x: 0.014147028, y: 0.23, z: 0.00248947}
 --- !u!65 &3132509204384614784
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -497,6 +580,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.37394714, y: 0.16468449, z: 0.25045785}
   m_Center: {x: 0.000009968877, y: 0.01622536, z: -0.03074792}
+--- !u!114 &654080062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2629512959384180280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8aa3a1f2554434d87e71ebdaa933ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFrozen: 0
+  holdRotation: {x: -35.473, y: 105.931, z: -94.134}
+  damageVelocity: 5
+  printObjectVelocity: 0
+  thrownDamage: 20
+  beenThrown: 0
+  takesDamageMask:
+    serializedVersion: 2
+    m_Bits: 9
+  impactHealthLoss: 30
+  useDraggedInHealthManager: 1
+  draggedInHM: {fileID: 0}
+  isLightObject: 0
+  beingHeld: 0
+  originalParent: {fileID: 0}
 --- !u!1 &2862461251114546531 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0d10819dab924ce43abdca1a8cc29e22,
@@ -513,7 +623,7 @@ Animator:
   m_GameObject: {fileID: 2862461251114546531}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0d10819dab924ce43abdca1a8cc29e22, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 551d269098cdd9445ae9898d5fd90ac2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1209,5 +1319,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: SniperRifleHighres
       objectReference: {fileID: 0}
+    - target: {fileID: 5563079208545212624, guid: 486bf3f7a1c5d8c499163181fb72f31e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.313
+      objectReference: {fileID: 0}
+    - target: {fileID: 5563079208545212624, guid: 486bf3f7a1c5d8c499163181fb72f31e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5563079208545212624, guid: 486bf3f7a1c5d8c499163181fb72f31e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.008
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 486bf3f7a1c5d8c499163181fb72f31e, type: 3}
+--- !u!4 &3238741220712763294 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 486bf3f7a1c5d8c499163181fb72f31e,
+    type: 3}
+  m_PrefabInstance: {fileID: 3132509205026744437}
+  m_PrefabAsset: {fileID: 0}

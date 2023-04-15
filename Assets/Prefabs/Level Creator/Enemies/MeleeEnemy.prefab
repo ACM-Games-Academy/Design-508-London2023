@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 7167034802001215575}
   - component: {fileID: 3432876089706774785}
   - component: {fileID: 7167034802001215574}
-  - component: {fileID: 7167034802001215564}
   - component: {fileID: 7167034802001215565}
   - component: {fileID: 4442664788307197233}
+  - component: {fileID: 8345695645626156609}
   m_Layer: 6
   m_Name: MeleeEnemy
   m_TagString: Untagged
@@ -110,6 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFrozen: 0
   ani: {fileID: 939755999715127483}
+  agent: {fileID: 7167034802001215575}
   playerTargetRange: 1000
   showTargetRangeInSceneView: 0
   stoppingRange: 2
@@ -117,39 +118,6 @@ MonoBehaviour:
   playerTag: PlayerTargetPoint
   bloodEffect: {fileID: 1000012909287652, guid: 78b0e7f97bd38df4cbae856c27751eea,
     type: 3}
---- !u!114 &7167034802001215564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7167034802001215573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dab6a382f6a7a24f9ffa573bb4bf801, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isFrozen: 0
-  state: 0
-  targetTag: PlayerTargetPoint
-  WhatBlocksMyView:
-    serializedVersion: 2
-    m_Bits: 265
-  shootDistance: 2
-  isStatic: 0
-  rotateAtTarget: 1
-  Xrotater: {fileID: 0}
-  Yrotater: {fileID: 7167034802001215563}
-  Xoffset: 0
-  Yoffset: 0
-  Shootpoint: {fileID: 1635573820143170371}
-  hitscanDamage: 15
-  mode: 2
-  bullet: {fileID: 5311365928930379941, guid: 9ada07786c596ab44a87952a093a7458, type: 3}
-  aimVariation: {x: 0.01, y: 0.01, z: 0.01}
-  shootAnimationDelay: 0
-  shootCooldown: 1
-  despawnTime: 2
 --- !u!114 &7167034802001215565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +153,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Dropables:
   - {fileID: 6658584202450898461, guid: 6f059af5ebe628c45ad62140edbd7bf7, type: 3}
+--- !u!114 &8345695645626156609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7167034802001215573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd34ba4c8c129048adca4972ee799e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFrozen: 0
+  targetTag: PlayerTargetPoint
+  targetCollider: {fileID: 0}
+  pointer: {fileID: 0}
+  WhatBlocksMyView:
+    serializedVersion: 2
+    m_Bits: 265
+  shootDistance: 2
+  isStatic: 0
+  rotateAtTarget: 1
+  Xrotater: {fileID: 0}
+  Yrotater: {fileID: 7167034802001215563}
+  Xoffset: 0
+  Yoffset: 0
+  Shootpoint: {fileID: 1635573820143170371}
+  bullet: {fileID: 0}
+  aimVariation: {x: 0, y: 0, z: 0}
+  shootAnimationDelay: 0.2
+  shootCooldown: 0.7
+  despawnTime: 0
+  currentTrail: {fileID: 0}
+  hitscanDamage: 8
+  trail: {fileID: 0}
 --- !u!1001 &939755999715127478
 PrefabInstance:
   m_ObjectHideFlags: 0

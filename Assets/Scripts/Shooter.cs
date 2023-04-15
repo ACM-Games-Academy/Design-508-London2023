@@ -5,14 +5,15 @@ using UnityEngine;
 public class Shooter : Freezable
 {
     public enum behaviours{search,aim};
-    public behaviours state;
+    behaviours state;
     [SerializeField] string targetTag = "PlayerTargetPoint";
-    Collider targetCollider;
+    [HideInInspector] public Collider targetCollider;
+    [HideInInspector] public Transform pointer;
+
     Transform target;
-    Transform pointer;
     [Header("Detecting The Target")]
-    [SerializeField] LayerMask WhatBlocksMyView;
-    [SerializeField] [Range(0.01f,100)]float shootDistance;
+    public LayerMask WhatBlocksMyView;
+    public float shootDistance;
     [Header("Aiming at the Target")]
     [SerializeField] bool isStatic;
     [SerializeField] bool rotateAtTarget;
@@ -21,20 +22,18 @@ public class Shooter : Freezable
     [SerializeField] float Xoffset;
     [SerializeField] float Yoffset; 
     [Header("Shooting at the Target")]
-    [SerializeField] Transform Shootpoint;
-    enum bulletType { projectile,hitscan,melee};
-    [SerializeField] float hitscanDamage;
-    [SerializeField] bulletType mode;
+    public Transform Shootpoint;
+
     [SerializeField] GameObject bullet;
-    [SerializeField] Vector3 aimVariation;
+    public Vector3 aimVariation;
     [SerializeField][Tooltip("how long after the animation starts should the attack happen")] float shootAnimationDelay;
     [SerializeField] float shootCooldown;
-    [SerializeField] float despawnTime;
+    public float despawnTime;
     GameObject previousBullet;
     bool fire;
-    GameObject currentTrail;
+
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         target = GameObject.FindGameObjectWithTag(targetTag).transform;
         targetCollider = target.GetComponentInParent<PlayerController>().GetComponent<Collider>();
@@ -62,7 +61,6 @@ public class Shooter : Freezable
         
 
     }
-
 
     void Detection()
     {
@@ -105,51 +103,11 @@ public class Shooter : Freezable
 
     public virtual void Shoot()
     {
-        if(mode == bulletType.projectile)
-        {
-            GameObject firedBullet = Instantiate(bullet, pointer.position, pointer.rotation);
-            previousBullet = firedBullet;
-            Physics.IgnoreCollision(firedBullet.GetComponent<Collider>(), transform.GetComponent<Collider>(), true);
-            //Invoke("DestroyPrevious", despawnTime);
-            fire = false;
-        }
-        else
-        {
-            Vector3 aim = new Vector3(Random.Range(-aimVariation.x, aimVariation.x), Random.Range(-aimVariation.y, aimVariation.y), Random.Range(-aimVariation.z, aimVariation.z)) + pointer.forward;          
-            bool hit = Physics.Raycast(Shootpoint.position, aim.normalized, out RaycastHit ray, WhatBlocksMyView);
-            Debug.DrawRay(Shootpoint.position, aim.normalized * shootDistance, Color.red);
-            if (hit)
-            {
-                //print(ray.collider.name);
-                if (ray.collider == targetCollider && targetCollider.TryGetComponent(out HealthManager healthManager))
-                {
-                    healthManager.HealthChange(-hitscanDamage);
-                    if (mode != bulletType.melee && currentTrail == null)
-                    {
-                        StartCoroutine(SpawnTrail(ray));
-                    }
-                }
-            }
-        }
-
-    }
-
-    private IEnumerator SpawnTrail(RaycastHit rc)
-    {
-        currentTrail = Instantiate(bullet, Shootpoint.position,Shootpoint.rotation);
-        float travelTime = currentTrail.GetComponent<TrailRenderer>().time;
-        float currentTime = Time.time;
-        while(Time.time < currentTime + travelTime)
-        {
-            float lerpTime = (Time.time - currentTime) / travelTime;
-            currentTrail.transform.position = Vector3.Lerp(currentTrail.transform.position, rc.point, lerpTime);
-            Debug.DrawLine(currentTrail.transform.position, rc.point, Color.black);
-            yield return new WaitForEndOfFrame();
-        }
-        currentTrail.transform.position = rc.point;
-        currentTrail.transform.GetChild(0).gameObject.SetActive(true);
-        Destroy(currentTrail, despawnTime);
-        currentTrail = null;
+        GameObject firedBullet = Instantiate(bullet, pointer.position, pointer.rotation);
+        previousBullet = firedBullet;
+        Physics.IgnoreCollision(firedBullet.GetComponent<Collider>(), transform.GetComponent<Collider>(), true);
+        //Invoke("DestroyPrevious", despawnTime);
+        fire = false;
     }
 
     void DestroyPrevious()
