@@ -6,7 +6,7 @@ public class Shooter : Freezable
 {
     public enum behaviours{search,aim};
     public behaviours state;
-    [SerializeField] string targetTag;
+    [SerializeField] string targetTag = "PlayerTargetPoint";
     Collider targetCollider;
     Transform target;
     Transform pointer;

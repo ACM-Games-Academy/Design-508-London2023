@@ -109,6 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFrozen: 0
   ani: {fileID: 6936101607125878738}
+  agent: {fileID: 0}
   playerTargetRange: 1000
   showTargetRangeInSceneView: 0
   stoppingRange: 15
@@ -142,7 +143,7 @@ MonoBehaviour:
   Xoffset: 0
   Yoffset: 0
   Shootpoint: {fileID: 3824369031497102058}
-  hitscanDamage: 0
+  hitscanDamage: 0.5
   mode: 1
   bullet: {fileID: 5311365928930379941, guid: 9ada07786c596ab44a87952a093a7458, type: 3}
   aimVariation: {x: 0.01, y: 0.01, z: 0.01}
