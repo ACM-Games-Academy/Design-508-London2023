@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Wave))]
 public class WaveManager : MonoBehaviour
@@ -28,6 +29,9 @@ public class WaveManager : MonoBehaviour
     bool fullySpawned;
     bool finished;
     float waitEndTime;
+    GameObject waveUI;
+    Slider waveBar;
+
     
     void Awake()
     {
@@ -42,6 +46,11 @@ public class WaveManager : MonoBehaviour
                 spawnPoints.Add(child);
             }
         }
+
+        //UI Assigning
+        waveUI = GameObject.FindGameObjectWithTag("waveUI");
+        waveBar = waveUI.GetComponentInChildren<Slider>();
+        waveUI.SetActive(false) ;
     }
 
     // Update is called once per frame
@@ -82,9 +91,11 @@ public class WaveManager : MonoBehaviour
                 }
                 break;
             case waveStates.SPAWNED:
+                UpdateUI();
                 if(GetKilledEnemies() >= spawnedEnemies.Count)
                 {
                     finished = true;
+                    waveUI.SetActive(false);
                     ClearOldEnemies();
                     StartWait(timeBetweenWaves);
                 }
@@ -96,6 +107,7 @@ public class WaveManager : MonoBehaviour
     {
         doorBlockers.SetActive(true);
         StartNextWave();
+        waveUI.SetActive(true);
     }
 
     void EndOfWaves()
@@ -111,6 +123,8 @@ public class WaveManager : MonoBehaviour
         currentWave = waves[waveNumber];
         waveNumber += 1;
         enemiesToSpawn = currentWave.enemies.ToArray();
+        waveBar.maxValue = enemiesToSpawn.Length;
+        waveBar.value = waveBar.maxValue;
         spawnedEnemies = new List<GameObject>();
         state = waveStates.SPAWNING;
     }
@@ -127,7 +141,7 @@ public class WaveManager : MonoBehaviour
     }
 
     int GetKilledEnemies()
-    {
+    {       
         int number = 0;
         foreach(GameObject enemy in spawnedEnemies)
         {
@@ -145,6 +159,11 @@ public class WaveManager : MonoBehaviour
             }
         }
         return number;
+    }
+
+    void UpdateUI()
+    {
+        waveBar.value = spawnedEnemies.Count - GetKilledEnemies();
     }
 
     void ClearOldEnemies()
