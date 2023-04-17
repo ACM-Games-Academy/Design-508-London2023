@@ -9,7 +9,7 @@ public class Enemy : Freezable
 {
     [Header("Optional")]
     [SerializeField] Animator ani;
-    NavMeshAgent agent;
+    [HideInInspector] public NavMeshAgent agent;
 
     [Header("Range")]
     [SerializeField] float playerTargetRange;

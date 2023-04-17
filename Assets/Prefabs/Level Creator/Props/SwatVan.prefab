@@ -91,7 +91,8 @@ Transform:
   m_LocalPosition: {x: -0.75455403, y: 1.8839948, z: -2.7315855}
   m_LocalScale: {x: 1, y: 1, z: 0.9999999}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6191955873074060352}
   m_Father: {fileID: 8952813087490410136}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -463,6 +464,37 @@ Transform:
   m_Father: {fileID: 40001621819545094}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7863532115954571301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6191955873074060352}
+  m_Layer: 0
+  m_Name: Spawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6191955873074060352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7863532115954571301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.761, y: -1.028, z: -0.655}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5990103231766331509}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8607813463737490466
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 30
   deathScript: {fileID: 8675469014613307424}
   deathFunction: Explode
   dead: 0
@@ -634,6 +666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFrozen: 0
   ani: {fileID: 0}
+  agent: {fileID: 8675469014613307431}
   playerTargetRange: 1000
   showTargetRangeInSceneView: 0
   stoppingRange: 10
@@ -641,6 +674,8 @@ MonoBehaviour:
   playerTag: PlayerTargetPoint
   bloodEffect: {fileID: 0}
   troops: []
+  troopSpawnPoint: {fileID: 6191955873074060352}
+  troopSpawnDelay: 2
 --- !u!195 &8675469014613307431
 NavMeshAgent:
   m_ObjectHideFlags: 0
