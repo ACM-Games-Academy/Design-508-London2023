@@ -143,6 +143,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
         canPunch = true;
         energy = maxEnergy;
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame

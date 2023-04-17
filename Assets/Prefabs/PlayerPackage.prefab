@@ -6444,7 +6444,7 @@ MonoBehaviour:
   disableInputs: 0
   maxEnergy: 100
   energyRegenRate: 12
-  laserVision: 1
+  laserVision: 0
   superSpeed: 0
   flight: 0
   GroundLayers:
