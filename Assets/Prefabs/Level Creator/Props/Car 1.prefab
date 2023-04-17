@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFrozen: 0
   holdRotation: {x: 0, y: 0, z: 0}
-  damageVelocity: 8
+  damageVelocity: 5
   printObjectVelocity: 0
   thrownDamage: 30
   beenThrown: 0
@@ -1095,6 +1095,7 @@ MonoBehaviour:
   force: 10000
   upwardModifier: 20
   affectedRadius: 4
+  showRadiusInEditor: 0
   radiusOffset: {x: 0, y: 0, z: 0}
   affectedLayers:
     serializedVersion: 2

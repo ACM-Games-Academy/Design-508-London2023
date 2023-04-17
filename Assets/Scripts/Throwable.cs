@@ -14,7 +14,7 @@ public class Throwable : Freezable
     [SerializeField] bool printObjectVelocity;
     [Tooltip("How much damage does it deal")]
     [SerializeField] float thrownDamage;
-    [HideInInspector] public bool beenThrown;
+     public bool beenThrown;
 
     [Header("Taking Damage")]
     [Tooltip("What layers cause the object to take damage?")]
@@ -28,7 +28,7 @@ public class Throwable : Freezable
 
     [Header("AUTOFILLED DO NOT CHANGE")]
     public bool beingHeld;  
-    public Transform originalParent;
+    [HideInInspector] public Transform originalParent;
     // Start is called before the first frame update
     void Awake()
     {
