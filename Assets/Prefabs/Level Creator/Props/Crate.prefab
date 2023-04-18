@@ -1409,15 +1409,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFrozen: 0
   holdRotation: {x: -10, y: 90, z: 0}
-  damageVelocity: 7
+  damageVelocity: 3
   printObjectVelocity: 0
   thrownDamage: 20
   beenThrown: 0
   takesDamageMask:
     serializedVersion: 2
-    m_Bits: 9
-  impactHealthLoss: 8
-  useDraggedInHealthManager: 1
+    m_Bits: 73
+  impactHealthLoss: 15
+  useDraggedInHealthManager: 0
   draggedInHM: {fileID: 0}
   isLightObject: 0
   beingHeld: 0
