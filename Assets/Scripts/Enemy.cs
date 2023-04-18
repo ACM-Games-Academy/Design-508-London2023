@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : Freezable
+public class Enemy : MonoBehaviour
 {
     [Header("Optional")]
     [SerializeField] Animator ani;

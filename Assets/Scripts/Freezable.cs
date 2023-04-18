@@ -16,6 +16,9 @@ public class Freezable : MonoBehaviour
     //for animators
     float prevAniSpeed;
 
+    //for navmesh agents
+    float prevAgentSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,14 +45,15 @@ public class Freezable : MonoBehaviour
             rb.angularDrag = 3;
             rb.useGravity = false;
         }
-        if(TryGetComponent(out Animator ani))
+        foreach(Animator ani in GetComponentsInChildren<Animator>())
         {
-            prevAniSpeed = ani.speed;
-            ani.speed = 0.01f;
+            ani.enabled = false;
         }
         if(TryGetComponent(out NavMeshAgent nm))
         {
-            nm.enabled = false;
+            prevAgentSpeed = nm.speed;
+            print(prevAgentSpeed);
+            nm.speed = 0;
         }
     }
 
@@ -62,13 +66,13 @@ public class Freezable : MonoBehaviour
             rb.useGravity = wasUsingGravity;
             rb.velocity = prevVelocity;
         }
-        if (TryGetComponent(out Animator ani))
+        foreach (Animator ani in GetComponentsInChildren<Animator>())
         {
-            ani.speed = prevAniSpeed;
+            ani.enabled = true;
         }
-        if(TryGetComponent(out NavMeshAgent nm))
+        if (TryGetComponent(out NavMeshAgent nm))
         {
-            nm.enabled = true;
+            nm.speed = prevAgentSpeed;
         }
     }
 
