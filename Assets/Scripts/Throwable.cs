@@ -76,7 +76,7 @@ public class Throwable : Freezable
                     hm.HealthChange(-impactHealthLoss);
                 }               
             }
-            if (colOb.layer != LayerMask.NameToLayer("Player") )
+            if (colOb.layer != LayerMask.NameToLayer("Player"))
             {
                 if (colOb.TryGetComponent(out HealthManager hlth))
                 {

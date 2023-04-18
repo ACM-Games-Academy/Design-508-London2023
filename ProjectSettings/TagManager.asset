@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Shootable
+  - PlayerTargetPoint
+  - tutorialText
+  - waveUI
+  - waveText
+  - waveSpawn
   layers:
   - Default
   - TransparentFX
@@ -37,7 +42,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Player
   m_SortingLayers:
   - name: Fire
     uniqueID: 3804908061
