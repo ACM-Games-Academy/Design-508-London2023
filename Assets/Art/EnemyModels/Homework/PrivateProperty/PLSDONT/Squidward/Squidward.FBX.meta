@@ -19,7 +19,8 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
+      human bone 'LeftUpperLeg' not found\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -83,7 +84,67 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: Squidward(Clone)
+      parentName: 
+      position: {x: 0.24608997, y: 0, z: -0.0058592847}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
+    - name: Neck
+      parentName: Squidward(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Head
+      parentName: Neck
+      position: {x: 0.03153262, y: -0.0058594407, z: 3.566439}
+      rotation: {x: -0.13623594, y: 0.000000034685964, z: -3.5527133e-15, w: 0.9906764}
+      scale: {x: 1.4476327, y: 1.3403351, z: 1.1630485}
+    - name: Nose
+      parentName: Head
+      position: {x: -0.00000011960267, y: -0.5239936, z: 0.63665766}
+      rotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
+      scale: {x: 0.690783, y: 0.85980946, z: 0.7460822}
+    - name: Right_shoulder
+      parentName: Squidward(Clone)
+      position: {x: 0.26750818, y: 0.017446913, z: 1.0733542}
+      rotation: {x: 0.6743797, y: 0.6743798, z: 0.21263103, w: 0.212631}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Right_arm
+      parentName: Right_shoulder
+      position: {x: -0.0042466307, y: 0.00055976474, z: 0.69597787}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1.3707721, y: 1, z: 1.1221313}
+    - name: Left_shoulder
+      parentName: Squidward(Clone)
+      position: {x: -0.2884771, y: -0.000000048446655, z: 1.1051267}
+      rotation: {x: 0, y: -0.46174863, z: -0, w: 0.8870109}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Left_arm
+      parentName: Left_shoulder
+      position: {x: -0.7138621, y: -0.00489446, z: -0.000012208557}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1.3707721, z: 1}
+    - name: Leg004
+      parentName: Squidward(Clone)
+      position: {x: 0.1997043, y: -0.10904999, z: -2.6864555}
+      rotation: {x: 0.9238795, y: 0.3826836, z: -0.00000015287222, w: -0.00000036906602}
+      scale: {x: 0.67166376, y: 0.45725033, z: 1.1221313}
+    - name: Leg002
+      parentName: Squidward(Clone)
+      position: {x: -0.23593684, y: 0.109049916, z: -2.6864555}
+      rotation: {x: -0.38268366, y: 0.92387944, z: -0.00000036906596, w: 0.00000015287223}
+      scale: {x: 0.6716637, y: 0.4572503, z: 1.1221313}
+    - name: Leg001
+      parentName: Squidward(Clone)
+      position: {x: -0.19748037, y: -0.1303511, z: -2.6864555}
+      rotation: {x: 0.9063078, y: -0.4226182, z: 0.00000016882505, w: -0.00000036204656}
+      scale: {x: 0.67166364, y: 0.45725024, z: 1.1221313}
+    - name: Leg003
+      parentName: Squidward(Clone)
+      position: {x: 0.19970435, y: 0.10904993, z: -2.6864555}
+      rotation: {x: 0.38268346, y: 0.92387956, z: -0.00000036906604, w: -0.00000015287216}
+      scale: {x: 0.6716637, y: 0.4572503, z: 1.1221313}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -98,7 +159,7 @@ ModelImporter:
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 3
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1

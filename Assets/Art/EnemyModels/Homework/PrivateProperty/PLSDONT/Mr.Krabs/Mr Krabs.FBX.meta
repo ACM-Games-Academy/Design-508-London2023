@@ -19,7 +19,8 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
+      human bone 'LeftLowerLeg' not found\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -82,8 +83,171 @@ ModelImporter:
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
-    human: []
-    skeleton: []
+    human:
+    - boneName: hips
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_leg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_leg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_shoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_shoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_hand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_arm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_arm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Right_foot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_foot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Left_hand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Mr Krabs(Clone)
+      parentName: 
+      position: {x: -0.630137, y: -1.200512, z: -0.0000001937866}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
+    - name: Cylinder002
+      parentName: Mr Krabs(Clone)
+      position: {x: 0.36559948, y: 0.06977661, z: 3.7727282}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Left_leg
+      parentName: Mr Krabs(Clone)
+      position: {x: -1.5711972, y: 0.00000023358595, z: -2.5938146}
+      rotation: {x: -0.0616284, y: 0.061628416, z: -0.70441616, w: 0.704416}
+      scale: {x: -0.30605704, y: -0.30605698, z: -0.30605698}
+    - name: Left_foot
+      parentName: Left_leg
+      position: {x: -0.00000019378662, y: 0.5245405, z: -3.1737118}
+      rotation: {x: 0.04361938, y: -0.0000000025745281, z: -0.0000000589664, w: 0.99904823}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: Left_shoulder
+      parentName: Mr Krabs(Clone)
+      position: {x: -2.693742, y: 0.035156358, z: 2.0087104}
+      rotation: {x: 0.35355344, y: -0.35355335, z: -0.61237234, w: 0.6123725}
+      scale: {x: 0.26066265, y: 0.26066265, z: 0.26066265}
+    - name: Left_arm
+      parentName: Left_shoulder
+      position: {x: -0.0000007751465, y: 0.27413765, z: 2.0832007}
+      rotation: {x: 0.08715567, y: -0, z: -0, w: 0.9961947}
+      scale: {x: 3.8363762, y: 3.8363764, z: 3.8363764}
+    - name: Left_hand
+      parentName: Left_arm
+      position: {x: 0.035155218, y: -1.1177721, z: 2.7823472}
+      rotation: {x: 0.17364818, y: -0, z: -0, w: 0.9848078}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Left_claw
+      parentName: Left_hand
+      position: {x: 0.000000001538399, y: 0.000000012111664, z: 0.000000012111664}
+      rotation: {x: -0.000000022768436, y: -0.5372994, z: 0.8433916, w: 0.00000014337894}
+      scale: {x: 0.5201704, y: 0.46533716, z: 0.46533716}
+    - name: Object002
+      parentName: Mr Krabs(Clone)
+      position: {x: -0.39100984, y: 0.06977661, z: 3.7940164}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Right_leg
+      parentName: Mr Krabs(Clone)
+      position: {x: 1.6072029, y: 0.00000019055398, z: -1.6093576}
+      rotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+      scale: {x: -0.30605704, y: -0.306057, z: -0.306057}
+    - name: Right_foot
+      parentName: Right_leg
+      position: {x: 0.00000009689331, y: -0.02203021, z: 2.740294}
+      rotation: {x: -0.04361938, y: -0.000000011558985, z: -0.000000060786654, w: 0.99904823}
+      scale: {x: 0.99999994, y: 0.9999998, z: 0.9999998}
+    - name: Right_shoulder
+      parentName: Mr Krabs(Clone)
+      position: {x: 2.649506, y: 0.000000022785741, z: 2.0087104}
+      rotation: {x: 0.35355338, y: 0.35355344, z: 0.61237246, w: 0.6123724}
+      scale: {x: 0.26066265, y: 0.26066265, z: 0.26066265}
+    - name: Right_arm
+      parentName: Right_shoulder
+      position: {x: -0.00000038757324, y: 0.27413774, z: 2.0832014}
+      rotation: {x: 0.08715567, y: -0, z: -0, w: 0.9961947}
+      scale: {x: 3.8363762, y: 3.8363764, z: 3.8363764}
+    - name: Right_hand
+      parentName: Right_arm
+      position: {x: 0.035155218, y: -1.1177721, z: 2.7823472}
+      rotation: {x: 0.17364818, y: -0, z: -0, w: 0.9848078}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Right_claw
+      parentName: Right_hand
+      position: {x: 0.000000001538399, y: 0.000000012111664, z: 0.000000012111664}
+      rotation: {x: -0.000000022768436, y: -0.5372994, z: 0.8433916, w: 0.00000014337894}
+      scale: {x: 0.5201704, y: 0.46533716, z: 0.46533716}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5

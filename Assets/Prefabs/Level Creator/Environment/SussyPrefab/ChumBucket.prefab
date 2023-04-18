@@ -1340,6 +1340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1776853685559580980}
+  - component: {fileID: 4222412270829780904}
   m_Layer: 0
   m_Name: ChumBucket
   m_TagString: Untagged
@@ -1380,6 +1381,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4222412270829780904
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7955005550252386079}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 5.1484094
+  m_Height: 35.93207
+  m_Direction: 1
+  m_Center: {x: -4.057206, y: -2.1421585, z: 4.0072093}
 --- !u!1 &8378712498021777659
 GameObject:
   m_ObjectHideFlags: 0
