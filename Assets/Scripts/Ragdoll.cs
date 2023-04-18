@@ -21,8 +21,8 @@ public class Ragdoll : MonoBehaviour
     [Header("Getting Up")]
     [HideInInspector] public bool getBackUp;
     [SerializeField] bool neverGetBackUp;
-    [SerializeField] string getUpState;
-    [SerializeField] string getUpClipName;
+    [SerializeField] string getUpState = "Getting Up";
+    [SerializeField] string getUpClipName = "Getting Up";
     [SerializeField] float getUpDelay;
     Transform hips;
     Transform[] bones;

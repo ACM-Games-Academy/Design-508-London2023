@@ -169,10 +169,10 @@ MonoBehaviour:
   testRagdoll: 0
   getBackUp: 0
   neverGetBackUp: 0
-  getUpState: 
-  getUpClipName: 
-  getUpDelay: 0
-  boneResetTime: 0
+  getUpState: Getting Up
+  getUpClipName: Getting Up
+  getUpDelay: 5
+  boneResetTime: 0.5
 --- !u!1001 &8620507772033087926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -610,6 +610,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 3762e19aa8eb4a648b1553acd28835f3, type: 2}
+    - target: {fileID: 5866666021909216657, guid: adb2fbcafdb1e8542a4baf34a5344491,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5868539803502573094, guid: adb2fbcafdb1e8542a4baf34a5344491,
         type: 3}
       propertyPath: m_Layer
@@ -1414,6 +1419,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &3710587449960525434
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5550224301972569879}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.77, y: 0.67, z: 0.73}
+  m_Center: {x: 0, y: 0, z: -0.12}
 --- !u!65 &8620507772191872951
 BoxCollider:
   m_ObjectHideFlags: 0
