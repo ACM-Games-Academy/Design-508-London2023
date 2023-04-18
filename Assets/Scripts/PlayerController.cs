@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviour
     [Header("[SUPER SPEED]")] 
     [SerializeField] float superSpeedMultiplier;
     [SerializeField] GameObject superSpeedEffect;
+    [SerializeField] GameObject speedOverlay;
     bool isSpeeding;
 
     [Header("[Aim Constraint]")]
@@ -424,6 +425,7 @@ public class PlayerController : MonoBehaviour
             {
                 isSpeeding = false;
                 unFreezeEvent();
+                speedOverlay.SetActive(false);
             }
         }
         if (ActionInQueue("startSprint",false))
@@ -435,6 +437,7 @@ public class PlayerController : MonoBehaviour
                 isSpeeding = true;
                 freezeEvent();
                 Instantiate(superSpeedEffect, transform.position, transform.rotation);
+                speedOverlay.SetActive(true);
             }
             StoreAsPrevious("startSprint");
         }

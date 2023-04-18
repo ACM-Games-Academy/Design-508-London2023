@@ -51,9 +51,17 @@ public class Freezable : MonoBehaviour
         }
         if(TryGetComponent(out NavMeshAgent nm))
         {
-            prevAgentSpeed = nm.speed;
-            print(prevAgentSpeed);
-            nm.speed = 0;
+            bool defineSpeed = true;
+            if(TryGetComponent(out Ragdoll rs))
+            {
+                defineSpeed = !rs.ragdoll;
+            }
+            if (defineSpeed)
+            {
+                prevAgentSpeed = nm.speed;
+                print(prevAgentSpeed);
+                nm.speed = 0;
+            }
         }
     }
 
@@ -68,11 +76,20 @@ public class Freezable : MonoBehaviour
         }
         foreach (Animator ani in GetComponentsInChildren<Animator>())
         {
+
             ani.enabled = true;
+
         }
         if (TryGetComponent(out NavMeshAgent nm))
         {
-            nm.speed = prevAgentSpeed;
+            if(prevAgentSpeed != 0)
+            {
+                nm.speed = prevAgentSpeed;
+            }           
+        }
+        if (TryGetComponent(out Ragdoll rs))
+        {
+            rs.RagdollCheck();
         }
     }
 
