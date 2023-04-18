@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [RequireComponent(typeof(Wave))]
 public class WaveManager : MonoBehaviour
@@ -23,6 +24,7 @@ public class WaveManager : MonoBehaviour
     Wave[] waves;
     Wave currentWave;
     int waveNumber;
+    TextMeshProUGUI waveNumText;
     GameObject[] enemiesToSpawn = new GameObject[0];
     List<Transform> spawnPoints = new List<Transform>();
     List<GameObject> spawnedEnemies;
@@ -49,8 +51,10 @@ public class WaveManager : MonoBehaviour
 
         //UI Assigning
         waveUI = GameObject.FindGameObjectWithTag("waveUI");
+        waveNumText = GameObject.FindGameObjectWithTag("waveText").GetComponent<TextMeshProUGUI>();
         waveBar = waveUI.GetComponentInChildren<Slider>();
         waveUI.SetActive(false) ;
+        
     }
 
     // Update is called once per frame
@@ -106,8 +110,7 @@ public class WaveManager : MonoBehaviour
     void BeginWaves()
     {
         doorBlockers.SetActive(true);
-        StartNextWave();
-        waveUI.SetActive(true);
+        StartNextWave();       
     }
 
     void EndOfWaves()
@@ -117,12 +120,14 @@ public class WaveManager : MonoBehaviour
     }
 
     void StartNextWave()
-    {
+    {       
         finished = false;
         fullySpawned = false;
         currentWave = waves[waveNumber];
         waveNumber += 1;
         enemiesToSpawn = currentWave.enemies.ToArray();
+        waveUI.SetActive(true);
+        UpdateCounterText();
         waveBar.maxValue = enemiesToSpawn.Length;
         waveBar.value = waveBar.maxValue;
         spawnedEnemies = new List<GameObject>();
@@ -164,6 +169,11 @@ public class WaveManager : MonoBehaviour
     void UpdateUI()
     {
         waveBar.value = spawnedEnemies.Count - GetKilledEnemies();
+    }
+
+    void UpdateCounterText()
+    {
+        waveNumText.text = "Wave " + waveNumber + "/" + waves.Length;
     }
 
     void ClearOldEnemies()

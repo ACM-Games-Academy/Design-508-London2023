@@ -9,6 +9,7 @@ TagManager:
   - tutorialText
   - waveSpawn
   - waveUI
+  - waveText
   layers:
   - Default
   - TransparentFX
