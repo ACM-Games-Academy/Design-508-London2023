@@ -38,5 +38,9 @@ public class MeleeHitbox : Explodable
             float meleeForce = rb.mass * meleeAccelaration;
             rb.AddForce(transform.forward* meleeForce, ForceMode.Impulse);
         }
+        if(collisionObject.TryGetComponent(out Freezable fr))
+        {
+            fr.incrementVelocity(transform.forward*meleeAccelaration);
+        }
     }
 }

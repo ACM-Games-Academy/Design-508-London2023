@@ -331,8 +331,15 @@ public class PlayerController : MonoBehaviour
 
                 //this runs when the player is holding an object
                 case pickupStates.holding:
-                    RotatePlayerToCam();              
-                    if (Input.GetButtonDown("Pickup"))
+                    RotatePlayerToCam();     
+                    if(currentlyTouchedPickup == null)
+                    {
+                        ani.SetBool("carrying", false);
+                        ani.Play("Idle");
+                        pickUpState = pickupStates.notholding;
+                        break;
+                    }
+                    else if (Input.GetButtonDown("Pickup"))
                     {
                         queuedActions.Add("throw");
                     }
@@ -341,7 +348,7 @@ public class PlayerController : MonoBehaviour
                     {
                         queuedActions.Add("punch");
                     }
-                break;
+                    break;
 
 
                 //this runs when the player isn't holding anything or picking anything up
@@ -610,7 +617,7 @@ public class PlayerController : MonoBehaviour
         {
             Throwable t = currentlyTouchedPickup.GetComponent<Throwable>();
             if (t.enabled)
-            {
+            {               
                 //disabling physics
                 TogglePhysics(currentlyTouchedPickup, false);
                 //setting animator boolean
@@ -633,26 +640,38 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Throw()
+    void Drop()
     {
         GameObject ob = currentlyTouchedPickup;
         Throwable ts = ob.GetComponent<Throwable>();
+
         TogglePhysics(ob, true);
+        pickUpState = pickupStates.notholding;
+        ob.transform.SetParent(ts.originalParent);
+        ani.SetBool("carrying", false);
+        ts.beingHeld = false;
+        if (ob.TryGetComponent(out Ragdoll rs))
+        {
+            rs.StartRagdoll();
+        }
+    }
+
+    void Throw()
+    {
+        Drop();
+        GameObject ob = currentlyTouchedPickup;
+        Throwable ts = ob.GetComponent<Throwable>();
         ts.beenThrown = true;
         foreach ( Rigidbody rb in ob.GetComponentsInChildren<Rigidbody>())
         {
             float throwForce = rb.mass * throwAccelaration;
             rb.AddForce(cam.forward * throwForce, ForceMode.Impulse);
-        }           
-        pickUpState = pickupStates.notholding;
-        ob.transform.SetParent(ts.originalParent);
-        ani.SetBool("carrying", false);
-        ts.beingHeld = false;
-        if(ob.TryGetComponent(out Ragdoll rs))
-        {
-            rs.StartRagdoll();
         }
+        ts.incrementVelocity(cam.forward*throwAccelaration);
+        ani.Play("Throw");  
     }
+
+
 
 
 

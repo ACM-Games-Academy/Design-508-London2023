@@ -180,7 +180,7 @@ public class WaveManager : MonoBehaviour
     {
         foreach(GameObject gob in spawnedEnemies)
         {
-            Destroy(gob,5f);
+            Destroy(gob, 5f);
         }
     }
 
