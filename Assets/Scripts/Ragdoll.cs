@@ -62,7 +62,11 @@ public class Ragdoll : MonoBehaviour
         }
         foreach(Rigidbody rdBone in ragdollBones)
         {
-            rdBone.gameObject.AddComponent<Freezable>();
+            if(rdBone.transform != hips)
+            {
+                rdBone.gameObject.AddComponent<Freezable>();
+            }
+            
         }      
 
         //I don't think I need this here

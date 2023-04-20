@@ -139,9 +139,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb6528a16f789645b633de1df9e1743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFrozen: 0
   ani: {fileID: 8445658856694309249}
   agent: {fileID: 7521857688728188072}
+  cannotDespawn: 0
   playerTargetRange: 1000
   showTargetRangeInSceneView: 0
   stoppingRange: 40
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
-  holdRotation: {x: -35.473, y: 105.931, z: -94.134}
+  holdRotation: {x: 0, y: 0, z: 90}
   damageVelocity: 5
   printObjectVelocity: 0
   thrownDamage: 20
@@ -628,6 +628,7 @@ MonoBehaviour:
   useDraggedInHealthManager: 1
   draggedInHM: {fileID: 0}
   isLightObject: 0
+  partOfRagdoll: 0
   beingHeld: 0
   originalParent: {fileID: 0}
 --- !u!1 &2862461251114546531 stripped

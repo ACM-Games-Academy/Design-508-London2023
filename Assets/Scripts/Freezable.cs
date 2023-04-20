@@ -80,14 +80,12 @@ public class Freezable : MonoBehaviour
         {
             rb.drag = prevDrag;
             rb.angularDrag = prevAngDrag;
-            rb.useGravity = true;
             rb.velocity = prevVelocity;
+            rb.useGravity = true;
         }
         foreach (Animator ani in GetComponentsInChildren<Animator>())
         {
-
             ani.enabled = true;
-
         }
         if (TryGetComponent(out NavMeshAgent nm))
         {
@@ -98,8 +96,24 @@ public class Freezable : MonoBehaviour
         }
         if (TryGetComponent(out Ragdoll rs))
         {
-            rs.RagdollCheck();
-        }     
+            if (rs.ragdoll)
+            {
+                rs.StartRagdoll();
+            }          
+        }
+    }
+
+    bool BeingHeld()
+    {
+        if(GetComponentInParent<Throwable>() != null)
+        {
+            Throwable ts = GetComponentInParent<Throwable>();
+            if (ts.beingHeld)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void OnEnable()
