@@ -60,6 +60,11 @@ public class Ragdoll : MonoBehaviour
         {
             originalMass = rb.mass;
         }
+        foreach(Rigidbody rdBone in ragdollBones)
+        {
+            rdBone.gameObject.AddComponent<Freezable>();
+        }      
+
         //I don't think I need this here
         animationTransforms = new BoneTransform[bones.Length];
         ragdollTransforms = new BoneTransform[bones.Length];
@@ -158,7 +163,7 @@ public class Ragdoll : MonoBehaviour
                 beingHeld = throwScript.beingHeld;
                 throwScript.enabled = false;
             }
-            if (!beingHeld)
+            if (!beingHeld && (!hips.GetComponent<Freezable>().isFrozen))
             {
                 HipRotationReset();
                 HipPositionReset();

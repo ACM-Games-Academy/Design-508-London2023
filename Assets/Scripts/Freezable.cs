@@ -41,7 +41,7 @@ public class Freezable : MonoBehaviour
 
     public void freezeMethod()
     {
-
+        isFrozen = true;
         if(TryGetComponent(out Rigidbody rb))
         {
             prevDrag = rb.drag;
@@ -75,6 +75,7 @@ public class Freezable : MonoBehaviour
 
     public void unFreezeMethod()
     {
+        isFrozen = false;
         if (TryGetComponent(out Rigidbody rb))
         {
             rb.drag = prevDrag;
@@ -98,7 +99,7 @@ public class Freezable : MonoBehaviour
         if (TryGetComponent(out Ragdoll rs))
         {
             rs.RagdollCheck();
-        }
+        }     
     }
 
     private void OnEnable()

@@ -28,6 +28,7 @@ public class Shooter : Freezable
     public Vector3 aimVariation;
     [SerializeField][Tooltip("how long after the animation starts should the attack happen")] float shootAnimationDelay;
     [SerializeField] float shootCooldown;
+    float originalCooldown;
     public float despawnTime;
     GameObject previousBullet;
     bool fire;
@@ -40,6 +41,7 @@ public class Shooter : Freezable
         pointer = Instantiate(new GameObject("pointer"),Shootpoint).transform;
         pointer.position = Shootpoint.position;
         StartCoroutine(ShootCooldown());
+        originalCooldown = shootCooldown;
     }
 
     // Update is called once per frame
@@ -53,10 +55,12 @@ public class Shooter : Freezable
         if (state == behaviours.search)
         {
             //look around animation
+            shootCooldown = 0;
         }
         if(state == behaviours.aim)
         {
             AimAtPlayer();
+            shootCooldown = originalCooldown;
         }
         
 
@@ -128,7 +132,7 @@ public class Shooter : Freezable
             //print("end of cooldown: "+ (previousShotTime + shootCooldown).ToString());
             yield return new WaitForEndOfFrame();
         }
-        if (state == behaviours.aim && !isRagdolling())
+        if (state == behaviours.aim && !isRagdolling() && !isFrozen)
         {
             yield return new WaitForSeconds(shootAnimationDelay);
             Shoot();
