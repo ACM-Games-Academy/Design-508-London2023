@@ -331,24 +331,24 @@ public class PlayerController : MonoBehaviour
 
                 //this runs when the player is holding an object
                 case pickupStates.holding:
-                    RotatePlayerToCam();     
-                    if(currentlyTouchedPickup == null)
-                    {
-                        ani.SetBool("carrying", false);
-                        ani.Play("Idle");
-                        pickUpState = pickupStates.notholding;
-                        break;
-                    }
-                    else if (Input.GetButtonDown("Pickup"))
-                    {
-                        queuedActions.Add("throw");
-                    }
-                    //punching
-                    if ((Input.GetButtonDown("Punch")) && currentlyTouchedPickup.GetComponent<Throwable>().isLightObject)
-                    {
-                        queuedActions.Add("punch");
-                    }
+                    RotatePlayerToCam();
+                if (currentlyTouchedPickup == null)
+                {
+                    ani.SetBool("carrying", false);
+                    ani.Play("Idle");
+                    pickUpState = pickupStates.notholding;
                     break;
+                }
+                else if (Input.GetButtonDown("Pickup"))
+                {
+                    queuedActions.Add("throw");
+                }
+                //punching
+                else if ((Input.GetButtonDown("Punch")) && currentlyTouchedPickup.GetComponent<Throwable>().isLightObject)
+                {
+                    queuedActions.Add("punch");
+                }
+                break;
 
 
                 //this runs when the player isn't holding anything or picking anything up
@@ -433,20 +433,31 @@ public class PlayerController : MonoBehaviour
                 isSpeeding = false;
                 unFreezeEvent();
                 speedOverlay.SetActive(false);
+                if (currentlyTouchedPickup.GetComponent<Throwable>().partOfRagdoll)
+                {
+                    Drop();
+                    queuedActions.Add("pickup");
+                }
             }
         }
         if (ActionInQueue("startSprint",false))
         {
             sprinting = true;
             ani.SetBool("sprinting",true);
-            if (previousActions.Contains("startSprint") && superSpeed)
+            if (previousActions.Contains("startSprint") && superSpeed && directionalInput.magnitude > 0.1f)
             {
-                isSpeeding = true;
+                isSpeeding = true;               
                 freezeEvent();
                 Instantiate(superSpeedEffect, transform.position, transform.rotation);
                 speedOverlay.SetActive(true);
+                RemoveActionsFromList(previousActions, "startSprint");
+                RemoveActionsFromList(queuedActions, "startSprint");
             }
-            StoreAsPrevious("startSprint");
+            else
+            {
+                StoreAsPrevious("startSprint");
+            }
+            
         }
         if (ActionInQueue("throw"))
         {
