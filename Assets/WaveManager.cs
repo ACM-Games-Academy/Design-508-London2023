@@ -180,7 +180,15 @@ public class WaveManager : MonoBehaviour
     {
         foreach(GameObject gob in spawnedEnemies)
         {
-            Destroy(gob,5f);
+            bool beingHeld = false;
+            if(gob.GetComponentInChildren<Throwable>() != null)
+            {
+                beingHeld = (gob.GetComponentInChildren<Throwable>().beingHeld);
+            }
+            if (!beingHeld)
+            {
+                Destroy(gob, 5f);
+            }           
         }
     }
 

@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     [Header("Optional")]
     [SerializeField] Animator ani;
     [HideInInspector] public NavMeshAgent agent;
+    [HideInInspector] public bool cannotDespawn;
 
     [Header("Range")]
     [SerializeField] float playerTargetRange;

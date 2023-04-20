@@ -25,7 +25,7 @@ public class Throwable : Freezable
     [SerializeField] HealthManager draggedInHM;
     Rigidbody rb;
     public bool isLightObject;
-
+    bool partOfRagdoll;
     [Header("AUTOFILLED DO NOT CHANGE")]
     public bool beingHeld;  
     [HideInInspector] public Transform originalParent;
@@ -34,6 +34,8 @@ public class Throwable : Freezable
     {
         rb = GetComponent<Rigidbody>();
         originalParent = transform.parent;
+
+        partOfRagdoll = (GetComponentInParent<Ragdoll>() != null);
     }
 
     // Update is called once per frame
@@ -42,6 +44,10 @@ public class Throwable : Freezable
         if (printObjectVelocity)
         {
             print(gameObject.name + " Velocity: " + rb.velocity.magnitude);
+        }
+        if(partOfRagdoll && originalParent == null)
+        {
+            Destroy(gameObject);
         }
     }
 
