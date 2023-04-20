@@ -666,7 +666,8 @@ public class PlayerController : MonoBehaviour
         {
             float throwForce = rb.mass * throwAccelaration;
             rb.AddForce(cam.forward * throwForce, ForceMode.Impulse);
-        }           
+        }
+        ts.incrementVelocity(cam.forward*throwAccelaration);
         ani.Play("Throw");  
     }
 

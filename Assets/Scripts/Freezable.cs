@@ -31,6 +31,14 @@ public class Freezable : MonoBehaviour
         
     }
 
+    public void incrementVelocity(Vector3 velocity)
+    {
+        if(TryGetComponent(out Rigidbody rb))
+        {
+            prevVelocity += velocity;
+        }       
+    }
+
     public void freezeMethod()
     {
 
@@ -38,8 +46,8 @@ public class Freezable : MonoBehaviour
         {
             prevDrag = rb.drag;
             prevAngDrag = rb.angularDrag;
-            wasUsingGravity = rb.useGravity;
-            prevVelocity = rb.velocity;
+            prevVelocity = Vector3.zero;
+            incrementVelocity(rb.velocity);
 
             rb.drag = 3;
             rb.angularDrag = 3;
@@ -71,7 +79,7 @@ public class Freezable : MonoBehaviour
         {
             rb.drag = prevDrag;
             rb.angularDrag = prevAngDrag;
-            rb.useGravity = wasUsingGravity;
+            rb.useGravity = true;
             rb.velocity = prevVelocity;
         }
         foreach (Animator ani in GetComponentsInChildren<Animator>())

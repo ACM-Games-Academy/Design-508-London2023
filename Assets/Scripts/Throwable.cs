@@ -67,6 +67,8 @@ public class Throwable : Freezable
         }
     }
 
+
+
     private void OnCollisionEnter(Collision collision)
     {
         GameObject colOb = collision.gameObject;
@@ -103,4 +105,5 @@ public class Throwable : Freezable
 
         }
     }
+
 }
