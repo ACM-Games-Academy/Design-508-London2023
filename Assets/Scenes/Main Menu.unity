@@ -661,6 +661,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3312790487714337832, guid: 64357a89e692e0c46a00e48a9afca143,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.84999
+      objectReference: {fileID: 0}
     - target: {fileID: 3312790487714337834, guid: 64357a89e692e0c46a00e48a9afca143,
         type: 3}
       propertyPath: m_IsActive
@@ -952,6 +957,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 2456829772794252392, guid: 5fd60e86cb032a440a8a27b9482fe9c4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fd60e86cb032a440a8a27b9482fe9c4, type: 3}
