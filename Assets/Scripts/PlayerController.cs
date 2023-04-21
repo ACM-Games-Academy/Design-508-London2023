@@ -57,7 +57,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] [Tooltip("The time after punching until you can punch again")]float punchCooldown;
     [SerializeField] [Tooltip("The accelaration that regular punches apply")]float punchAccelaration;
     [SerializeField] [Tooltip("The accelaration that kicks apply")] float kickAccelaration;
-    [SerializeField] BoxCollider punchCollider;    
+    [SerializeField] BoxCollider punchCollider;
+    bool punchAxisInUse;
 
     MeleeHitbox meleeScript;
     bool canPunch;
@@ -248,7 +249,7 @@ public class PlayerController : MonoBehaviour
         {
             b.AddForce(Vector3.up * riseSpeed * 100 * Time.deltaTime, ForceMode.Force);
         }
-        else if (Input.GetButton("Crouch"))
+        else if (Input.GetAxis("Crouch") > 0.4f)
         {
             b.AddForce(Vector3.down * lowerSpeed * 100 * Time.deltaTime, ForceMode.Force);
         }
@@ -363,10 +364,15 @@ public class PlayerController : MonoBehaviour
                         crosshair.gameObject.SetActive(true);
                         crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);
                     }
-                    //punching
-                    if ((Input.GetButtonDown("Punch")))
+                //punching
+                    if ((Input.GetAxisRaw("Punch") == 1) && !punchAxisInUse)
                     {
-                        queuedActions.Add("punch");                        
+                        queuedActions.Add("punch");
+                        punchAxisInUse = true;
+                    }
+                    else if((Input.GetAxisRaw("Punch") == 0) && punchAxisInUse)
+                    {
+                        punchAxisInUse = false;
                     }
                     //picking up
                     if (Input.GetButtonDown("Pickup") && currentlyTouchedPickup != null)
@@ -374,7 +380,7 @@ public class PlayerController : MonoBehaviour
                         queuedActions.Add("pickup");
                     }
                     //initiating roll
-                    if (Input.GetKeyDown("left ctrl") && grounded && !isFlying)
+                    if (Input.GetButtonDown("Crouch") && grounded && !isFlying)
                     {
                         StartCoroutine(Roll());
                     }
@@ -433,10 +439,13 @@ public class PlayerController : MonoBehaviour
                 isSpeeding = false;
                 unFreezeEvent();
                 speedOverlay.SetActive(false);
-                if (currentlyTouchedPickup.GetComponent<Throwable>().partOfRagdoll)
+                if(currentlyTouchedPickup != null)
                 {
-                    Drop();
-                    queuedActions.Add("pickup");
+                    if (currentlyTouchedPickup.GetComponent<Throwable>().partOfRagdoll)
+                    {
+                        Drop();
+                        queuedActions.Add("pickup");
+                    }
                 }
             }
         }
@@ -696,7 +705,7 @@ public class PlayerController : MonoBehaviour
 
         
         //when firing laser
-        if (Input.GetMouseButton(0))
+        if (Input.GetAxis("Fire1") > 0.4f)
         {
             regen = false;
             if (hit && energy >= 0)
