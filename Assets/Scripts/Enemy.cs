@@ -7,6 +7,14 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : MonoBehaviour
 {
+    public enum location
+    {
+        onGround,
+        inVan,
+        rooftop,
+    }
+    public location spawnPoint;
+
     [Header("Optional")]
     [SerializeField] Animator ani;
     [HideInInspector] public NavMeshAgent agent;
@@ -25,6 +33,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Death")]
     [SerializeField] GameObject bloodEffect;
+
 
     public virtual void Awake()
     {
