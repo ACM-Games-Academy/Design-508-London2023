@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 484543233666452960}
+  - component: {fileID: 8399856626187740636}
   m_Layer: 0
   m_Name: building
   m_TagString: Untagged
@@ -32,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8399856626187740636
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005042878880307034}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0704845, y: 0.18560573, z: 0.13950759}
+  m_Center: {x: -0.046755373, y: 0.08661349, z: -0.02211781}
 --- !u!1 &3745008670085929225
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +72,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3745008670085929225}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.007209589, y: 0.1150676, z: -0.013398294}
+  m_LocalPosition: {x: -0.0547, y: 0.1150676, z: -0.0228}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
