@@ -5242,7 +5242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PauseUI: {fileID: 886174754780472086}
   HUD: {fileID: 886174754714186975}
-  SettingsMenu: {fileID: 9058442703091449783}
+  SettingsMenu: {fileID: 6254113068113787213}
   FreeCam: {fileID: 886174755411591663}
 --- !u!1 &886174755914513898
 GameObject:
@@ -15998,6 +15998,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64357a89e692e0c46a00e48a9afca143, type: 3}
+--- !u!1 &6254113068113787213 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3312790487714337834, guid: 64357a89e692e0c46a00e48a9afca143,
+    type: 3}
+  m_PrefabInstance: {fileID: 8877289579351993703}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6254113068113787215 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3312790487714337832, guid: 64357a89e692e0c46a00e48a9afca143,

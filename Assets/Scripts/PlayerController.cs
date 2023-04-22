@@ -30,9 +30,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float maxEnergy;
     [SerializeField] float energyRegenRate;
     public static float energy;
-    [SerializeField] bool laserVision;
-    [SerializeField] bool superSpeed;
-    [SerializeField] bool flight;
+    public bool superStrength;
+    public bool laserVision;
+    public bool superSpeed;
+    public bool flight;
     bool regen;
     float currentRegenRate;
 
@@ -384,6 +385,7 @@ public class PlayerController : MonoBehaviour
                     if (Input.GetButtonDown("Crouch") && grounded && !isFlying)
                     {
                         StartCoroutine(Roll());
+                        queuedActions.Add("stopSprint");
                     }
                     break;
             }

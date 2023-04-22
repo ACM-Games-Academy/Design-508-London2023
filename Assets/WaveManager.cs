@@ -112,7 +112,10 @@ public class WaveManager : MonoBehaviour
                     barUI.SetActive(false);
                     incomingUI.SetActive(true);
                     ClearOldEnemies();
-                    StartWait(timeBetweenWaves);
+                    if(waveNumber < waves.Length)
+                    {
+                        StartWait(timeBetweenWaves);
+                    }                
                 }
                 break;
         }

@@ -31,7 +31,7 @@ public class teleport : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == teleportTag)
+        if (other.tag == teleportTag && canTeleport)
         {
             Invoke("Teleport", 1);
         }

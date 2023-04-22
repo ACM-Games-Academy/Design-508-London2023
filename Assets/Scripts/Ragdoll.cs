@@ -151,7 +151,7 @@ public class Ragdoll : MonoBehaviour
 
     public void GetUp()
     {
-        if (!CancelGetUp())
+        if (!CancelGetUp() && !neverGetBackUp)
         {
             print("running get up");
             HipRotationReset();
