@@ -229,6 +229,7 @@ public class WaveManager : MonoBehaviour
         {
             GameObject newEnemy = Instantiate(nextEnemy.gameObject, spawnPoint.position, spawnPoint.rotation, transform);
             spawnedEnemies.Add(newEnemy);
+            spawnedCount += 1;
             StartWait(spawnDelay);
         }
     }
