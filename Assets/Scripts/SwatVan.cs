@@ -45,8 +45,7 @@ public class SwatVan : Enemy
         deployed = true;
         ToggleThrowable(true);
         foreach (GameObject troop in troops)
-        {
-            yield return new WaitForSeconds(troopSpawnDelay);
+        {            
             if(troop.TryGetComponent(out Enemy enemyScript))
             {
                 GameObject enemy = Instantiate(troop, troopSpawnPoint.position, troopSpawnPoint.rotation);
@@ -62,6 +61,7 @@ public class SwatVan : Enemy
                     currentWaveManager.spawnedEnemies.Add(enemy);
                 }
             }
+            yield return new WaitForSeconds(troopSpawnDelay);
         }
         troops = new List<GameObject>();
     }
@@ -69,11 +69,7 @@ public class SwatVan : Enemy
     public override void Die()
     {
         troopSpawnDelay = 0;
-        if (!deployed)
-        {
-            StartCoroutine(DeployTroops());
-        }
-
+        StartCoroutine(DeployTroops());
         GetComponent<Explodable>().Invoke("Explode", 0.3f);
     }
 

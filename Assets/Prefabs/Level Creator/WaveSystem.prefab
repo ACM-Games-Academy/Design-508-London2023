@@ -203,7 +203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1872483776}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wave Spawn Point (1)
   m_TagString: waveSpawn
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
@@ -234,7 +234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4583467985766806231}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: doorBlockers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8751526015471255463}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wave Spawn Point
   m_TagString: waveSpawn
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
@@ -298,7 +298,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8751526015641211584}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wave Spawn Point
   m_TagString: waveSpawn
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
@@ -333,7 +333,7 @@ GameObject:
   - component: {fileID: 8751526016940050365}
   - component: {fileID: 8751526016940050363}
   - component: {fileID: 6814233467835535911}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: WaveSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}

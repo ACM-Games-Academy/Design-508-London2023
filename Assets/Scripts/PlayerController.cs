@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.UI;
 
 public delegate void freeze();
 public delegate void unfreeze();
@@ -791,6 +792,7 @@ public class PlayerController : MonoBehaviour
         laser2.enabled = false;
         GameObject blood = Instantiate(bloodEffect,bloodSpawn.position,bloodSpawn.rotation,bloodSpawn);
         deathScreen.SetActive(true);
+        deathScreen.GetComponentInChildren<Button>().Select();
         if (isFlying)
         {
             isFlying = false;

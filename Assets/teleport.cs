@@ -7,11 +7,14 @@ public class teleport : MonoBehaviour
     [SerializeField] Transform destination;
     [SerializeField] string teleportTag = "Player";
     [SerializeField] float teleportDelay;
+    [SerializeField] bool oneTimeUse = true;
+    bool canTeleport;
     Transform transformToMove;
     // Start is called before the first frame update
     void Awake()
     {
         transformToMove = GameObject.FindGameObjectWithTag(teleportTag).transform;
+        canTeleport = true;
     }
 
     // Update is called once per frame
@@ -23,6 +26,7 @@ public class teleport : MonoBehaviour
     void Teleport()
     {
         transformToMove.position = destination.position;
+        canTeleport = false;
     }
 
     private void OnTriggerEnter(Collider other)

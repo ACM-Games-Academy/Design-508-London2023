@@ -16,4 +16,9 @@ public class MainMenu : MonoBehaviour
         Debug.Log ("QUIT");
         Application.Quit();
     }
+
+    private void OnEnable()
+    {
+        GetComponentInChildren<Button>().Select();
+    }
 }

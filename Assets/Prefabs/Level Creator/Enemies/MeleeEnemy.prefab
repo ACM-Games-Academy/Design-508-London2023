@@ -117,7 +117,7 @@ MonoBehaviour:
   stoppingRange: 2
   showStoppingRangeInSceneView: 0
   playerTag: PlayerTargetPoint
-  bloodEffect: {fileID: 1000012909287652, guid: 78b0e7f97bd38df4cbae856c27751eea,
+  bloodEffect: {fileID: 1000010675638318, guid: a4eb04008c6181343a228982d86a92c3,
     type: 3}
 --- !u!114 &7167034802001215565
 MonoBehaviour:
