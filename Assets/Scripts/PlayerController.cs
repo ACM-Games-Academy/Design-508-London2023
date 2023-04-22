@@ -344,12 +344,22 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (Input.GetButtonDown("Pickup"))
                 {
+                    queuedActions.Add("drop");
+                }
+                else if (Input.GetButtonDown("Throw"))
+                {
                     queuedActions.Add("throw");
                 }
                 //punching
                 else if ((Input.GetButtonDown("Punch")) && currentlyTouchedPickup.GetComponent<Throwable>().isLightObject)
                 {
                     queuedActions.Add("punch");
+                }
+                //initiating roll
+                else if (Input.GetButtonDown("Crouch") && !isFlying)
+                {
+                    queuedActions.Add("drop");
+                    queuedActions.Add("roll");
                 }
                 break;
 
@@ -382,10 +392,9 @@ public class PlayerController : MonoBehaviour
                         queuedActions.Add("pickup");
                     }
                     //initiating roll
-                    if (Input.GetButtonDown("Crouch") && grounded && !isFlying)
+                    if (Input.GetButtonDown("Crouch") && !isFlying)
                     {
-                        StartCoroutine(Roll());
-                        queuedActions.Add("stopSprint");
+                        queuedActions.Add("roll");
                     }
                     break;
             }
@@ -431,6 +440,11 @@ public class PlayerController : MonoBehaviour
             RemoveActionsFromList(queuedActions, action);
             previousActions.Add(action);
             StartCoroutine(ClearActionAfterSeconds(action, comboDelay));
+        }
+        if (ActionInQueue("roll"))
+        {
+            StartCoroutine(Roll());
+            queuedActions.Add("stopSprint");
         }
         //cycles through all actions and checks if their inputs have been recently pressed
         if (ActionInQueue("stopSprint"))
@@ -572,6 +586,10 @@ public class PlayerController : MonoBehaviour
             {
                 pickUpState = pickupStates.pickingUp;
             }
+        }
+        if (ActionInQueue("drop"))
+        {
+            Drop();
         }
         if (ActionInQueue("startFlight"))
         {

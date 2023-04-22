@@ -22,6 +22,6 @@ public class Breakable : MonoBehaviour
             //Vector3 force = (rb.transform.position - transform.position) * breakForce;
             rb.AddExplosionForce(breakForce, transform.position, 10);
         }
-        Destroy (gameObject,0.3f);
+        Destroy (gameObject,0.01f);
     }
 }
