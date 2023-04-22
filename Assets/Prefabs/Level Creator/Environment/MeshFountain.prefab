@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 1343389360305427976}
   - component: {fileID: 2531328023835948968}
   - component: {fileID: 273744679336005192}
-  m_Layer: 0
+  - component: {fileID: 669981136}
+  - component: {fileID: 669981135}
+  m_Layer: 3
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +85,35 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &669981136
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533519147146876664}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6564086670116265437, guid: 7f4cd21d849f39a42a280ecac0e47cc1, type: 3}
+--- !u!114 &669981135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533519147146876664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a796aec3be2bcfe4096f822f71e8e098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destination: {fileID: 0}
+  teleportTag: Player
+  teleportDelay: 0.8
 --- !u!1 &1294896859513683090
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +125,8 @@ GameObject:
   - component: {fileID: 2477146472394541991}
   - component: {fileID: 6771061162312970676}
   - component: {fileID: 7031525609322772040}
-  m_Layer: 0
+  - component: {fileID: 64173903}
+  m_Layer: 3
   m_Name: ValenciaFountain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +199,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &64173903
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294896859513683090}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6198970988265212486, guid: 7f4cd21d849f39a42a280ecac0e47cc1, type: 3}
 --- !u!1 &5805357390149440920
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6618907602241425186}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MeshFountain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,9 +236,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5805357390149440920}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.146072, y: -20.26, z: -25.281342}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 0.71805423, y: 0.71805423, z: 0.71805423}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2477146472394541991}
