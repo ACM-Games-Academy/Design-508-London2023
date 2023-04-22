@@ -1393,8 +1393,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.8034348, y: 1.9242398, z: 1.7897406}
-  m_Center: {x: 0.04, y: 0.87, z: 0.87}
+  m_Size: {x: 1.8034348, y: 1.8361456, z: 1.7897406}
+  m_Center: {x: 0.039999958, y: 0.9140469, z: 0.8699999}
 --- !u!114 &1162881133722501849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1420,6 +1420,7 @@ MonoBehaviour:
   useDraggedInHealthManager: 0
   draggedInHM: {fileID: 0}
   isLightObject: 0
+  partOfRagdoll: 0
   beingHeld: 0
   originalParent: {fileID: 0}
 --- !u!114 &290175324763269454
@@ -1437,10 +1438,10 @@ MonoBehaviour:
   maxHealth: 15
   deathScript: {fileID: 835322678325929600}
   deathFunction: BreakIt
-  dead: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
+  dead: 0
   health: 0
   canTakeDamage: 0
 --- !u!1 &2441068311848571163
