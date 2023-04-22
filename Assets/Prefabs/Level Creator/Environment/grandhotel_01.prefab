@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8270944791354438438}
   - component: {fileID: 562459144403038201}
   - component: {fileID: 4897930722567497619}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 68daa8bbce709cb4bb9778853ea22033, type: 3}
 --- !u!1 &3751335595542856807
@@ -124,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 3751335595542856807}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -42.23494, y: 0.0000038146973, z: 139.08743}
-  m_LocalScale: {x: 0.54922, y: 0.54922, z: 0.54922}
+  m_LocalScale: {x: 0.5492201, y: 0.54922, z: 0.5492201}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 807584589660882360}
