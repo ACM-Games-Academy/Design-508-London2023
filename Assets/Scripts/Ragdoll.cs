@@ -158,11 +158,15 @@ public class Ragdoll : MonoBehaviour
             HipPositionReset();
             ragdollTransforms = PopulateTransforms(bones);
             resettingBones = true;
+            if (throwScript != null)
+            {
+                throwScript.enabled = false;
+            }
         }
         else if(!neverGetBackUp)
         {
             //print("delayed get up for " + 1 + " second");
-            Invoke("GetUp", 1);
+            Invoke("GetUp", 2);
         }
 
     }

@@ -69,6 +69,11 @@ public class SwatVan : Enemy
     public override void Die()
     {
         troopSpawnDelay = 0;
+        if (!deployed)
+        {
+            StartCoroutine(DeployTroops());
+        }
+
         GetComponent<Explodable>().Invoke("Explode", 0.3f);
     }
 

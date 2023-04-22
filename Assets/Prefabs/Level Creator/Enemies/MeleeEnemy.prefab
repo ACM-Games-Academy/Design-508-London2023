@@ -94,7 +94,7 @@ MonoBehaviour:
   neverGetBackUp: 0
   getUpState: Getting Up
   getUpClipName: Getting Up
-  getUpDelay: 5
+  getUpDelay: 3
   boneResetTime: 0.5
 --- !u!114 &7167034802001215574
 MonoBehaviour:
@@ -134,10 +134,10 @@ MonoBehaviour:
   maxHealth: 30
   deathScript: {fileID: 7167034802001215574}
   deathFunction: Die
-  dead: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
+  dead: 0
   health: 0
   canTakeDamage: 0
 --- !u!114 &4442664788307197233

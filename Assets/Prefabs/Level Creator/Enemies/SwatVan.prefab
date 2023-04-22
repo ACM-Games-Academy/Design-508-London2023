@@ -576,7 +576,7 @@ MonoBehaviour:
   takesDamageMask:
     serializedVersion: 2
     m_Bits: 73
-  impactHealthLoss: 20
+  impactHealthLoss: 25
   useDraggedInHealthManager: 0
   draggedInHM: {fileID: 0}
   isLightObject: 0
@@ -596,8 +596,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
-  deathScript: {fileID: 8675469014613307424}
-  deathFunction: Explode
+  deathScript: {fileID: 6630050773689820298}
+  deathFunction: Die
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
@@ -619,7 +619,7 @@ MonoBehaviour:
   explosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
   blastDamage: 50
   force: 10000
-  upwardModifier: 20
+  upwardModifier: 3
   affectedRadius: 7
   showRadiusInEditor: 1
   radiusOffset: {x: 0, y: 0, z: 0.57}
@@ -671,7 +671,7 @@ MonoBehaviour:
   cannotDespawn: 0
   playerTargetRange: 1000
   showTargetRangeInSceneView: 0
-  stoppingRange: 10
+  stoppingRange: 30
   showStoppingRangeInSceneView: 0
   playerTag: PlayerTargetPoint
   bloodEffect: {fileID: 0}
