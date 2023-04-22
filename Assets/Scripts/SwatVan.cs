@@ -7,8 +7,10 @@ public class SwatVan : Enemy
 {
     [Header("Van")]
     public List<GameObject> troops;
+    [HideInInspector]public WaveManager currentWaveManager;
     [SerializeField] Transform troopSpawnPoint;
     [SerializeField] float troopSpawnDelay;
+    
     bool deployed;
     public override void Awake()
     {
@@ -35,10 +37,14 @@ public class SwatVan : Enemy
             yield return new WaitForSeconds(troopSpawnDelay);
             if(troop.TryGetComponent(out Enemy enemyScript))
             {
-                Instantiate(troop, troopSpawnPoint.position, troopSpawnPoint.rotation);
+                GameObject enemy = Instantiate(troop, troopSpawnPoint.position, troopSpawnPoint.rotation);
+                if(currentWaveManager != null)
+                {
+                    currentWaveManager.spawnedEnemies.Add(enemy);
+                }
             }
         }        
-        ToggleThrowable(true);
+        this.enabled = false;
     }
 
     void ToggleThrowable(bool toggle)
@@ -52,6 +58,16 @@ public class SwatVan : Enemy
             rb.isKinematic = !toggle;
         }
         agent.enabled = !toggle;
+    }
+
+    private void OnDisable()
+    {
+        ToggleThrowable(true);
+    }
+
+    private void OnEnable()
+    {
+        ToggleThrowable(false);
     }
 
 }

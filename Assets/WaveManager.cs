@@ -11,7 +11,9 @@ public class WaveManager : MonoBehaviour
     [SerializeField] float timeBetweenWaves;
     [SerializeField] GameObject doorBlockers;
     
-
+    [Header("Spawning")]
+    List<GameObject> currentVanLoad = new List<GameObject>();
+    [SerializeField] GameObject swatVan;
     enum waveStates
     {
         SPAWNING,
@@ -27,12 +29,18 @@ public class WaveManager : MonoBehaviour
     TextMeshProUGUI waveNumText;
     GameObject[] enemiesToSpawn = new GameObject[0];
     List<Transform> spawnPoints = new List<Transform>();
-    List<GameObject> spawnedEnemies;
+    [HideInInspector] public List<GameObject> spawnedEnemies;
+    int spawnedCount;
+
+
+
     bool fullySpawned;
     bool finished;
     float waitEndTime;
     GameObject waveUI;
+    GameObject incomingUI;
     Slider waveBar;
+    GameObject barUI;
 
     
     void Awake()
@@ -52,7 +60,9 @@ public class WaveManager : MonoBehaviour
         //UI Assigning
         waveUI = GameObject.FindGameObjectWithTag("waveUI");
         waveNumText = GameObject.FindGameObjectWithTag("waveText").GetComponent<TextMeshProUGUI>();
+        incomingUI = GameObject.FindGameObjectWithTag("incomingWaveUI");
         waveBar = waveUI.GetComponentInChildren<Slider>();
+        barUI = waveBar.transform.parent.gameObject;
         waveUI.SetActive(false) ;
         
     }
@@ -83,7 +93,7 @@ public class WaveManager : MonoBehaviour
                             EndOfWaves();
                         }
                     }
-                    else if(spawnedEnemies.Count != enemiesToSpawn.Length && !fullySpawned)
+                    else if(spawnedCount != enemiesToSpawn.Length && !fullySpawned)
                     {
                         state = waveStates.SPAWNING;
                     }
@@ -96,10 +106,11 @@ public class WaveManager : MonoBehaviour
                 break;
             case waveStates.SPAWNED:
                 UpdateUI();
-                if(GetKilledEnemies() >= spawnedEnemies.Count)
+                if(GetKilledEnemies() >= spawnedCount)
                 {
                     finished = true;
-                    waveUI.SetActive(false);
+                    barUI.SetActive(false);
+                    incomingUI.SetActive(true);
                     ClearOldEnemies();
                     StartWait(timeBetweenWaves);
                 }
@@ -110,6 +121,7 @@ public class WaveManager : MonoBehaviour
     void BeginWaves()
     {
         doorBlockers.SetActive(true);
+        waveUI.SetActive(true);
         StartNextWave();       
     }
 
@@ -117,6 +129,7 @@ public class WaveManager : MonoBehaviour
     {
         state = waveStates.STOPPED;
         doorBlockers.SetActive(false);
+        waveUI.SetActive(false);
     }
 
     void StartNextWave()
@@ -126,11 +139,13 @@ public class WaveManager : MonoBehaviour
         currentWave = waves[waveNumber];
         waveNumber += 1;
         enemiesToSpawn = currentWave.enemies.ToArray();
-        waveUI.SetActive(true);
+        barUI.SetActive(true);
         UpdateCounterText();
+        incomingUI.SetActive(false);
         waveBar.maxValue = enemiesToSpawn.Length;
         waveBar.value = waveBar.maxValue;
         spawnedEnemies = new List<GameObject>();
+        spawnedCount = 0;
         state = waveStates.SPAWNING;
     }
 
@@ -168,7 +183,7 @@ public class WaveManager : MonoBehaviour
 
     void UpdateUI()
     {
-        waveBar.value = spawnedEnemies.Count - GetKilledEnemies();
+        waveBar.value = spawnedCount - GetKilledEnemies();
     }
 
     void UpdateCounterText()
@@ -185,11 +200,39 @@ public class WaveManager : MonoBehaviour
     }
 
     void SpawnNextEnemy()
-    {
+    {       
+        Enemy nextEnemy = enemiesToSpawn[spawnedCount].GetComponent<Enemy>();
         Transform spawnPoint = GetSpawnPoint();
-        GameObject newEnemy = Instantiate(enemiesToSpawn[spawnedEnemies.Count], spawnPoint.position, spawnPoint.rotation, transform);
-        spawnedEnemies.Add(newEnemy);
-        StartWait(spawnDelay);
+        if (nextEnemy.spawnPoint == Enemy.location.inVan)
+        {
+            currentVanLoad.Add(nextEnemy.gameObject);
+            bool spawnVan = false;
+            if(spawnedCount + 1 == enemiesToSpawn.Length)
+            {
+                spawnVan = true;
+            }
+            else
+            {
+                spawnVan = (enemiesToSpawn[spawnedCount+1].GetComponent<Enemy>().spawnPoint != Enemy.location.inVan);//if the enemy after this one doesn't spawn in a van
+            }
+            if (spawnVan)
+            {
+                GameObject van = Instantiate(swatVan, spawnPoint.position, spawnPoint.rotation, transform);//send the van with currently loaded enemies
+                van.GetComponent<SwatVan>().troops = currentVanLoad;
+                print(currentVanLoad.Count);
+                print(van.GetComponent<SwatVan>().troops.Count);
+                van.GetComponent<SwatVan>().currentWaveManager = this;
+                currentVanLoad = new List<GameObject>();
+            }
+            spawnedCount += 1;
+            StartWait(0);
+        }
+        else
+        {
+            GameObject newEnemy = Instantiate(nextEnemy.gameObject, spawnPoint.position, spawnPoint.rotation, transform);
+            spawnedEnemies.Add(newEnemy);
+            StartWait(spawnDelay);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

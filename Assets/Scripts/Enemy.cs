@@ -115,7 +115,14 @@ public class Enemy : MonoBehaviour
 
     public void MoveToTarget(bool toggle)
     {
-        agent.destination = player.position;
+        if (toggle)
+        {
+            agent.destination = player.position;
+        }
+        else
+        {
+            agent.destination = agent.transform.position;
+        }
         agent.isStopped = !toggle;
         if (ani != null)
         {
