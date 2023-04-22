@@ -115,15 +115,11 @@ public class Enemy : MonoBehaviour
 
     public void MoveToTarget(bool toggle)
     {
+        agent.enabled = toggle;
         if (toggle)
         {
             agent.destination = player.position;
-        }
-        else
-        {
-            agent.destination = agent.transform.position;
-        }
-        agent.isStopped = !toggle;
+        }      
         if (ani != null)
         {
             ani.SetBool("Walking", toggle);

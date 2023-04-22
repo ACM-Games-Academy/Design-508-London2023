@@ -50,7 +50,7 @@ public class Throwable : Freezable
         }
     }
 
-    HealthManager GetHealthManager()
+    public HealthManager GetHealthManager()
     {
         if (useDraggedInHealthManager)
         {
@@ -79,7 +79,7 @@ public class Throwable : Freezable
 
                 if(hm != null)
                 {
-                    print(gameObject.name+" collided with "+colOb.name + "at speed "+rb.velocity.magnitude);
+                    //print(gameObject.name+" collided with "+colOb.name + "at speed "+rb.velocity.magnitude);
                     hm.HealthChange(-impactHealthLoss);
                 }               
             }

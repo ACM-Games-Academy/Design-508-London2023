@@ -219,8 +219,6 @@ public class WaveManager : MonoBehaviour
             {
                 GameObject van = Instantiate(swatVan, spawnPoint.position, spawnPoint.rotation, transform);//send the van with currently loaded enemies
                 van.GetComponent<SwatVan>().troops = currentVanLoad;
-                print(currentVanLoad.Count);
-                print(van.GetComponent<SwatVan>().troops.Count);
                 van.GetComponent<SwatVan>().currentWaveManager = this;
                 currentVanLoad = new List<GameObject>();
             }
@@ -240,7 +238,7 @@ public class WaveManager : MonoBehaviour
         if (other.tag == "Player" && waveNumber < 1)
         {
             BeginWaves();
-            foreach(Collider c in GetComponentsInChildren<Collider>())
+            foreach(Collider c in GetComponents<Collider>())
             {
                 Destroy(c);
             }

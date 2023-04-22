@@ -1076,6 +1076,7 @@ MonoBehaviour:
   useDraggedInHealthManager: 0
   draggedInHM: {fileID: 0}
   isLightObject: 0
+  partOfRagdoll: 0
   beingHeld: 0
   originalParent: {fileID: 0}
 --- !u!114 &5719891138197208785
@@ -1090,7 +1091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c311336d7681a614c84a36a07323c43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
+  explosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
   blastDamage: 50
   force: 10000
   upwardModifier: 20
@@ -1116,10 +1117,10 @@ MonoBehaviour:
   maxHealth: 100
   deathScript: {fileID: 5719891138197208785}
   deathFunction: Explode
-  dead: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
+  dead: 0
   health: 50
   canTakeDamage: 0
 --- !u!1 &4783089605383547170

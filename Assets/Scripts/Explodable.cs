@@ -64,6 +64,10 @@ public class Explodable : MonoBehaviour
             if (col.TryGetComponent(out Ragdoll rd) && !col.TryGetComponent(out PlayerController pc))
             {
                 rd.StartRagdoll();
+                if (rd.GetComponentInParent<HealthManager>() != null)
+                {
+                    rd.GetComponentInParent<HealthManager>().HealthChange(-blastDamage);
+                }
             }
             if (col.TryGetComponent(out Rigidbody rb))
             {
@@ -74,6 +78,6 @@ public class Explodable : MonoBehaviour
 
     public void ExplosionForce(Rigidbody rb)
     {
-        rb.AddExplosionForce(force * Time.deltaTime, transform.position + radiusOffset, affectedRadius,upwardModifier);
+        rb.AddExplosionForce(force * Time.deltaTime, transform.position + radiusOffset, affectedRadius,upwardModifier,ForceMode.Impulse);
     }
 }

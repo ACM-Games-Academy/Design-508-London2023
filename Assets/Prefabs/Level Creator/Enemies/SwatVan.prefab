@@ -488,7 +488,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7863532115954571301}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.761, y: -1.028, z: -0.655}
+  m_LocalPosition: {x: 0.761, y: -1.132, z: -0.039}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -571,7 +571,7 @@ MonoBehaviour:
   holdRotation: {x: 0, y: 0, z: 0}
   damageVelocity: 8
   printObjectVelocity: 0
-  thrownDamage: 30
+  thrownDamage: 25
   beenThrown: 0
   takesDamageMask:
     serializedVersion: 2
@@ -580,6 +580,7 @@ MonoBehaviour:
   useDraggedInHealthManager: 0
   draggedInHM: {fileID: 0}
   isLightObject: 0
+  partOfRagdoll: 0
   beingHeld: 0
   originalParent: {fileID: 0}
 --- !u!114 &8675469014613307425
@@ -594,13 +595,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 50
   deathScript: {fileID: 8675469014613307424}
   deathFunction: Explode
-  dead: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
+  dead: 0
   health: 0
   canTakeDamage: 0
 --- !u!114 &8675469014613307424
@@ -615,13 +616,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c311336d7681a614c84a36a07323c43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
+  explosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
   blastDamage: 50
   force: 10000
   upwardModifier: 20
-  affectedRadius: 4.77
-  showRadiusInEditor: 0
-  radiusOffset: {x: 0, y: 0, z: 1.08}
+  affectedRadius: 7
+  showRadiusInEditor: 1
+  radiusOffset: {x: 0, y: 0, z: 0.57}
   affectedLayers:
     serializedVersion: 2
     m_Bits: 329
@@ -664,9 +665,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1630f410e6e72419b0c69e4c539e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFrozen: 0
+  spawnPoint: 0
   ani: {fileID: 0}
   agent: {fileID: 8675469014613307431}
+  cannotDespawn: 0
   playerTargetRange: 1000
   showTargetRangeInSceneView: 0
   stoppingRange: 10
@@ -674,8 +676,9 @@ MonoBehaviour:
   playerTag: PlayerTargetPoint
   bloodEffect: {fileID: 0}
   troops: []
+  currentWaveManager: {fileID: 0}
   troopSpawnPoint: {fileID: 6191955873074060352}
-  troopSpawnDelay: 2
+  troopSpawnDelay: 0.7
 --- !u!195 &8675469014613307431
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -686,10 +689,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 5
-  m_Speed: 15
-  m_Acceleration: 8
+  m_Speed: 30
+  m_Acceleration: 16
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 360
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

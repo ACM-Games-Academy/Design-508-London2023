@@ -16,35 +16,60 @@ public class SwatVan : Enemy
     {
         base.Awake();
         deployed = false;
-        ToggleThrowable(false);
     }
 
     public override bool PlayerInRange()
     {
-        if (tooClose() && !deployed)
+        //this function basically defines whether or not the enemy moves toward the player, usually based on range
+        if (!deployed)
         {
-            StartCoroutine(DeployTroops());
+            if (tooClose())
+            {
+                StartCoroutine(DeployTroops());
+                return false;
+            }
+            else
+            {
+                return base.PlayerInRange();
+            }
         }
-        return base.PlayerInRange(); 
+        else
+        {
+            return false;
+        }
+
     }
 
     IEnumerator DeployTroops()
     {
-        agent.enabled = false;
         deployed = true;
+        ToggleThrowable(true);
         foreach (GameObject troop in troops)
         {
             yield return new WaitForSeconds(troopSpawnDelay);
             if(troop.TryGetComponent(out Enemy enemyScript))
             {
                 GameObject enemy = Instantiate(troop, troopSpawnPoint.position, troopSpawnPoint.rotation);
+                if(TryGetComponent(out Throwable ts) && enemy.TryGetComponent(out Ragdoll enemyRs))
+                {
+                    if(ts.beingHeld || ts.beenThrown)
+                    {
+                        enemyRs.Invoke("StartRagdoll",0.1f);
+                    }
+                }
                 if(currentWaveManager != null)
                 {
                     currentWaveManager.spawnedEnemies.Add(enemy);
                 }
             }
-        }        
-        this.enabled = false;
+        }
+        troops = new List<GameObject>();
+    }
+
+    public override void Die()
+    {
+        troopSpawnDelay = 0;
+        GetComponent<Explodable>().Invoke("Explode", 0.3f);
     }
 
     void ToggleThrowable(bool toggle)
@@ -57,7 +82,6 @@ public class SwatVan : Enemy
         {
             rb.isKinematic = !toggle;
         }
-        agent.enabled = !toggle;
     }
 
     private void OnDisable()

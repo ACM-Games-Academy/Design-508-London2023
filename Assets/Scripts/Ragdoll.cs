@@ -100,10 +100,6 @@ public class Ragdoll : MonoBehaviour
     {
         ragdoll = true;
         RagdollCheck();
-        if (throwScript != null)
-        {
-            throwScript.enabled = true;
-        }
         if (getBackUp && !neverGetBackUp)
         {
             Invoke("GetUp", getUpDelay);
@@ -116,6 +112,10 @@ public class Ragdoll : MonoBehaviour
         if(agent != null)
         {
             agent.enabled = !ragdoll;
+        }
+        if (throwScript != null)
+        {
+            throwScript.enabled = ragdoll;
         }
         TogglePhysics(ragdoll);
     }
@@ -151,32 +151,53 @@ public class Ragdoll : MonoBehaviour
 
     public void GetUp()
     {
-        bool cancel = false;
-        if(TryGetComponent(out HealthManager hm))
+        if (!CancelGetUp())
+        {
+            print("running get up");
+            HipRotationReset();
+            HipPositionReset();
+            ragdollTransforms = PopulateTransforms(bones);
+            resettingBones = true;
+        }
+        else if(!neverGetBackUp)
+        {
+            //print("delayed get up for " + 1 + " second");
+            Invoke("GetUp", 1);
+        }
+
+    }
+
+    bool CancelGetUp()
+    {
+        //print("checking for cancel");
+        if (TryGetComponent(out HealthManager hm))//if dead, don't get back up
         {
             if (hm.dead)
             {
-                cancel = true;
-            }  
+                //print("no no no i am dead");
+                neverGetBackUp = true;
+                return true;              
+            }
         }
-        bool beingHeld = false;
-        if (!cancel)
+        if (hips.GetComponent<Freezable>().isFrozen)//if time is frozen don't get up
         {
-            if (throwScript != null)
-            {
-                beingHeld = throwScript.beingHeld;
-                throwScript.enabled = false;
-            }
-            if (!beingHeld && (!hips.GetComponent<Freezable>().isFrozen))
-            {
-                HipRotationReset();
-                HipPositionReset();
-                ragdollTransforms = PopulateTransforms(bones);
-                resettingBones = true;
-            }
-        }       
+            //print("no no no, i am frozen");
+            return true;
+        }
+        Debug.DrawRay(hips.position, Vector3.down.normalized,Color.cyan);
+        if (!Physics.Raycast(hips.position,Vector3.down.normalized, 1))//if not grounded, pretty much
+        {
+            //print("no no no i am in the air");
+            return true;
+        }
+        if (throwScript != null)//if the player is holding thou art, lest we not stand up
+        {
+            //print("no no no, i am being held by the player");
+            return throwScript.beingHeld;
+        }
+        return false;
+        
     }
-
 
     void HipPositionReset()
     {

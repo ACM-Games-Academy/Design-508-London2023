@@ -8,15 +8,16 @@ public class HealthManager : MonoBehaviour
     public float maxHealth;
     [Header("What Happens Upon Death?")]
     [SerializeField] MonoBehaviour deathScript;
-    [SerializeField] string deathFunction;
-    [HideInInspector] public bool dead;
+    [SerializeField] string deathFunction;    
     [Header("Regen")]
     [SerializeField] bool hasRegen;
     [SerializeField] float regenSpeed;
     [SerializeField] float regenTimer;
     float startRegenTime;
 
-    [HideInInspector]public float health;
+    [Header("FOR DEBUGGING ONLY")]
+    public bool dead;
+    public float health;
     [HideInInspector] public bool canTakeDamage;
     // Start is called before the first frame update
     void Start()
@@ -69,6 +70,7 @@ public class HealthManager : MonoBehaviour
     public void Death()
     {
         HealthChange(-health);
+        print("DIED");
     }
 
 

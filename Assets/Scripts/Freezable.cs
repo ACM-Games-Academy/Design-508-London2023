@@ -67,7 +67,6 @@ public class Freezable : MonoBehaviour
             if (defineSpeed)
             {
                 prevAgentSpeed = nm.speed;
-                print(prevAgentSpeed);
                 nm.speed = 0;
             }
         }
@@ -96,10 +95,7 @@ public class Freezable : MonoBehaviour
         }
         if (TryGetComponent(out Ragdoll rs))
         {
-            if (rs.ragdoll)
-            {
-                rs.StartRagdoll();
-            }          
+            rs.RagdollCheck();     
         }
     }
 
