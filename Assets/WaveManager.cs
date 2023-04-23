@@ -11,6 +11,9 @@ public class WaveManager : MonoBehaviour
     [SerializeField] float timeBetweenWaves;
     [SerializeField] GameObject doorBlockers;
     [SerializeField] AudioClip music;
+    Vector3 previousObjV3;
+    string previousObjMsg;
+
     
     [Header("Spawning")]
     List<GameObject> currentVanLoad = new List<GameObject>();
@@ -72,7 +75,7 @@ public class WaveManager : MonoBehaviour
         incomingUI = GameObject.FindGameObjectWithTag("incomingWaveUI");
         waveBar = waveUI.GetComponentInChildren<Slider>();
         barUI = waveBar.transform.parent.gameObject;
-        waveUI.SetActive(false) ;
+        waveUI.SetActive(false);
         
     }
 
@@ -92,6 +95,9 @@ public class WaveManager : MonoBehaviour
                         if(!objectWasSpawned || (objectWasSpawned && spawnedObject == null))
                         {
                             StartNextWave();
+                            ObjectiveManager.currentObjectiveLocation = previousObjV3;
+                            ObjectiveManager.currentObjectiveText = "Defeat The Enemies";
+                            ObjectiveManager.UpdateObjective();
                         }
                     }
                     else if(spawnedCount != enemiesToSpawn.Length && !fullySpawned)
@@ -117,6 +123,9 @@ public class WaveManager : MonoBehaviour
                     {
                         spawnedObject = Instantiate(currentWave.spawnsGameObject, objectSpawn.position, currentWave.spawnsGameObject.transform.rotation);
                         objectWasSpawned = true;
+                        ObjectiveManager.currentObjectiveLocation = objectSpawn.position;
+                        ObjectiveManager.currentObjectiveText = "Collect the Pickup";
+                        ObjectiveManager.UpdateObjective();
                     }
                     if (waveNumber < waves.Length)
                     {
@@ -138,6 +147,11 @@ public class WaveManager : MonoBehaviour
         StartNextWave();
         AudioManager.music.clip = music;
         AudioManager.music.Play();
+        previousObjMsg = ObjectiveManager.currentObjectiveText;
+        ObjectiveManager.currentObjectiveText = "Defeat The Enemies";
+        previousObjV3 = ObjectiveManager.currentObjectiveLocation;
+        ObjectiveManager.UpdateObjective();
+
     }
 
     void EndOfWaves()
@@ -147,6 +161,9 @@ public class WaveManager : MonoBehaviour
         waveUI.SetActive(false);
         AudioManager.music.clip = AudioManager.defaultTrack;
         AudioManager.music.Play();
+        ObjectiveManager.currentObjectiveText = previousObjMsg;
+        ObjectiveManager.currentObjectiveLocation = previousObjV3;
+        ObjectiveManager.UpdateObjective();
     }
 
     void StartNextWave()
