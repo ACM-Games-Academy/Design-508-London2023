@@ -24,7 +24,7 @@ public class Objective : MonoBehaviour
             ObjectiveManager.currentObjectiveText = objectiveMessage;
             ObjectiveManager.currentObjectiveLocation = objectiveLocation.position;
             ObjectiveManager.UpdateObjective();
-            print("sdujhbsdklfb");
+            Destroy(gameObject);
         }
     }
 }
