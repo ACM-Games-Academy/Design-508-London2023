@@ -25,7 +25,7 @@ public class ObjectiveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FacingObjective())
+        if (FacingObjective() && currentObjectiveLocation != null)
         {
             marker.SetActive(true);
             marker.transform.position = Camera.main.WorldToScreenPoint(currentObjectiveLocation);
