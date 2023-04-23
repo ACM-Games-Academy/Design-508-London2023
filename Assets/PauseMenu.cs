@@ -9,8 +9,8 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
     public GameObject PauseUI;
     public GameObject HUD;
-    public GameObject SettingsMenu;
     public GameObject FreeCam;
+    [SerializeField] GameObject settingsMenu;
     
     void Update()
     {
@@ -32,6 +32,7 @@ public class PauseMenu : MonoBehaviour
         FreeCam.SetActive(true);
         PauseUI.SetActive(false);
         HUD.SetActive(true);
+        settingsMenu.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
 
