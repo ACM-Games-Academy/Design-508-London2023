@@ -53,6 +53,9 @@ public class unlock : MonoBehaviour
 
     private void OnDestroy()
     {
-        tutorial.SetActive(false);
+        if(tutorial != null)
+        {
+            tutorial.SetActive(false);
+        }
     }
 }

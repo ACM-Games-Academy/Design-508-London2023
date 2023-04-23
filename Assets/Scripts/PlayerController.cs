@@ -132,6 +132,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject deathScreen;
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        if(GameManager.instance != null)
+        {
+            GameManager.instance.LoadVariables();
+        }
+    }
+
     void Start()
     {
         //GET COMPONENTING
