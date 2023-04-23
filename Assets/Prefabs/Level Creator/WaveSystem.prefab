@@ -387,6 +387,7 @@ MonoBehaviour:
   spawnDelay: 5
   timeBetweenWaves: 20
   doorBlockers: {fileID: 2245749404132501709}
+  music: {fileID: 8300000, guid: c05f6d6e7a0b64240a4d3489576caa2e, type: 3}
   swatVan: {fileID: 8607813463737490466, guid: 558607cbc1716b14ca8dedadd1fc0dc4, type: 3}
   spawnedEnemies: []
 --- !u!114 &8751526016940050363

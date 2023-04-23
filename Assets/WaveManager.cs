@@ -10,6 +10,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] float spawnDelay;
     [SerializeField] float timeBetweenWaves;
     [SerializeField] GameObject doorBlockers;
+    [SerializeField] AudioClip music;
     
     [Header("Spawning")]
     List<GameObject> currentVanLoad = new List<GameObject>();
@@ -125,7 +126,9 @@ public class WaveManager : MonoBehaviour
     {
         doorBlockers.SetActive(true);
         waveUI.SetActive(true);
-        StartNextWave();       
+        StartNextWave();
+        AudioManager.music.clip = music;
+        AudioManager.music.Play();
     }
 
     void EndOfWaves()
@@ -133,6 +136,8 @@ public class WaveManager : MonoBehaviour
         state = waveStates.STOPPED;
         doorBlockers.SetActive(false);
         waveUI.SetActive(false);
+        AudioManager.music.clip = AudioManager.defaultTrack;
+        AudioManager.music.Play();
     }
 
     void StartNextWave()
