@@ -10,7 +10,10 @@ public class SpawnAndSpin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Instantiate(level, transform);
+        if(level != null)
+        {
+            Instantiate(level, transform);
+        }
     }
 
     // Update is called once per frame

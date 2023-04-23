@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float maxEnergy;
     [SerializeField] float energyRegenRate;
     public static float energy;
-    public bool superStrength;
     public bool laserVision;
     public bool superSpeed;
     public bool flight;
@@ -155,11 +154,11 @@ public class PlayerController : MonoBehaviour
         energy = maxEnergy;
         Time.timeScale = 1;
 
+        transform.position = GameManager.spawnPoint;
         LoadManagerVariables();
     }
-    void LoadManagerVariables()
-    {
-        transform.position = GameManager.spawnPoint;
+    public void LoadManagerVariables()
+    {        
         superSpeed = GameManager.superSpeed;
         laserVision = GameManager.laserVision;
         flight = GameManager.flight;

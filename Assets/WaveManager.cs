@@ -85,13 +85,9 @@ public class WaveManager : MonoBehaviour
                         {
                             //shakirs function for upgrading
                         }
-                        else if(waveNumber < waves.Length)
-                        {
-                            StartNextWave();
-                        }
                         else
                         {
-                            EndOfWaves();
+                            StartNextWave();
                         }
                     }
                     else if(spawnedCount != enemiesToSpawn.Length && !fullySpawned)
@@ -116,7 +112,11 @@ public class WaveManager : MonoBehaviour
                     if(waveNumber < waves.Length)
                     {
                         StartWait(timeBetweenWaves);
-                    }                
+                    }
+                    else
+                    {
+                        EndOfWaves();
+                    }
                 }
                 break;
         }

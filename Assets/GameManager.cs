@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static bool superSpeed;
     public static bool laserVision;
     public static bool flight;
-    PlayerController player;
+    public static PlayerController player;
     // Start is called before the first frame update
     void Awake()
     {
