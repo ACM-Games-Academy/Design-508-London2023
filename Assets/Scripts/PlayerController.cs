@@ -79,7 +79,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float flightSpeed;
     [SerializeField] float riseSpeed;
     [SerializeField] float lowerSpeed;
-    [SerializeField] float flightDrain;
     bool isFlying;
 
     [Header("[ROLL]")]
@@ -99,7 +98,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector3 directionOffset;
     [SerializeField] GameObject laserEffect;
     [SerializeField] Transform crosshair;
-    [SerializeField] float laserDrain;
     Vector3 hitpoint1;
     Vector3 hitpoint2;
     Vector3 laserMidpoint;
@@ -120,6 +118,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float punchDamage;
     [SerializeField] float standingKickDamage;
     [SerializeField] float runningKickDamage;
+
+    [Header("ENERGY DRAIN PER SECOND")]
+    [SerializeField] float flightDrain;
+    [SerializeField] float laserDrain;
+    [SerializeField] float superSpeedDrain;
+    [SerializeField] float rollDrain;
+    [SerializeField] float kickDrain;
+    [SerializeField] float throwDrain;
 
     [Header("[Death]")]
     [SerializeField] GameObject bloodEffect;
@@ -204,6 +210,10 @@ public class PlayerController : MonoBehaviour
         {
             Flying();
         }
+        if (isSpeeding)
+        {
+            EnergyDrain(superSpeedDrain);
+        }
     }
 
 
@@ -259,6 +269,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator Roll()
     {
+        EnergyDrain(rollDrain);
         isRolling = true;
         ani.Play("Roll");
         playerHealth.canTakeDamage = false;
@@ -301,15 +312,9 @@ public class PlayerController : MonoBehaviour
             queuedActions.Add("startSprint");
         }
         //disabling sprint
-        if (Input.GetButtonUp("Sprint") && !queuedActions.Contains("stopSprint"))
+        if ((Input.GetButtonUp("Sprint") && !queuedActions.Contains("stopSprint")) || !HasEnergy())
         {
             queuedActions.Add("stopSprint");
-        }
-        //enabling super speed
-        if(Input.GetKeyDown("c") && superSpeed)
-        {
-
-                
         }
         //JUMPING
         if (Input.GetButtonDown("Jump") && !playerHealth.dead)
@@ -322,7 +327,7 @@ public class PlayerController : MonoBehaviour
             {
                 queuedActions.Add("startFlight");
             }          
-        }        
+        }       
         //PLAYER ACTIONS
         switch (pickUpState)
             {   
@@ -331,7 +336,6 @@ public class PlayerController : MonoBehaviour
                     PickUp();
                     currentlyTouchedPickup.GetComponent<Throwable>().beingHeld = true;
                     break;
-
                 //this runs when the player is holding an object
                 case pickupStates.holding:
                     RotatePlayerToCam();
@@ -346,7 +350,7 @@ public class PlayerController : MonoBehaviour
                 {
                     queuedActions.Add("drop");
                 }
-                else if (Input.GetButtonDown("Throw"))
+                else if (Input.GetButtonDown("Throw") && HasEnergy())
                 {
                     queuedActions.Add("throw");
                 }
@@ -356,7 +360,7 @@ public class PlayerController : MonoBehaviour
                     queuedActions.Add("punch");
                 }
                 //initiating roll
-                else if (Input.GetButtonDown("Crouch") && !isFlying)
+                else if (Input.GetButtonDown("Crouch") && !isFlying && HasEnergy())
                 {
                     queuedActions.Add("drop");
                     queuedActions.Add("roll");
@@ -377,7 +381,7 @@ public class PlayerController : MonoBehaviour
                         crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);
                     }
                 //punching
-                    if ((Input.GetAxisRaw("Punch") == 1) && !punchAxisInUse)
+                    if ((Input.GetAxisRaw("Punch") == 1) && !punchAxisInUse && HasEnergy())
                     {
                         queuedActions.Add("punch");
                         punchAxisInUse = true;
@@ -392,7 +396,7 @@ public class PlayerController : MonoBehaviour
                         queuedActions.Add("pickup");
                     }
                     //initiating roll
-                    if (Input.GetButtonDown("Crouch") && !isFlying)
+                    if (Input.GetButtonDown("Crouch") && !isFlying && HasEnergy())
                     {
                         queuedActions.Add("roll");
                     }
@@ -553,6 +557,7 @@ public class PlayerController : MonoBehaviour
             if(directionalInput.magnitude > 0.1f && sprinting)
             {
                 ani.Play("Running Kick");
+                EnergyDrain(kickDrain);
                 meleeScript.meleeDamage = runningKickDamage;
             }
             else
@@ -842,6 +847,11 @@ public class PlayerController : MonoBehaviour
         {
             energy = maxEnergy;
         }
+    }
+
+    bool HasEnergy()
+    {
+        return energy > 10;
     }
 
     void RotatePlayerToCam()
