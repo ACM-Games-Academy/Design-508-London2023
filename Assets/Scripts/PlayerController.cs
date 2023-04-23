@@ -154,6 +154,15 @@ public class PlayerController : MonoBehaviour
         canPunch = true;
         energy = maxEnergy;
         Time.timeScale = 1;
+
+        LoadManagerVariables();
+    }
+    void LoadManagerVariables()
+    {
+        transform.position = GameManager.spawnPoint;
+        superSpeed = GameManager.superSpeed;
+        laserVision = GameManager.laserVision;
+        flight = GameManager.flight;
     }
 
     // Update is called once per frame
