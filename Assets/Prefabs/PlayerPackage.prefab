@@ -76711,6 +76711,7 @@ MonoBehaviour:
   HUD: {fileID: 4442391289410577384}
   FreeCam: {fileID: 4442391289498268853}
   settingsMenu: {fileID: 4442391289037669184}
+  controlsMenu: {fileID: 4442391288471572748}
 --- !u!1 &4442391289849357742
 GameObject:
   m_ObjectHideFlags: 0
