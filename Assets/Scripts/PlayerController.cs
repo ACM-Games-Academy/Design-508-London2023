@@ -562,7 +562,7 @@ public class PlayerController : MonoBehaviour
         //when punch is pressed three times
         if (ActionInQueue("kick"))
         {   
-            if(directionalInput.magnitude > 0.1f && sprinting)
+            if(directionalInput.magnitude > 0.1f && sprinting && HasEnergy())
             {
                 ani.Play("Running Kick");
                 EnergyDrain(kickDrain);
@@ -742,7 +742,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Fire1") > 0.4f)
         {
             regen = false;
-            if (hit && energy >= 0)
+            if (hit && HasEnergy())
             {
                 EnergyDrain(laserDrain / 2);                
                 laser.SetPosition(1, ray.point);

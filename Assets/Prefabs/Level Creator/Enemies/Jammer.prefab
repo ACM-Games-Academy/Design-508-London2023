@@ -99,11 +99,11 @@ MonoBehaviour:
   bullet: {fileID: 0}
   aimVariation: {x: 0.01, y: 0.01, z: 0.01}
   shootAnimationDelay: 0
-  shootCooldown: 0.2
+  shootCooldown: 0.02
   despawnTime: 1
   currentTrail: {fileID: 0}
   hitscanDamage: 0
-  trail: {fileID: 0}
+  trail: {fileID: 5311365928930379941, guid: fd447a2f486fc594591696c6c743a592, type: 3}
   energyLoss: 1
 --- !u!195 &7521857688728188072
 NavMeshAgent:
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb6528a16f789645b633de1df9e1743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPoint: 0
   ani: {fileID: 8445658856694309249}
   agent: {fileID: 7521857688728188072}
   cannotDespawn: 0
@@ -147,7 +148,7 @@ MonoBehaviour:
   stoppingRange: 40
   showStoppingRangeInSceneView: 1
   playerTag: PlayerTargetPoint
-  bloodEffect: {fileID: 1000012909287652, guid: 78b0e7f97bd38df4cbae856c27751eea,
+  bloodEffect: {fileID: 1000010675638318, guid: a4eb04008c6181343a228982d86a92c3,
     type: 3}
 --- !u!136 &511485467
 CapsuleCollider:
@@ -199,10 +200,10 @@ MonoBehaviour:
   maxHealth: 30
   deathScript: {fileID: 4261056523543500352}
   deathFunction: Die
-  dead: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
+  dead: 0
   health: 0
   canTakeDamage: 0
 --- !u!1001 &3132509204872267826
