@@ -27,8 +27,13 @@ public class ObjectiveManager : MonoBehaviour
     {
         if (FacingObjective())
         {
+            marker.SetActive(true);
             marker.transform.position = Camera.main.WorldToScreenPoint(currentObjectiveLocation);
-        }              
+        }
+        else
+        {
+            marker.SetActive(false);
+        }
     }
 
     public static void UpdateObjective()
@@ -40,8 +45,6 @@ public class ObjectiveManager : MonoBehaviour
     bool FacingObjective()
     {
         transform.LookAt(currentObjectiveLocation);
-
-        print(Camera.main.fieldOfView);
         Debug.DrawRay(transform.position, transform.forward,Color.red);
 
         return Vector3.Angle(transform.forward, Camera.main.transform.forward) < Camera.main.fieldOfView;
