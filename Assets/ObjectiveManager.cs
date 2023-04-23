@@ -27,6 +27,7 @@ public class ObjectiveManager : MonoBehaviour
     {
         if (FacingObjective())
         {
+            marker.SetActive(true);
             marker.transform.position = Camera.main.WorldToScreenPoint(currentObjectiveLocation);
         }
         else
