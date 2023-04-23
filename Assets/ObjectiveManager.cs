@@ -16,17 +16,34 @@ public class ObjectiveManager : MonoBehaviour
         objectiveUIText = GameObject.FindGameObjectWithTag("objectiveText").GetComponent<TextMeshProUGUI>();
         marker = GameObject.FindGameObjectWithTag("marker");
         currentObjectiveLocation = transform.position;
+
+
+        transform.SetParent(Camera.main.transform);
+        transform.localPosition = Vector3.zero;
 }
 
     // Update is called once per frame
     void Update()
     {
-        marker.transform.position = Camera.main.WorldToScreenPoint(currentObjectiveLocation);
+        if (FacingObjective())
+        {
+            marker.transform.position = Camera.main.WorldToScreenPoint(currentObjectiveLocation);
+        }              
     }
 
     public static void UpdateObjective()
     {
         objectiveUIText.text = currentObjectiveText;
         
+    }
+
+    bool FacingObjective()
+    {
+        transform.LookAt(currentObjectiveLocation);
+
+        print(Camera.main.fieldOfView);
+        Debug.DrawRay(transform.position, transform.forward,Color.red);
+
+        return Vector3.Angle(transform.forward, Camera.main.transform.forward) < Camera.main.fieldOfView;
     }
 }
