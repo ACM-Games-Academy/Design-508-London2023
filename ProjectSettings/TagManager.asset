@@ -12,6 +12,9 @@ TagManager:
   - waveText
   - incomingWaveUI
   - GameManager
+  - objectSpawn
+  - objectiveText
+  - marker
   layers:
   - Default
   - TransparentFX

@@ -3,6 +3,6 @@ using UnityEngine;
 
 public class Wave : MonoBehaviour
 {
-    public bool triggerUpgrade;
+    public GameObject spawnsGameObject;
     public List<GameObject> enemies;
 }

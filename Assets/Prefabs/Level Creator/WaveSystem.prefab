@@ -258,6 +258,37 @@ Transform:
   m_Father: {fileID: 8751526016940050366}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4899078245987932072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7845324155674114090}
+  m_Layer: 0
+  m_Name: Object Spawn
+  m_TagString: objectSpawn
+  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7845324155674114090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4899078245987932072}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8751526016940050366}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8751526015471255462
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +387,7 @@ Transform:
   - {fileID: 8751526015641211584}
   - {fileID: 1872483776}
   - {fileID: 4583467985766806231}
+  - {fileID: 7845324155674114090}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -402,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ccd9c07ef7a14468a61d0796cc0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerUpgrade: 0
+  spawnsGameObject: {fileID: 0}
   enemies:
   - {fileID: 7167034802001215573, guid: 9c77712e4d9d1904dad4a3c09ab2002e, type: 3}
   - {fileID: 7167034802001215573, guid: 9c77712e4d9d1904dad4a3c09ab2002e, type: 3}
@@ -420,7 +452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ccd9c07ef7a14468a61d0796cc0489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerUpgrade: 0
+  spawnsGameObject: {fileID: 0}
   enemies:
   - {fileID: 7167034802001215573, guid: 9c77712e4d9d1904dad4a3c09ab2002e, type: 3}
   - {fileID: 7167034802001215573, guid: 9c77712e4d9d1904dad4a3c09ab2002e, type: 3}

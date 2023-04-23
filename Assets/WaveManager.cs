@@ -15,6 +15,10 @@ public class WaveManager : MonoBehaviour
     [Header("Spawning")]
     List<GameObject> currentVanLoad = new List<GameObject>();
     [SerializeField] GameObject swatVan;
+    [SerializeField] bool stopWavesUntilObjectCollected = true;
+    GameObject spawnedObject;
+    bool objectWasSpawned;
+    Transform objectSpawn;
     enum waveStates
     {
         SPAWNING,
@@ -52,9 +56,13 @@ public class WaveManager : MonoBehaviour
         //add all the spawn points to a list variable
         foreach(Transform child in transform.GetComponentsInChildren<Transform>())
         {
-            if(child.tag == "waveSpawn")
+            if (child.tag == "waveSpawn")
             {
                 spawnPoints.Add(child);
+            }
+            else if (child.tag == "objectSpawn")
+            {
+                objectSpawn = child;
             }
         }
 
@@ -81,11 +89,7 @@ public class WaveManager : MonoBehaviour
                 {
                     if (finished)
                     {
-                        if (currentWave.triggerUpgrade)
-                        {
-                            //shakirs function for upgrading
-                        }
-                        else
+                        if(!objectWasSpawned || (objectWasSpawned && spawnedObject == null))
                         {
                             StartNextWave();
                         }
@@ -109,7 +113,12 @@ public class WaveManager : MonoBehaviour
                     barUI.SetActive(false);
                     incomingUI.SetActive(true);
                     ClearOldEnemies();
-                    if(waveNumber < waves.Length)
+                    if (currentWave.spawnsGameObject != null && !objectWasSpawned)
+                    {
+                        spawnedObject = Instantiate(currentWave.spawnsGameObject, objectSpawn.position, currentWave.spawnsGameObject.transform.rotation);
+                        objectWasSpawned = true;
+                    }
+                    if (waveNumber < waves.Length)
                     {
                         StartWait(timeBetweenWaves);
                     }
