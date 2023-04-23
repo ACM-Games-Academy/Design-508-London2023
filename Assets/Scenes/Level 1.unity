@@ -71398,6 +71398,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 886174756187192377, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
+        type: 3}
+      propertyPath: superSpeedDrain
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 886174756370217299, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -83116,6 +83121,11 @@ PrefabInstance:
       propertyPath: deathScript
       value: 
       objectReference: {fileID: 7058575693354795930}
+    - target: {fileID: 8980223361252226527, guid: cc7a04a4263b646499835496b8833151,
+        type: 3}
+      propertyPath: deathFunction
+      value: Explode
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc7a04a4263b646499835496b8833151, type: 3}
 --- !u!114 &7058575693354795930 stripped
