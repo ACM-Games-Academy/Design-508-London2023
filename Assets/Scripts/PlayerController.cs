@@ -856,7 +856,15 @@ public class PlayerController : MonoBehaviour
 
     bool HasEnergy()
     {
-        return energy > 10;
+        if (energy > 20)
+        {
+            return true;
+        }
+        else
+        {
+            EnergyDrain(50);
+            return false;
+        }
     }
 
     void RotatePlayerToCam()

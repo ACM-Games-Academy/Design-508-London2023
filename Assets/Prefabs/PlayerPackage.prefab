@@ -6904,7 +6904,7 @@ MonoBehaviour:
   disableInputs: 0
   maxEnergy: 100
   energyRegenRate: 24
-  energyRegenCooldown: 3
+  energyRegenCooldown: 2
   laserVision: 0
   superSpeed: 0
   flight: 0
@@ -6961,7 +6961,7 @@ MonoBehaviour:
   laserDrain: 50
   superSpeedDrain: 60
   rollDrain: 500
-  kickDrain: 1500
+  kickDrain: 3000
   throwDrain: 1500
   bloodEffect: {fileID: 1000010675638318, guid: 1afa466a5d347f144939ca63607ad67b,
     type: 3}
