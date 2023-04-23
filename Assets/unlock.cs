@@ -46,7 +46,7 @@ public class unlock : MonoBehaviour
             GameManager.player.LoadManagerVariables();
             Destroy(GetComponent<Collider>());
             Destroy(GetComponent<Renderer>());
-            Destroy(gameObject, 2f);
+            Destroy(gameObject, 5f);
         }
         
     }

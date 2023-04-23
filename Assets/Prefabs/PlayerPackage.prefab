@@ -24656,7 +24656,7 @@ MonoBehaviour:
   runningKickDamage: 5
   flightDrain: 5
   laserDrain: 50
-  superSpeedDrain: 30
+  superSpeedDrain: 10
   rollDrain: 500
   kickDrain: 3000
   throwDrain: 1500

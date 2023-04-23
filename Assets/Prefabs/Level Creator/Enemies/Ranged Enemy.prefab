@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5701579798403427419}
   - component: {fileID: 284428461582560525}
   - component: {fileID: 5701579798403427418}
-  - component: {fileID: 3460244648551583248}
+  - component: {fileID: 3815917537385238657}
   - component: {fileID: 5701579798403427393}
   m_Layer: 6
   m_Name: Ranged Enemy
@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb6528a16f789645b633de1df9e1743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPoint: 0
   ani: {fileID: 6936101607125878738}
   agent: {fileID: 5701579798403427419}
   cannotDespawn: 0
@@ -117,7 +118,7 @@ MonoBehaviour:
   playerTag: Player
   bloodEffect: {fileID: 1000012909287652, guid: 78b0e7f97bd38df4cbae856c27751eea,
     type: 3}
---- !u!114 &3460244648551583248
+--- !u!114 &3815917537385238657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,7 +127,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5701579798403427417}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cd34ba4c8c129048adca4972ee799e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 3dab6a382f6a7a24f9ffa573bb4bf801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
@@ -136,7 +137,7 @@ MonoBehaviour:
   WhatBlocksMyView:
     serializedVersion: 2
     m_Bits: 265
-  shootDistance: 15
+  shootDistance: 20
   isStatic: 0
   rotateAtTarget: 1
   Xrotater: {fileID: 0}
@@ -144,14 +145,11 @@ MonoBehaviour:
   Xoffset: 0
   Yoffset: 0
   Shootpoint: {fileID: 3824369031497102058}
-  bullet: {fileID: 0}
-  aimVariation: {x: 0.01, y: 0.01, z: 0.01}
+  bullet: {fileID: 5056348519534656981, guid: 6a6aef65992de0746887f33fdffb0d29, type: 3}
+  aimVariation: {x: 0.3, y: 0.3, z: 0.3}
   shootAnimationDelay: 0
-  shootCooldown: 0.01
-  despawnTime: 2
-  currentTrail: {fileID: 0}
-  hitscanDamage: 0.2
-  trail: {fileID: 5311365928930379941, guid: 9ada07786c596ab44a87952a093a7458, type: 3}
+  shootCooldown: 0.1
+  despawnTime: 20
 --- !u!114 &5701579798403427393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,10 +165,10 @@ MonoBehaviour:
   maxHealth: 30
   deathScript: {fileID: 5701579798403427418}
   deathFunction: Die
-  dead: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
+  dead: 0
   health: 0
   canTakeDamage: 0
 --- !u!1 &6124385870493579701
@@ -1108,7 +1106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
-  holdRotation: {x: 0, y: 0, z: 90}
+  holdRotation: {x: 0, y: 100, z: 100}
   damageVelocity: 5
   printObjectVelocity: 0
   thrownDamage: 20
