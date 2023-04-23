@@ -6903,10 +6903,10 @@ MonoBehaviour:
   comboDelay: 1
   disableInputs: 0
   maxEnergy: 100
-  energyRegenRate: 12
-  superStrength: 0
-  laserVision: 1
-  superSpeed: 1
+  energyRegenRate: 24
+  energyRegenCooldown: 3
+  laserVision: 0
+  superSpeed: 0
   flight: 0
   GroundLayers:
     serializedVersion: 2

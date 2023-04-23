@@ -37619,16 +37619,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5546919604078583511, guid: 3e3e9026d49b0c3408f1dad70914e68a,
-        type: 3}
-      propertyPath: energyLoss
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5546919604078583511, guid: 3e3e9026d49b0c3408f1dad70914e68a,
-        type: 3}
-      propertyPath: shootCooldown
-      value: 0.02
-      objectReference: {fileID: 0}
     - target: {fileID: 7644470372577759036, guid: 3e3e9026d49b0c3408f1dad70914e68a,
         type: 3}
       propertyPath: m_RootOrder
@@ -71771,6 +71761,26 @@ PrefabInstance:
         type: 3}
       propertyPath: rollForce
       value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 886174756187192377, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
+        type: 3}
+      propertyPath: superSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 886174756187192377, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
+        type: 3}
+      propertyPath: laserVision
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 886174756187192377, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
+        type: 3}
+      propertyPath: energyRegenRate
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 886174756187192377, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
+        type: 3}
+      propertyPath: energyRegenCooldown
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 886174756370217299, guid: 6d51c4ad3c374d44ba8398f45d10c0ad,
         type: 3}

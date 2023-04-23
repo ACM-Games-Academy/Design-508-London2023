@@ -29,12 +29,12 @@ public class PlayerController : MonoBehaviour
     [Header("[POWER SETTINGS]")]
     [SerializeField] float maxEnergy;
     [SerializeField] float energyRegenRate;
+    [SerializeField] float energyRegenCooldown;
+    float startRegenTime;
     public static float energy;
     public bool laserVision;
     public bool superSpeed;
     public bool flight;
-    bool regen;
-    float currentRegenRate;
 
     [Header("[Physics Properties]")]
     [SerializeField] LayerMask GroundLayers;
@@ -178,15 +178,9 @@ public class PlayerController : MonoBehaviour
         }
 
         //regen
-        regen = true;
-        if (regen)
+        if (Time.time > startRegenTime)
         {
-            currentRegenRate = energyRegenRate;
-            Invoke("EnergyRegen",3);
-        }
-        else
-        {
-            currentRegenRate = 0;
+            EnergyRegen();
         }
     }
 
@@ -221,6 +215,10 @@ public class PlayerController : MonoBehaviour
         if (isSpeeding)
         {
             EnergyDrain(superSpeedDrain);
+            if (!HasEnergy())
+            {
+                queuedActions.Add(("stopSprint"));
+            }
         }
     }
 
@@ -320,7 +318,7 @@ public class PlayerController : MonoBehaviour
             queuedActions.Add("startSprint");
         }
         //disabling sprint
-        if ((Input.GetButtonUp("Sprint") && !queuedActions.Contains("stopSprint")) || !HasEnergy())
+        if ((Input.GetButtonUp("Sprint") && !queuedActions.Contains("stopSprint")))
         {
             queuedActions.Add("stopSprint");
         }
@@ -389,7 +387,7 @@ public class PlayerController : MonoBehaviour
                         crosshair.position = Camera.main.WorldToScreenPoint(laserMidpoint);
                     }
                 //punching
-                    if ((Input.GetAxisRaw("Punch") == 1) && !punchAxisInUse && HasEnergy())
+                    if ((Input.GetAxisRaw("Punch") == 1) && !punchAxisInUse)
                     {
                         queuedActions.Add("punch");
                         punchAxisInUse = true;
@@ -514,7 +512,7 @@ public class PlayerController : MonoBehaviour
             {
                 queuedActions.Add("punch2");
             }
-            else if (sprinting && directionalInput.magnitude > 0.1f)
+            else if (sprinting && directionalInput.magnitude > 0.1f && HasEnergy())
             {
                 queuedActions.Add("kick");
             }
@@ -562,7 +560,7 @@ public class PlayerController : MonoBehaviour
         //when punch is pressed three times
         if (ActionInQueue("kick"))
         {   
-            if(directionalInput.magnitude > 0.1f && sprinting && HasEnergy())
+            if(directionalInput.magnitude > 0.1f && sprinting)
             {
                 ani.Play("Running Kick");
                 EnergyDrain(kickDrain);
@@ -741,7 +739,6 @@ public class PlayerController : MonoBehaviour
         //when firing laser
         if (Input.GetAxis("Fire1") > 0.4f)
         {
-            regen = false;
             if (hit && HasEnergy())
             {
                 EnergyDrain(laserDrain / 2);                
@@ -840,8 +837,8 @@ public class PlayerController : MonoBehaviour
 
     public void EnergyDrain(float rate)
     {
-        regen = false;
         energy -= (Time.deltaTime * rate);
+        startRegenTime = Time.time + energyRegenCooldown;
         if(energy < 0)
         {
             energy = 0;
@@ -850,7 +847,7 @@ public class PlayerController : MonoBehaviour
 
     public void EnergyRegen()
     {
-        energy += (Time.deltaTime * currentRegenRate);
+        energy += (Time.deltaTime * energyRegenRate);
         if(energy > maxEnergy)
         {
             energy = maxEnergy;
