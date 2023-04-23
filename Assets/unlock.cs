@@ -13,9 +13,8 @@ public class unlock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tutorialText = GameObject.FindGameObjectWithTag("tutorialText").GetComponent<TextMeshProUGUI>();
+        tutorialText = GameManager.instance.powerTutorial;
         tutorial = tutorialText.transform.parent.gameObject;
-        tutorial.SetActive(false);
     }
 
     // Update is called once per frame

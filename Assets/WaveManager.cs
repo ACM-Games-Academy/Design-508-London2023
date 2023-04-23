@@ -51,7 +51,7 @@ public class WaveManager : MonoBehaviour
     GameObject barUI;
 
     
-    void Awake()
+    void Start()
     {
         //get all the wave scripts that were added
         waves = GetComponents<Wave>();
@@ -70,13 +70,15 @@ public class WaveManager : MonoBehaviour
         }
 
         //UI Assigning
-        waveUI = GameObject.FindGameObjectWithTag("waveUI");
+        waveUI = GameManager.instance.waveUI;
+        waveUI.SetActive(true);
         waveNumText = GameObject.FindGameObjectWithTag("waveText").GetComponent<TextMeshProUGUI>();
         incomingUI = GameObject.FindGameObjectWithTag("incomingWaveUI");
         waveBar = waveUI.GetComponentInChildren<Slider>();
         barUI = waveBar.transform.parent.gameObject;
         waveUI.SetActive(false);
-        
+
+
     }
 
     // Update is called once per frame

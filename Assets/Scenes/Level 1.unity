@@ -82346,6 +82346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f50621e3226e24496b301955f694dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerTutorial: {fileID: 0}
 --- !u!4 &2106475404
 Transform:
   m_ObjectHideFlags: 0
