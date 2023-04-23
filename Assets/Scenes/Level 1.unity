@@ -66458,7 +66458,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2518164
+  m_Name: pb_Mesh-2975178
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -70726,7 +70726,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2518178
+  m_Name: pb_Mesh-2975192
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -82942,7 +82942,7 @@ PrefabInstance:
     - target: {fileID: 3275075203208868664, guid: cc7a04a4263b646499835496b8833151,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5448
+      value: 5451
       objectReference: {fileID: 0}
     - target: {fileID: 3475613721080430617, guid: cc7a04a4263b646499835496b8833151,
         type: 3}
@@ -82962,7 +82962,7 @@ PrefabInstance:
     - target: {fileID: 5240764864528769408, guid: cc7a04a4263b646499835496b8833151,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5343
+      value: 5346
       objectReference: {fileID: 0}
     - target: {fileID: 5453831885714284111, guid: cc7a04a4263b646499835496b8833151,
         type: 3}
@@ -83038,9 +83038,21 @@ PrefabInstance:
         type: 3}
       propertyPath: deathScript
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7058575693354795930}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc7a04a4263b646499835496b8833151, type: 3}
+--- !u!114 &7058575693354795930 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7898012417683680962, guid: cc7a04a4263b646499835496b8833151,
+    type: 3}
+  m_PrefabInstance: {fileID: 7058575693354795929}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c311336d7681a614c84a36a07323c43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7272691441714042797
 PrefabInstance:
   m_ObjectHideFlags: 0
