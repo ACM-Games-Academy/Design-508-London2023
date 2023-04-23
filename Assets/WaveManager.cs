@@ -97,6 +97,7 @@ public class WaveManager : MonoBehaviour
                             StartNextWave();
                             ObjectiveManager.currentObjectiveLocation = previousObjV3;
                             ObjectiveManager.currentObjectiveText = "Defeat The Enemies";
+                            ObjectiveManager.UpdateObjective();
                         }
                     }
                     else if(spawnedCount != enemiesToSpawn.Length && !fullySpawned)
@@ -124,6 +125,7 @@ public class WaveManager : MonoBehaviour
                         objectWasSpawned = true;
                         ObjectiveManager.currentObjectiveLocation = objectSpawn.position;
                         ObjectiveManager.currentObjectiveText = "Collect the Pickup";
+                        ObjectiveManager.UpdateObjective();
                     }
                     if (waveNumber < waves.Length)
                     {
@@ -148,6 +150,7 @@ public class WaveManager : MonoBehaviour
         previousObjMsg = ObjectiveManager.currentObjectiveText;
         ObjectiveManager.currentObjectiveText = "Defeat The Enemies";
         previousObjV3 = ObjectiveManager.currentObjectiveLocation;
+        ObjectiveManager.UpdateObjective();
 
     }
 
@@ -160,6 +163,7 @@ public class WaveManager : MonoBehaviour
         AudioManager.music.Play();
         ObjectiveManager.currentObjectiveText = previousObjMsg;
         ObjectiveManager.currentObjectiveLocation = previousObjV3;
+        ObjectiveManager.UpdateObjective();
     }
 
     void StartNextWave()
