@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this);
             LoadVariables();
             instance = this;
-            spawnPoint = player.transform.position;
+            spawnPoint = transform.position;
             superSpeed = player.superSpeed;
             laserVision = player.laserVision;
             flight = player.flight;
