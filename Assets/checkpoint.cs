@@ -18,7 +18,10 @@ public class checkpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GameManager.spawnPoint = transform.position;
-        Destroy(gameObject);
+        if(other.tag == "Player")
+        {
+            GameManager.spawnPoint = transform.position;
+            Destroy(gameObject);
+        }
     }
 }
