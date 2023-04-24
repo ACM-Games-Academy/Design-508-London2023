@@ -618,7 +618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
   blastDamage: 50
-  force: 10000
+  force: 8000
   upwardModifier: 3
   affectedRadius: 7
   showRadiusInEditor: 1
