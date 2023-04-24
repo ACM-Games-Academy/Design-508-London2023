@@ -90,6 +90,14 @@ public class WaveManager : MonoBehaviour
                 SpawnNextEnemy();
                 break;
             case waveStates.WAITING:
+                if(objectWasSpawned && spawnedObject == null)
+                {
+                    incomingUI.SetActive(true);
+                    ObjectiveManager.currentObjectiveLocation = previousObjV3;
+                    ObjectiveManager.currentObjectiveText = "Defeat The Enemies";
+                    ObjectiveManager.UpdateObjective();
+                    objectWasSpawned = false;
+                }
                 if(Time.time >= waitEndTime)
                 {
                     if (finished)
@@ -97,9 +105,6 @@ public class WaveManager : MonoBehaviour
                         if(!objectWasSpawned || (objectWasSpawned && spawnedObject == null))
                         {
                             StartNextWave();
-                            ObjectiveManager.currentObjectiveLocation = previousObjV3;
-                            ObjectiveManager.currentObjectiveText = "Defeat The Enemies";
-                            ObjectiveManager.UpdateObjective();
                         }
                     }
                     else if(spawnedCount != enemiesToSpawn.Length && !fullySpawned)
@@ -118,8 +123,7 @@ public class WaveManager : MonoBehaviour
                 if(GetKilledEnemies() >= spawnedCount)
                 {
                     finished = true;
-                    barUI.SetActive(false);
-                    incomingUI.SetActive(true);
+                    barUI.SetActive(false);                   
                     ClearOldEnemies();
                     if (currentWave.spawnsGameObject != null && !objectWasSpawned)
                     {
@@ -128,6 +132,10 @@ public class WaveManager : MonoBehaviour
                         ObjectiveManager.currentObjectiveLocation = objectSpawn.position;
                         ObjectiveManager.currentObjectiveText = "Collect the Pickup";
                         ObjectiveManager.UpdateObjective();
+                    }
+                    else
+                    {
+                        incomingUI.SetActive(true);
                     }
                     if (waveNumber < waves.Length)
                     {

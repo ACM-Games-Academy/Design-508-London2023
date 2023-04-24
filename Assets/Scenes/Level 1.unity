@@ -85768,6 +85768,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.0006
       objectReference: {fileID: 0}
+    - target: {fileID: 456057085951814381, guid: cc7a04a4263b646499835496b8833151,
+        type: 3}
+      propertyPath: objectiveMessage
+      value: Head to the Airstrip
+      objectReference: {fileID: 0}
     - target: {fileID: 3275075203208868664, guid: cc7a04a4263b646499835496b8833151,
         type: 3}
       propertyPath: m_Mesh
@@ -85803,6 +85808,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1607244616}
+    - target: {fileID: 6934313775154796826, guid: cc7a04a4263b646499835496b8833151,
+        type: 3}
+      propertyPath: objectiveMessage
+      value: Get through the plaza
+      objectReference: {fileID: 0}
+    - target: {fileID: 6934313775190111818, guid: cc7a04a4263b646499835496b8833151,
+        type: 3}
+      propertyPath: objectiveMessage
+      value: Obtain The Laser Power
+      objectReference: {fileID: 0}
     - target: {fileID: 6934313776665034761, guid: cc7a04a4263b646499835496b8833151,
         type: 3}
       propertyPath: m_LocalPosition.x
