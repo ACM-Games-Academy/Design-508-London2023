@@ -747,7 +747,7 @@ public class PlayerController : MonoBehaviour
         //when firing laser
         if (Input.GetAxis("Fire1") > 0.4f)
         {
-            if (hit && HasEnergy())
+            if (hit && HasEnergy() && !ray.collider.isTrigger)
             {
                 EnergyDrain(laserDrain / 2);                
                 laser.SetPosition(1, ray.point);
