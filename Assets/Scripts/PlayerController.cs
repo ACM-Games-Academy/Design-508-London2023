@@ -741,13 +741,11 @@ public class PlayerController : MonoBehaviour
 
         //laser raycast
         Vector3 direction = cam.rotation * Vector3.forward + directionOffset;
-        bool hit = Physics.Raycast(eyeball.position, direction.normalized, out RaycastHit ray, maxDistance, LaserLayers);
-
-        
+        bool hit = Physics.Raycast(eyeball.position, direction.normalized, out RaycastHit ray, maxDistance, LaserLayers, QueryTriggerInteraction.Ignore);       
         //when firing laser
         if (Input.GetAxis("Fire1") > 0.4f)
         {
-            if (hit && HasEnergy() && !ray.collider.isTrigger)
+            if (hit && HasEnergy())
             {
                 EnergyDrain(laserDrain / 2);                
                 laser.SetPosition(1, ray.point);

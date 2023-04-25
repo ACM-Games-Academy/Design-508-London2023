@@ -24731,7 +24731,7 @@ MonoBehaviour:
   standingKickDamage: 6
   runningKickDamage: 5
   flightDrain: 5
-  laserDrain: 50
+  laserDrain: 20
   superSpeedDrain: 10
   rollDrain: 500
   kickDrain: 3000
