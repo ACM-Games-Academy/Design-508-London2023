@@ -166,7 +166,7 @@ public class Ragdoll : MonoBehaviour
         else if(!neverGetBackUp)
         {
             //print("delayed get up for " + 1 + " second");
-            Invoke("GetUp", 2);
+            Invoke("GetUp", 5);
         }
 
     }
