@@ -8,10 +8,14 @@ public class Drainer : Hitscan
 
     public override void whenHit(RaycastHit ray)
     {
-        PlayerController.energy -= energyLoss;
-        if (currentTrail == null)
+        if(ray.collider == targetCollider)
         {
-            StartCoroutine(SpawnTrail(ray));
+            GameManager.player.EnergyDrain(energyLoss);
+            if (currentTrail == null)
+            {
+                StartCoroutine(SpawnTrail(ray));
+            }
         }
+
     }
 }

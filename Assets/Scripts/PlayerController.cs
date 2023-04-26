@@ -364,7 +364,7 @@ public class PlayerController : MonoBehaviour
                 {
                     queuedActions.Add("drop");
                 }
-                else if (Input.GetButtonDown("Throw") && HasEnergy())
+                else if (Input.GetButtonDown("Throw"))
                 {
                     queuedActions.Add("throw");
                 }
@@ -405,7 +405,7 @@ public class PlayerController : MonoBehaviour
                         punchAxisInUse = false;
                     }
                     //picking up
-                    if (Input.GetButtonDown("Pickup") && currentlyTouchedPickup != null)
+                    if (Input.GetButtonDown("Pickup") && currentlyTouchedPickup != null && HasEnergy())
                     {
                         queuedActions.Add("pickup");
                     }

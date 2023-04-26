@@ -111,6 +111,7 @@ public class Ragdoll : MonoBehaviour
         ani.enabled = !ragdoll;
         if(agent != null)
         {
+            print("agent set to" + !ragdoll);
             agent.enabled = !ragdoll;
         }
         if (throwScript != null)

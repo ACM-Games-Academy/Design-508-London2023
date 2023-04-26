@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class checkpoint : MonoBehaviour
 {
+    [SerializeField] bool removeSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,11 @@ public class checkpoint : MonoBehaviour
         if(other.tag == "Player")
         {
             GameManager.spawnPoint = transform.position;
+            if (removeSpeed)
+            {
+                GameManager.superSpeed = false;
+                GameManager.player.superSpeed = false;
+            }
             Destroy(gameObject);
         }
     }

@@ -62,7 +62,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -72,7 +72,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 1.68
   m_BaseOffset: -0.12
-  m_WalkableMask: 77
+  m_WalkableMask: 131077
   m_ObstacleAvoidanceType: 4
 --- !u!114 &3432876089706774785
 MonoBehaviour:
@@ -168,11 +168,11 @@ MonoBehaviour:
   Shootpoint: {fileID: 1635573820143170371}
   bullet: {fileID: 0}
   aimVariation: {x: 0, y: 0, z: 0}
-  shootAnimationDelay: 0.2
-  shootCooldown: 0.7
+  shootAnimationDelay: 0.1
+  shootCooldown: 0.35
   despawnTime: 0
   currentTrail: {fileID: 0}
-  hitscanDamage: 8
+  hitscanDamage: 4
   trail: {fileID: 0}
 --- !u!1001 &939755999715127478
 PrefabInstance:

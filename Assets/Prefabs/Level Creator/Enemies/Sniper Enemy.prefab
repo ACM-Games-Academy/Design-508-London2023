@@ -1326,7 +1326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
-  holdRotation: {x: 0, y: 0, z: 90}
+  holdRotation: {x: 113.3, y: 302.3, z: 125.3}
   damageVelocity: 5
   printObjectVelocity: 0
   thrownDamage: 20
@@ -1352,8 +1352,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.97, y: 0.7, z: 0.61}
-  m_Center: {x: 0.014147028, y: 0.23, z: 0.00248947}
+  m_Size: {x: 0.97, y: 0.96530247, z: 0.61}
+  m_Center: {x: 0.014147043, y: 0.09734905, z: 0.0024894774}
 --- !u!1 &3029339558470832615
 GameObject:
   m_ObjectHideFlags: 0
@@ -1924,7 +1924,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 1.68
   m_BaseOffset: -0.12
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 131077
   m_ObstacleAvoidanceType: 4
 --- !u!114 &1107811471120786230
 MonoBehaviour:
@@ -1968,7 +1968,7 @@ MonoBehaviour:
   stoppingRange: 15
   showStoppingRangeInSceneView: 0
   playerTag: Player
-  bloodEffect: {fileID: 1000012909287652, guid: 78b0e7f97bd38df4cbae856c27751eea,
+  bloodEffect: {fileID: 1000010675638318, guid: a4eb04008c6181343a228982d86a92c3,
     type: 3}
 --- !u!114 &4370884900329308203
 MonoBehaviour:
@@ -2017,7 +2017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 15
   deathScript: {fileID: 4867782180899873377}
   deathFunction: Die
   hasRegen: 0

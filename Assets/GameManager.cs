@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
         waveUI.SetActive(false);
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+
+        fadeScreen = GameObject.FindGameObjectWithTag("fadeScreen").GetComponent<Image>();
     }
 
     // Update is called once per frame

@@ -15,6 +15,7 @@ TagManager:
   - objectSpawn
   - objectiveText
   - marker
+  - fadeScreen
   layers:
   - Default
   - TransparentFX

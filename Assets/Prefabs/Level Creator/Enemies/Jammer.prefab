@@ -99,12 +99,12 @@ MonoBehaviour:
   bullet: {fileID: 0}
   aimVariation: {x: 0.01, y: 0.01, z: 0.01}
   shootAnimationDelay: 0
-  shootCooldown: 0.02
+  shootCooldown: 0.04
   despawnTime: 1
   currentTrail: {fileID: 0}
   hitscanDamage: 0
   trail: {fileID: 5311365928930379941, guid: fd447a2f486fc594591696c6c743a592, type: 3}
-  energyLoss: 0.2
+  energyLoss: 20
 --- !u!195 &7521857688728188072
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 131077
   m_ObstacleAvoidanceType: 4
 --- !u!114 &4261056523543500352
 MonoBehaviour:
@@ -146,7 +146,7 @@ MonoBehaviour:
   playerTargetRange: 1000
   showTargetRangeInSceneView: 0
   stoppingRange: 40
-  showStoppingRangeInSceneView: 1
+  showStoppingRangeInSceneView: 0
   playerTag: PlayerTargetPoint
   bloodEffect: {fileID: 1000010675638318, guid: a4eb04008c6181343a228982d86a92c3,
     type: 3}
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 5
   deathScript: {fileID: 4261056523543500352}
   deathFunction: Die
   hasRegen: 0
@@ -589,8 +589,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.97, y: 0.7, z: 0.61}
-  m_Center: {x: 0.014147028, y: 0.23, z: 0.00248947}
+  m_Size: {x: 0.97, y: 0.9598479, z: 0.61}
+  m_Center: {x: 0.014147043, y: 0.100076035, z: 0.0024894774}
 --- !u!65 &3132509204384614784
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -617,7 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFrozen: 0
-  holdRotation: {x: 0, y: 0, z: 90}
+  holdRotation: {x: -151.6, y: 275, z: 112.4}
   damageVelocity: 5
   printObjectVelocity: 0
   thrownDamage: 20

@@ -72,7 +72,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 1.68
   m_BaseOffset: -0.12
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 131077
   m_ObstacleAvoidanceType: 4
 --- !u!114 &284428461582560525
 MonoBehaviour:
@@ -116,7 +116,7 @@ MonoBehaviour:
   stoppingRange: 15
   showStoppingRangeInSceneView: 0
   playerTag: Player
-  bloodEffect: {fileID: 1000012909287652, guid: 78b0e7f97bd38df4cbae856c27751eea,
+  bloodEffect: {fileID: 1000010675638318, guid: a4eb04008c6181343a228982d86a92c3,
     type: 3}
 --- !u!114 &3815917537385238657
 MonoBehaviour:

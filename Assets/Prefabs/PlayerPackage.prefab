@@ -24726,11 +24726,11 @@ MonoBehaviour:
   headAimConstraint: {fileID: 4442391288730820718}
   laserVisionTarget: {fileID: 4442391288415636954}
   WeightLerpSpeed: 10
-  laserDamage: 3
+  laserDamage: 7
   punchDamage: 4
   standingKickDamage: 6
   runningKickDamage: 5
-  flightDrain: 5
+  flightDrain: 1
   laserDrain: 20
   superSpeedDrain: 10
   rollDrain: 500
@@ -24782,12 +24782,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4e1a42b4064cd4280110dad95ee81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 130
   deathScript: {fileID: 4442391288333807539}
   deathFunction: Die
   hasRegen: 1
-  regenSpeed: 2
-  regenTimer: 10
+  regenSpeed: 10
+  regenTimer: 5
   dead: 0
   health: 0
   canTakeDamage: 0
@@ -75634,7 +75634,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.7
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

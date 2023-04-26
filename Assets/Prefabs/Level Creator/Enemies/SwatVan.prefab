@@ -576,7 +576,7 @@ MonoBehaviour:
   takesDamageMask:
     serializedVersion: 2
     m_Bits: 73
-  impactHealthLoss: 25
+  impactHealthLoss: 50
   useDraggedInHealthManager: 0
   draggedInHM: {fileID: 0}
   isLightObject: 0
@@ -699,5 +699,5 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 4.85
   m_BaseOffset: 0.4
-  m_WalkableMask: 8
+  m_WalkableMask: 131072
   m_ObstacleAvoidanceType: 4

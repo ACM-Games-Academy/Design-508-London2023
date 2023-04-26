@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
 
     [Header("Optional")]
     [SerializeField] Animator ani;
-    [HideInInspector] public NavMeshAgent agent;
+    public NavMeshAgent agent;
     [HideInInspector] public bool cannotDespawn;
 
     [Header("Range")]
@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject bloodEffect;
 
 
-    public virtual void Awake()
+    public virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag(playerTag).transform;
@@ -113,13 +113,17 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void MoveToTarget(bool toggle)
+    public virtual void MoveToTarget(bool toggle)
     {
-        agent.enabled = toggle;
         if (toggle)
         {
             agent.destination = player.position;
-        }      
+            agent.isStopped = false;
+        }
+        else
+        {
+            agent.isStopped = true;
+        }
         if (ani != null)
         {
             ani.SetBool("Walking", toggle);

@@ -58,7 +58,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 131077
   m_ObstacleAvoidanceType: 4
 --- !u!114 &8620507773357729970
 MonoBehaviour:
@@ -72,6 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb6528a16f789645b633de1df9e1743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPoint: 0
   ani: {fileID: 2794667792082011175}
   agent: {fileID: 8620507773357729969}
   cannotDespawn: 0
@@ -111,10 +112,10 @@ MonoBehaviour:
   maxHealth: 30
   deathScript: {fileID: 8620507773357729970}
   deathFunction: Die
-  dead: 0
   hasRegen: 0
   regenSpeed: 0
   regenTimer: 0
+  dead: 0
   health: 0
   canTakeDamage: 0
 --- !u!114 &8620507773357729966

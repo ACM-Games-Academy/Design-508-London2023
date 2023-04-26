@@ -12,9 +12,9 @@ public class SwatVan : Enemy
     [SerializeField] float troopSpawnDelay;
     
     bool deployed;
-    public override void Awake()
+    public override void Start()
     {
-        base.Awake();
+        base.Start();
         deployed = false;
     }
 
@@ -38,6 +38,18 @@ public class SwatVan : Enemy
             return false;
         }
 
+    }
+
+    public override void MoveToTarget(bool toggle)
+    {
+        if (toggle)
+        {
+            base.MoveToTarget(toggle);
+        }
+        else if (agent != null)
+        {
+            agent.enabled = false;
+        }
     }
 
     IEnumerator DeployTroops()
